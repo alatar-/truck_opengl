@@ -1,0 +1,24 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl Semi_truck.tga
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.245760 0.245760 0.245760
+Ks 0.900000 0.900000 0.900000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd semi_truck.tga
+map_d semi_truck.tga
+
+newmtl car_glass.tga
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.245760 0.245760 0.245760
+Ks 0.900000 0.900000 0.900000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd car_glass.tga
+map_d car_glass.tga

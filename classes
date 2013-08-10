@@ -1,0 +1,117 @@
+// OBJECT LOADER
+class OBJLoader {
+	need to involve here the outsource loader in way, we could use it easili ;)
+};
+
+// THE TRUCK:
+I have omitted constructors and destructors in the classes - think they will be in response mainly to load the textures and models of object.
+
+
+class Obstacle {
+	// fields:
+	private type; 
+	private coordinates;
+	private state; // if it was hit by a truck or not
+	private model; 
+	private texture;
+
+	//methods:
+	Redraw(state, phisics[]); // phisics, I mean how it moves - dirrection, speed, force and so on...
+	kind of collision listener - to talk about.
+};
+
+class Parking {
+	// fields:
+	public size;
+	private obstacles[];
+
+};
+
+class Wheel {
+	// fields:
+	private coordinates (X,Y,Z); 
+	private rotationSpeed;
+	public speed; (?)
+	private sth, that will held the plain of rotation;
+	private model;
+	private texture;
+
+	// methods:
+	MoveForwards(speed);
+	MoveBackwards(speed);
+	MovementToRotation(); // converts one speed to another - they're not the same, are they?
+};
+
+
+// place where the inheritance is possible: Trailer and Body are simmilar at the first glimpse,
+// or we can make one turbo-class that held both of these and don't care aobut inheritance. 
+class Trailer {
+	// fields:
+	private coordinates (X,Y,Z); 
+	public speed; (?)
+	private anchorPoint; // (rotation point) probably that will be constant but not sure right now
+	private model;
+	private texture;
+	.
+	.
+	.
+
+	// methods:
+	moveForwards(speed);
+	moveBackwards(speed);
+};
+
+class Body {
+	// fields:
+	private coordinates (X,Y,Z); 
+	public speed; (?)
+	private anchorPoint; // (rotation point) probably that will be constant but not sure right now
+	private model;
+	private texture;
+	.
+	.
+	.
+
+	// methods:
+	moveForwards(speed);
+	moveBackwards(speed);	
+};
+
+class Truck {
+	// fields:
+	private Wheels[];
+	private Trailers[];
+	private Body;
+	private speed;
+	private direction; // (?) or screw it and use negative speed values
+	private turning[]; //normalised vector of actual turning, it can be passed as an argument to set the plain of the front steering wheels.
+
+	// methods: 
+	Move();
+	UpdateTurning();
+};
+
+// LIGHTING
+class Light {
+	here stuff about the lighting - location, type, color etc. I do not know much about it, need to look through the notes	
+};
+
+// THE SCENE
+class Scene {
+	Light[];
+	Parking;
+	Truck;
+}; 
+/* 
+	I think it's pointless to refer to truck via the Scene class however, it will be useful to have this stuff in one class because of the lighting and shaders stuff, don't U think?
+/*
+
+// GAME (WHAT, WHEN GOING ON AND OTHER BULLSHIT):
+
+class Game {
+	
+};
+
+class Menu {
+	
+}
