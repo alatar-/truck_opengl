@@ -4,7 +4,7 @@ CC=g++
 CCFLAGS=-g -Wall
 
 TARGET=truck
-FULL_SOURCES=bone_vertex material mesh texture model player shared vertex world truck_part
+FULL_SOURCES=bone_vertex material mesh texture model player shared vertex world truck_part wehicle
 SOURCES=$(FULL_SOURCES) main
 HEADERS=$(FULL_SOURCES) libs/INI
 

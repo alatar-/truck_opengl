@@ -17,12 +17,18 @@ class player_t;
 class TruckPart;
 #include "truck_part.h"
 
+class Wehicle;
+#include "wehicle.h"
+
 using namespace std;
 
 class world_t {
 private: 
 	model_t *galery;
-	vector<TruckPart*> truck;
+	Wehicle* truck;
+	Wehicle* first_trailer ;
+	Wehicle* second_trailer;
+	//vector<TruckPart*> truck;
 	//model_t *truck;
 	pthread_mutex_t mutex_position;
 	player_t *player;

@@ -24,7 +24,7 @@ private:
 public:
 	pthread_t thread;
 	
-	TruckPart (world_t *in_world, string in_path, float in_size, float x, float y, glm::vec3 in_T, glm::vec3 in_R, glm::vec3 in_S);
+	TruckPart (world_t *in_world, string in_path, float in_size, float ang_in, float x, float y, glm::vec3 in_T, glm::vec3 in_R, glm::vec3 in_S);
 	~TruckPart();
 	
 	void fire();

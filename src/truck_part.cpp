@@ -1,10 +1,10 @@
 #include "truck_part.h"
 
 #include <unistd.h>
-TruckPart::TruckPart (world_t *in_world, string in_path, float in_size, float x, float y, glm::vec3 in_T, glm::vec3 in_R, glm::vec3 in_S)
+TruckPart::TruckPart (world_t *in_world, string in_path, float in_size, float ang_in, float x, float y, glm::vec3 in_T, glm::vec3 in_R, glm::vec3 in_S)
 : MV(1.0f) {
 	set_pos(x,y);
-	ang_h = 0;
+	ang_h = ang_in;
 	in_transform = glm::translate(glm::mat4(1.0f), in_T);
 // 	printf("\nvisitor_t::constructor> T\n");
 // 	print_mat4(in_transform);
