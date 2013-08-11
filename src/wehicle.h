@@ -14,9 +14,7 @@ public:
 	
 	Wehicle();
 	~Wehicle();
-	void set_mv_matrix (glm::mat4 V);
-	void apply_mv();
-
-
+	void set_mv_matrix(glm::mat4 V);
+	// void apply_mv();
 };
 #endif

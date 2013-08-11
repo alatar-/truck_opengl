@@ -7,19 +7,15 @@
 #include <string>
 #include "wehicle.h"
 
-glm::vec3 str_to_vec3 (const string &in_s) {
-	float x
-		,	y
-		,	z;
+glm::vec3 str_to_vec3(const string &in_s) {
+	float x, y,	z;
 	printf("in_s: %s\n", in_s.c_str());
 	sscanf(in_s.c_str(), " %f / %f / %f", &x, &y, &z);
 	return glm::vec3(x, y, z);
 }
 
-vector <float> str_to_vec (const string &in_s) {
-	float x
-		, y
-		, rotation;
+vector <float> str_to_vec(const string &in_s) {
+	float x, y, rotation;
 	printf("in_s: %s\n", in_s.c_str());
 	sscanf(in_s.c_str(), " %f / %f / %f", &x, &y, &rotation);
 	vector <float> result;
@@ -29,12 +25,11 @@ vector <float> str_to_vec (const string &in_s) {
 	return result;
 }
 
-
-bool materials_ptr_less (const material_t *a, const material_t *b) {
+bool materials_ptr_less(const material_t *a, const material_t *b) {
 	return !(*a < *b);
 }
 
-bool world_t::load (string in_config_file, unsigned in_screen_w, unsigned in_screen_h) {
+bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h) {
 	/** load config */
 	ini_t ini(in_config_file, true);
 	
@@ -277,8 +272,8 @@ bool world_t::load (string in_config_file, unsigned in_screen_w, unsigned in_scr
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	
-	return true;
+
+    return true;
 }
 
 world_t::~world_t() {	
@@ -296,32 +291,21 @@ void world_t::draw() {
 	for (unsigned i = 0, ilen = materials.size(); i < ilen; ++i) {
 		materials[i]->set_marker(false);
 	}
-	int x;
-	galery->set_mv_matrix(glm::mat4(1.0f));
+	galery->set_mv_matrix(
+		glm::mat4(1.0f));
+	// glm::mat4(
+	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)
+	// 	glm::vec4(0.0f, 0.5f, 0.0f, 0.0f),
+	// 	glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
+	// 	glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
+	// ));
 
-	//for (unsigned i = 0, len = truck.size(); i < len; ++i) {
-	//	truck[i]->set_mv_matrix(glm::mat4(1.0f));
-	//	truck[i]->set_mv_matrix_to_meshes();
-	//}
-	truck->body->set_mv_matrix(glm::mat4(1.0f));
-	truck->body->set_mv_matrix_to_meshes();
-	//printf("truck done\n");
-
-	truck->left_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
-	truck->left_steering_wheel->set_mv_matrix_to_meshes();
-	//printf("left done\n");
-	truck->right_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
-	truck->right_steering_wheel->set_mv_matrix_to_meshes();
-	//printf("right done\n");
-	for (unsigned i = 0, len = truck->left_wheels.size(); i < len; ++i) {
-		truck->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
-		truck->left_wheels[i]->set_mv_matrix_to_meshes();
-	}
-	for (unsigned i = 0, len = truck->right_wheels.size(); i < len; ++i) {
-		truck->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
-		truck->right_wheels[i]->set_mv_matrix_to_meshes();
-	}
-	//printf("mv matrix set\n");
+    truck->set_mv_matrix(glm::mat4(1.0f));
+	// truck->set_mv_matrix_to_meshes();
+    //printf("mv matrix set\n");
 	
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -416,7 +400,7 @@ void world_t::draw() {
 // 	glDisable(GL_ALPHA_TEST);
 // }
 
-void world_t::draw_in_material_order (glm::mat4 V) {
+void world_t::draw_in_material_order(glm::mat4 V) {
 	glMatrixMode(GL_MODELVIEW);
 	
 	for (unsigned i = 0, ilen = materials.size(); i < ilen; ++i) {
@@ -424,11 +408,11 @@ void world_t::draw_in_material_order (glm::mat4 V) {
 	}
 }
 
-void world_t::next_frame (direct_t keys_h, direct_t keys_v) {
+void world_t::next_frame(direct_t keys_h, direct_t keys_v) {
 	player->move(keys_h, keys_v);
 }
 
-void world_t::mouse_motion (float dang_h, float dang_v) {
+void world_t::mouse_motion(float dang_h, float dang_v) {
 	if (invert_mouse_y) {
 		dang_v *= -1;
 	}
@@ -436,7 +420,7 @@ void world_t::mouse_motion (float dang_h, float dang_v) {
 }
 
 
-bool world_t::test_colls_with_galery (vertex_2d pos, vertex_2d itd, float size, float height) {
+bool world_t::test_colls_with_galery(vertex_2d pos, vertex_2d itd, float size, float height) {
 	float scale = module(pos, itd);
 	scale = (scale + size) / size;
 	

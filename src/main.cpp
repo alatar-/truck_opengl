@@ -8,20 +8,14 @@
 
 world_t *World = new world_t();
 
-int screen_w
-	,	screen_h
-	,	m_x
-	,	m_y;
+int screen_w, screen_h,	
+    m_x, m_y;
 
-bool f_key_up = false
-	,	f_key_down = false
-	,	f_key_left = false
-	,	f_key_right = false;
+bool f_key_up, f_key_down,
+	 f_key_left, f_key_right,
+     f_key_w, f_key_s;
 
-
-
-
-void key_down (int c, int x, int y) {
+void key_down(int c, int x, int y) {
 	switch (c) {
 		case GLUT_KEY_LEFT:
 			f_key_left = true;
@@ -36,6 +30,17 @@ void key_down (int c, int x, int y) {
 			f_key_down = true;
 			break;
 	}
+}
+
+void key_down(unsigned char c, int x, int y) {
+    switch (c) {
+        case 'w':
+            f_key_w = true;
+            break;
+        case 's':
+            f_key_s = true;
+            break;
+    }
 }
 
 void key_up (int c, int x, int y) {
@@ -55,18 +60,29 @@ void key_up (int c, int x, int y) {
 	}
 }
 
-void mouse_motion (int x, int y) {
-	int dx = x - m_x
-		,	dy = y - m_y;
+void key_up(unsigned char c, int x, int y) {
+    switch (c) {
+        case 'w':
+            f_key_w = false;
+            break;
+        case 's':
+            f_key_s = false;
+            break;
+    }
+}
+
+void mouse_motion(int x, int y) {
+	int dx = x - m_x, 
+        dy = y - m_y;
 	
 	if ((abs(dx) < MOUSE_OVERFLOW) && (abs(dy) < MOUSE_OVERFLOW)) {
 		World->mouse_motion(dx, dy);
 	}
-	
-	if ( x <= 10
-	|| x >= screen_w - 10
-	|| y <= 10
-	|| y >= screen_h - 10
+
+	if (x <= 10 ||
+    	x >= screen_w - 10 ||
+    	y <= 10 ||
+    	y >= screen_h - 10
 	) {
 		m_x = screen_w / 2;
 		m_y = screen_h / 2;
@@ -77,20 +93,19 @@ void mouse_motion (int x, int y) {
 	}
 }
 
-void display_frame () {
+void display_frame() {
 	glClearStencil(0);
 	glClearColor(0.5, 0.5, 0.8, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	World->draw();
-	
 	glutSwapBuffers();
 }
 
-void next_frame () {
+void next_frame() {
 	World->next_frame(
-		(direct_t)(BACK * f_key_right + FORW * f_key_left)
-	,	(direct_t)(BACK * f_key_down + FORW * f_key_up)
+	   (direct_t)(BACK * f_key_right + FORW * f_key_left),
+	   (direct_t)(BACK * f_key_down + FORW * f_key_up)
 	);
 	glutPostRedisplay();
 }
@@ -102,7 +117,7 @@ void gl_init(int *argc, char **argv) {
 	screen_w = glutGet(GLUT_SCREEN_WIDTH);
 	screen_h = glutGet(GLUT_SCREEN_HEIGHT);
 	
-	glutInitWindowSize(screen_w,screen_h);
+	glutInitWindowSize(screen_w, screen_h);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Truck Master");
 	glutFullScreen();
@@ -129,17 +144,16 @@ void gl_init(int *argc, char **argv) {
 	
 	glutDisplayFunc(display_frame);
 	glutIdleFunc(next_frame);
-	glutSpecialFunc(key_down);
 	glutSpecialUpFunc(key_up);
+	glutSpecialFunc(key_down);
 	glutPassiveMotionFunc(mouse_motion);
 	glutMotionFunc(mouse_motion);
 }
 
-int main (int argc, char **argv) {
+int main(int argc, char **argv) {
 	gl_init(&argc, argv);
 	World->load("config.ini", screen_w, screen_h);
 	
 	glutMainLoop();
-	
 	return 0;
 }

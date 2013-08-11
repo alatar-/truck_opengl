@@ -26,38 +26,34 @@ class world_t {
 private: 
 	model_t *galery;
 	Wehicle* truck;
-	Wehicle* first_trailer ;
+	Wehicle* first_trailer;
 	Wehicle* second_trailer;
-	//vector<TruckPart*> truck;
+	//vector <TruckPart*> truck;
 	//model_t *truck;
 	player_t *player;
 	vector <material_t*> materials;
 	glm::mat4 P;
-	float mouse_sensitivity_x
-		,	mouse_sensitivity_y;
+	float mouse_sensitivity_x, mouse_sensitivity_y;
 	bool invert_mouse_y;
 	
 	unsigned max_textures;
 	bool shadows_working;
 	
 	GLuint shadow_map;
-	unsigned shadow_map_size
-		,	screen_w
-		,	screen_h;
+	unsigned shadow_map_size, screen_w,	screen_h;
 public:
-	world_t(){
-	}
+	world_t(){}
 	~world_t();
 	
-	bool load (string in_config_file, unsigned in_screen_w, unsigned in_screen_h);
+	bool load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h);
 	void draw();
-	void next_frame (direct_t keys_h, direct_t keys_v);
+	void next_frame(direct_t keys_h, direct_t keys_v);
 	
-	void mouse_motion (float dang_h, float dang_v);
+	void mouse_motion(float dang_h, float dang_v);
 
-	bool test_colls_with_galery (vertex_2d pos, vertex_2d itd, float size, float height);
+	bool test_colls_with_galery(vertex_2d pos, vertex_2d itd, float size, float height);
 	
-	void draw_in_material_order (glm::mat4 V);
+	void draw_in_material_order(glm::mat4 V);
 	// void draw_with_shadows (glm::mat4 V);
 };
 

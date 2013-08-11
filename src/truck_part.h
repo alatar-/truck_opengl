@@ -14,8 +14,7 @@ using namespace std;
 class TruckPart {
 private:
 	float ang_h, size;	
-	glm::mat4 in_transform
-		,	MV;
+	glm::mat4 in_transform,	MV;
 	vertex_2d pos;
 	world_t *world;
 	model_t *model;
