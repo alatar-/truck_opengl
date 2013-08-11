@@ -15,7 +15,7 @@
 // dw4 = 6/6/6
 
 Wehicle::Wehicle() {
-
+	following_wehicle = NULL;
 }
 
 Wehicle::~Wehicle() {

@@ -10,6 +10,7 @@ public:
 	vector <TruckPart*> left_wheels;
 	vector <TruckPart*> right_wheels;
 	TruckPart* body;
+	Wehicle* following_wehicle;
 	
 	Wehicle();
 	~Wehicle();
