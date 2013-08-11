@@ -18,6 +18,7 @@ class TruckPart;
 #include "truck_part.h"
 
 class Wehicle;
+class Truck;
 #include "wehicle.h"
 
 using namespace std;
@@ -25,8 +26,7 @@ using namespace std;
 class world_t {
 private: 
 	model_t *galery;
-	Wehicle* truck;
-	Wehicle* first_trailer;
+	Truck* truck;
 	Wehicle* second_trailer;
 	//vector <TruckPart*> truck;
 	//model_t *truck;
@@ -47,7 +47,7 @@ public:
 	
 	bool load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h);
 	void draw();
-	void next_frame(direct_t keys_h, direct_t keys_v);
+	void next_frame (direct_t keys_h, direct_t keys_v, direct_t height);
 	
 	void mouse_motion(float dang_h, float dang_v);
 

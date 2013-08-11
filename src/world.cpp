@@ -96,7 +96,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 	// }
 
 	{
-		truck = new Wehicle();
+		truck = new Truck();
 		{
 			string model_file("./models/");
 			ini.select("Truck");
@@ -212,6 +212,176 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 				printf("Got materials\n");
 			}
 		}
+
+
+		{
+			first_trailer = new Wehicle();
+			{
+				string model_file("./models/");
+				ini.select("Trailer1");
+				printf("trailer1!!!!!!!\n");
+				first_trailer->body = new TruckPart(this
+						,	model_file + ini.get<string>("model", "Truck/Trailer_no_wheels.obj")
+						,	ini.get<float>("size", 2.0f)
+						,	ini.get<float>("angle", 0.0f)
+						,	ini.get<float>("posX", 2.0f)
+						,	ini.get<float>("posY", 2.0f)
+						,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
+						,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
+						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+						);
+				vector <material_t*> &vis_mats = first_trailer->body->get_materials();
+				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
+				printf("Got materials\n");
+			}
+
+			{
+				printf("loading double wheels 1\n");
+				ini.select("Trailer1DoubleWheels");
+				string model_file("./models/");
+				for(int i = 0; i < 2; ++i) {
+					stringstream ssX;
+					string leftX("leftX");
+					ssX<<leftX<<i;
+					leftX = ssX.str();
+					stringstream ssY;
+					string leftY("leftY");
+					ssY<<leftY<<i;
+					leftY = ssY.str();
+					first_trailer->left_wheels.push_back(new TruckPart(this
+								,	model_file + ini.get<string>("model", "double_wheel.obj")
+								,	ini.get<float>("rightS", 2.0f)
+								,	ini.get<float>("angleL", 0.0f)
+								,	ini.get<float>(leftX, 2.0f)
+								,	ini.get<float>(leftY, 2.0f)
+								,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
+								,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
+								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+								));
+					printf("loading double wheels 2\n");
+					vector <material_t*> &vis_mats = first_trailer->left_wheels.back()->get_materials();
+					printf("loading double wheels 3\n");
+					materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
+					printf("Got materials\n");
+				}
+			}
+
+			{
+				printf("loading double wheels 1\n");
+				ini.select("Trailer1DoubleWheels");
+				string model_file("./models/");
+				for(int i = 0; i < 2; ++i) {
+					stringstream ssX;
+					string rightX("rightX");
+					ssX<<rightX<<i;
+					rightX = ssX.str();
+					stringstream ssY;
+					string rightY("rightY");
+					ssY<<rightY<<i;
+					rightY = ssY.str();
+					first_trailer->right_wheels.push_back(new TruckPart(this
+								,	model_file + ini.get<string>("model", "double_wheel.obj")
+								,	ini.get<float>("rightS", 2.0f)
+								,	ini.get<float>("angleR", 0.0f)
+								,	ini.get<float>(rightX, 2.0f)
+								,	ini.get<float>(rightY, 2.0f)
+								,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
+								,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
+								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+								));
+					printf("loading double wheels 2\n");
+					vector <material_t*> &vis_mats = first_trailer->right_wheels.back()->get_materials();
+					printf("loading double wheels 3\n");
+					materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
+					printf("Got materials\n");
+				}
+			}
+		}
+
+		{
+			second_trailer = new Wehicle();
+			{
+				string model_file("./models/");
+				ini.select("Trailer2");
+				second_trailer->body = new TruckPart(this
+						,	model_file + ini.get<string>("model", "Second_trailer_no_wheels.obj")
+						,	ini.get<float>("size", 2.0f)
+						,	ini.get<float>("angle", 0.0f)
+						,	ini.get<float>("posX", 2.0f)
+						,	ini.get<float>("posY", 2.0f)
+						,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
+						,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
+						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+						);
+				vector <material_t*> &vis_mats = second_trailer->body->get_materials();
+				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
+				printf("Got materials\n");
+			}
+
+			{
+				printf("loading double wheels 1\n");
+				ini.select("Trailer2DoubleWheels");
+				string model_file("./models/");
+				for(int i = 0; i < 4; ++i) {
+					stringstream ssX;
+					string leftX("leftX");
+					ssX<<leftX<<i;
+					leftX = ssX.str();
+					stringstream ssY;
+					string leftY("leftY");
+					ssY<<leftY<<i;
+					leftY = ssY.str();
+					second_trailer->left_wheels.push_back(new TruckPart(this
+								,	model_file + ini.get<string>("model", "double_wheel.obj")
+								,	ini.get<float>("rightS", 2.0f)
+								,	ini.get<float>("angleL", 0.0f)
+								,	ini.get<float>(leftX, 2.0f)
+								,	ini.get<float>(leftY, 2.0f)
+								,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
+								,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
+								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+								));
+					printf("loading double wheels 2\n");
+					vector <material_t*> &vis_mats = second_trailer->left_wheels.back()->get_materials();
+					printf("loading double wheels 3\n");
+					materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
+					printf("Got materials\n");
+				}
+			}
+
+			{
+				printf("loading double wheels 1\n");
+				ini.select("Trailer2DoubleWheels");
+				string model_file("./models/");
+				for(int i = 0; i < 4; ++i) {
+					stringstream ssX;
+					string rightX("rightX");
+					ssX<<rightX<<i;
+					rightX = ssX.str();
+					stringstream ssY;
+					string rightY("rightY");
+					ssY<<rightY<<i;
+					rightY = ssY.str();
+					second_trailer->right_wheels.push_back(new TruckPart(this
+								,	model_file + ini.get<string>("model", "double_wheel.obj")
+								,	ini.get<float>("rightS", 2.0f)
+								,	ini.get<float>("angleR", 0.0f)
+								,	ini.get<float>(rightX, 2.0f)
+								,	ini.get<float>(rightY, 2.0f)
+								,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
+								,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
+								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+								));
+					printf("loading double wheels 2\n");
+					vector <material_t*> &vis_mats = second_trailer->right_wheels.back()->get_materials();
+					printf("loading double wheels 3\n");
+					materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
+					printf("Got materials\n");
+				}
+			}
+		}
+
+		/*--------------------------------------------------------------------------------*/
 		// {
 		// 	ini.select("TruckDoubleWheels");
 		// 	model_file = "./models/";
@@ -291,8 +461,7 @@ void world_t::draw() {
 	for (unsigned i = 0, ilen = materials.size(); i < ilen; ++i) {
 		materials[i]->set_marker(false);
 	}
-	galery->set_mv_matrix(
-		glm::mat4(1.0f));
+	galery->set_mv_matrix(glm::mat4(1.0f));
 	// glm::mat4(
 	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
@@ -303,10 +472,55 @@ void world_t::draw() {
 	// 	glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
 	// ));
 
-    truck->set_mv_matrix(glm::mat4(1.0f));
 	// truck->set_mv_matrix_to_meshes();
     //printf("mv matrix set\n");
-	
+	galery->set_mv_matrix(glm::mat4(1.0f));
+
+		//for (unsigned i = 0, len = truck.size(); i < len; ++i) {
+		//	truck[i]->set_mv_matrix(glm::mat4(1.0f));
+		//	truck[i]->set_mv_matrix_to_meshes();
+		//}
+		truck->body->set_mv_matrix(glm::mat4(1.0f));
+		truck->body->set_mv_matrix_to_meshes();
+		//printf("truck done\n");
+
+		truck->left_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
+		truck->left_steering_wheel->set_mv_matrix_to_meshes();
+		//printf("left done\n");
+		truck->right_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
+		truck->right_steering_wheel->set_mv_matrix_to_meshes();
+		//printf("right done\n");
+		for (unsigned i = 0, len = truck->left_wheels.size(); i < len; ++i) {
+			truck->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+			truck->left_wheels[i]->set_mv_matrix_to_meshes();
+		}
+		for (unsigned i = 0, len = truck->right_wheels.size(); i < len; ++i) {
+			truck->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+			truck->right_wheels[i]->set_mv_matrix_to_meshes();
+		}
+
+		first_trailer->body->set_mv_matrix(glm::mat4(1.0f));
+		first_trailer->body->set_mv_matrix_to_meshes();
+		for (unsigned i = 0, len = first_trailer->left_wheels.size(); i < len; ++i) {
+			first_trailer->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+			first_trailer->left_wheels[i]->set_mv_matrix_to_meshes();
+		}
+		for (unsigned i = 0, len = first_trailer->right_wheels.size(); i < len; ++i) {
+			first_trailer->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+			first_trailer->right_wheels[i]->set_mv_matrix_to_meshes();
+		}
+		
+		second_trailer->body->set_mv_matrix(glm::mat4(1.0f));
+		second_trailer->body->set_mv_matrix_to_meshes();
+		for (unsigned i = 0, len = second_trailer->left_wheels.size(); i < len; ++i) {
+			second_trailer->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+			second_trailer->left_wheels[i]->set_mv_matrix_to_meshes();
+		}
+		for (unsigned i = 0, len = second_trailer->right_wheels.size(); i < len; ++i) {
+			second_trailer->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+			second_trailer->right_wheels[i]->set_mv_matrix_to_meshes();
+		}
+	//printf("mv matrix set\n");
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -408,8 +622,9 @@ void world_t::draw_in_material_order(glm::mat4 V) {
 	}
 }
 
-void world_t::next_frame(direct_t keys_h, direct_t keys_v) {
-	player->move(keys_h, keys_v);
+
+void world_t::next_frame (direct_t keys_h, direct_t keys_v, direct_t height) {
+	player->move(keys_h, keys_v, height);
 }
 
 void world_t::mouse_motion(float dang_h, float dang_v) {
