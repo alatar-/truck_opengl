@@ -6,8 +6,6 @@
 
 #define MOUSE_OVERFLOW 300
 
-world_t *World = new world_t();
-
 int screen_w, screen_h,	
     m_x, m_y;
 
@@ -15,6 +13,8 @@ bool f_key_up, f_key_down,
 	 f_key_left, f_key_right,
 	 f_key_lower, f_key_higher,
      f_key_w, f_key_s;
+
+world_t *World = new world_t();
 
 void key_down(int c, int x, int y) {
 	switch (c) {
@@ -39,7 +39,7 @@ void key_down(int c, int x, int y) {
 	}
 }
 
-void key_down(unsigned char c, int x, int y) {
+void keyDown(unsigned char c, int x, int y) {
     switch (c) {
         case 'w':
             f_key_w = true;
@@ -74,7 +74,7 @@ void key_up (int c, int x, int y) {
 	}
 }
 
-void key_up(unsigned char c, int x, int y) {
+void keyUp(unsigned char c, int x, int y) {
     switch (c) {
         case 'w':
             f_key_w = false;
@@ -120,7 +120,8 @@ void next_frame() {
 	World->next_frame(
 		(direct_t)(BACK * f_key_right + FORW * f_key_left)
 	,	(direct_t)(BACK * f_key_down + FORW * f_key_up)
-	,	(direct_t)(BACK * f_key_lower + FORW * f_key_higher)
+	,	(direct_t)(BACK * f_key_lower + FORW * f_key_higher),
+		(direct_t)(BACK * f_key_s    + FORW * f_key_w)
 	);
 	glutPostRedisplay();
 }
@@ -159,6 +160,9 @@ void gl_init(int *argc, char **argv) {
 	
 	glutDisplayFunc(display_frame);
 	glutIdleFunc(next_frame);
+	glutKeyboardFunc(keyDown);
+	glutKeyboardUpFunc(keyUp);
+
 	glutSpecialUpFunc(key_up);
 	glutSpecialFunc(key_down);
 	glutPassiveMotionFunc(mouse_motion);

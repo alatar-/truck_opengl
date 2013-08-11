@@ -38,6 +38,9 @@ TruckPart::TruckPart(world_t *in_world,
 	
 	model = new model_t();//new anim_mesh_model_t();
 	model->load(in_path);
+
+	last_time = glutGet(GLUT_ELAPSED_TIME);
+	speed = 20 / 1000;
 }
 
 TruckPart::~TruckPart() {
@@ -91,4 +94,29 @@ float TruckPart::get_size() {
 void TruckPart::set_pos(float x, float y) {
 	pos.x = x;
 	pos.y = y;
+}
+
+void TruckPart::move (direct_t X) {
+	printf("move in truckpart %lf\n", pos.x);
+	int now = glutGet(GLUT_ELAPSED_TIME)
+		,	dt = now - last_time;
+	last_time = now;
+	printf("%d %d %d + %lf", speed, dt, X, pos.x);
+	// pos = vertex_2d(pos.x + (speed * dt) * X * sin(ang_h), pos.y);
+	pos.x++;
+	printf("move in truckpart zmieniona %lf\n", pos.x);
+	// float dspeed = speed * dt
+	// 	,	sn = sin(ang_h)
+	// 	,	cs = cos(ang_h);
+	// //printf("height: %d, position: %f\n", height, pos.z);
+	// vertex_2d itd(pos.x + dspeed * (keys_v  * sn + keys_h * cs)
+	// 	,	pos.y + dspeed * (keys_v * cs - keys_h * sn) 
+	// 	// ,	pos.z + dspeed * height
+	// 	);
+	// pos = itd;
+	// if (world->test_colls_with_galery(pos, itd, size, height)) {
+	// 	world->lock();
+	// 			pos = itd;
+	// 	world->unlock();
+	// }
 }

@@ -623,8 +623,9 @@ void world_t::draw_in_material_order(glm::mat4 V) {
 }
 
 
-void world_t::next_frame (direct_t keys_h, direct_t keys_v, direct_t height) {
+void world_t::next_frame (direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle) {
 	player->move(keys_h, keys_v, height);
+	truck->move(vehicle);
 }
 
 void world_t::mouse_motion(float dang_h, float dang_v) {

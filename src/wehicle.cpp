@@ -28,3 +28,7 @@ Truck::~Truck() {
 	delete left_steering_wheel;
 	delete right_steering_wheel;
 }
+
+void Truck::move(direct_t X) {
+    this->body->move(X);
+}

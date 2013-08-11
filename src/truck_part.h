@@ -18,7 +18,8 @@ private:
 	vertex_2d pos;
 	world_t *world;
 	model_t *model;
-	
+	int last_time;
+	float speed;
 	glm::mat4 get_model_matrix();
 public:
 	pthread_t thread;
@@ -42,6 +43,8 @@ public:
 	vector <material_t*> &get_materials() {
 		return model->get_materials();
 	}
+
+	void move (direct_t X);
 
 };
 

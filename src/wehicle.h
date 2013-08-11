@@ -24,5 +24,7 @@ public:
 		printf("Truck made\n");
 	}
 	~Truck();
+
+	void move(direct_t X);
 };
 #endif
