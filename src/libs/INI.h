@@ -80,7 +80,7 @@ public:
    typedef typename std::pair<section_t, keys_t*> sectionspair_t;
 
    ///Settings & Tweaks
-   static const int BUFFER_SIZE = 32;
+   static const int BUFFER_SIZE = 1024;
 
    ///Data members
    keys_t* current;
