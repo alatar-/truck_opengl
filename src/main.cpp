@@ -13,7 +13,7 @@ int screen_w, screen_h,
 
 bool f_key_up, f_key_down,
 	 f_key_left, f_key_right,
-	 f_key_lower, f_key_higher;
+	 f_key_lower, f_key_higher,
      f_key_w, f_key_s;
 
 void key_down(int c, int x, int y) {

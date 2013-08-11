@@ -27,6 +27,7 @@ class world_t {
 private: 
 	model_t *galery;
 	Truck* truck;
+    Wehicle* first_trailer;
 	Wehicle* second_trailer;
 	//vector <TruckPart*> truck;
 	//model_t *truck;
