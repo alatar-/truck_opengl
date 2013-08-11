@@ -5,8 +5,6 @@
 
 class Wehicle {
 public:
-	TruckPart* left_steering_wheel;
-	TruckPart* right_steering_wheel;
 	vector <TruckPart*> left_wheels;
 	vector <TruckPart*> right_wheels;
 	TruckPart* body;
@@ -18,5 +16,15 @@ public:
 	void apply_mv();
 
 
+};
+
+class Truck : public Wehicle {
+public:
+	TruckPart* left_steering_wheel;
+	TruckPart* right_steering_wheel;
+	Truck() : Wehicle() {
+		printf("Truck made\n");
+	}
+	~Truck();
 };
 #endif

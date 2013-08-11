@@ -19,9 +19,12 @@ Wehicle::Wehicle() {
 }
 
 Wehicle::~Wehicle() {
-	delete left_steering_wheel;
-	delete right_steering_wheel;
 	left_wheels.clear();
 	right_wheels.clear();
 	delete body;
+}
+
+Truck::~Truck() {
+	delete left_steering_wheel;
+	delete right_steering_wheel;
 }
