@@ -1,4 +1,4 @@
-LIBS=-lglut -lGLEW -lMagick++ -lassimp -lGL -pthread
+LIBS=-lglut -lGLEW -lMagick++ -lassimp -lGL
 OPTS=-I/usr/include/ImageMagick -I/usr/local/include/assimp `Magick++-config --cxxflags --cppflags --ldflags --libs`
 CC=g++
 CCFLAGS=-g -Wall

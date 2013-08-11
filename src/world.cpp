@@ -439,8 +439,6 @@ bool world_t::load (string in_config_file, unsigned in_screen_w, unsigned in_scr
 	}
 	
 	
-	pthread_mutex_init(&mutex_position, NULL);
-	
 	glGenTextures(1, &shadow_map);
 	glBindTexture(GL_TEXTURE_2D, shadow_map);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadow_map_size, shadow_map_size, 0,
@@ -456,8 +454,6 @@ bool world_t::load (string in_config_file, unsigned in_screen_w, unsigned in_scr
 world_t::~world_t() {	
 	delete galery;
 	delete player;
-	
-	pthread_mutex_destroy(&mutex_position);
 }
 
 void world_t::draw() {
@@ -473,7 +469,6 @@ void world_t::draw() {
 	int x;
 	galery->set_mv_matrix(glm::mat4(1.0f));
 
-	lock();
 		//for (unsigned i = 0, len = truck.size(); i < len; ++i) {
 		//	truck[i]->set_mv_matrix(glm::mat4(1.0f));
 		//	truck[i]->set_mv_matrix_to_meshes();
@@ -518,7 +513,6 @@ void world_t::draw() {
 			second_trailer->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
 			second_trailer->right_wheels[i]->set_mv_matrix_to_meshes();
 		}
-	unlock();
 	//printf("mv matrix set\n");
 	
 	
@@ -622,13 +616,6 @@ void world_t::draw_in_material_order (glm::mat4 V) {
 	}
 }
 
-void world_t::lock() {
-	pthread_mutex_lock(&mutex_position);
-}
-
-void world_t::unlock() {
-	pthread_mutex_unlock(&mutex_position);
-}
 
 void world_t::next_frame (direct_t keys_h, direct_t keys_v, direct_t height) {
 	player->move(keys_h, keys_v, height);
