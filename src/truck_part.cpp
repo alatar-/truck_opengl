@@ -47,19 +47,6 @@ TruckPart::~TruckPart() {
 	delete model;
 }
 
-void TruckPart::fire() {
-	pthread_attr_t attr;
-	
-	pthread_attr_init(&attr);
-	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-	
-	pthread_attr_destroy(&attr);
-}
-
-int TruckPart::join() {
-	return pthread_join(thread, NULL);
-}
-
 void TruckPart::draw (bool use_mv) {
 	model->draw(use_mv);
 }

@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <string>
-#include <pthread.h>
 #include <algorithm>
 
 #include "shared.h"
@@ -29,8 +28,6 @@ private:
 	Truck* truck;
     Wehicle* first_trailer;
 	Wehicle* second_trailer;
-	//vector <TruckPart*> truck;
-	//model_t *truck;
 	player_t *player;
 	vector <material_t*> materials;
 	glm::mat4 P;
