@@ -40,7 +40,7 @@ TruckPart::TruckPart(world_t *in_world,
 	model->load(in_path);
 
 	last_time = glutGet(GLUT_ELAPSED_TIME);
-	speed = 20 / 1000;
+	speed = 20.0 / 1000;
 }
 
 TruckPart::~TruckPart() {
@@ -97,14 +97,15 @@ void TruckPart::set_pos(float x, float y) {
 }
 
 void TruckPart::move (direct_t X) {
-	printf("move in truckpart %lf\n", pos.x);
-	int now = glutGet(GLUT_ELAPSED_TIME)
-		,	dt = now - last_time;
+	// printf("move in truckpart %lf\n", pos.x);
+	int now = glutGet(GLUT_ELAPSED_TIME);
+	int dt = now - last_time;
+	// printf("%d  - %d  = %d\n", now, last_time, dt);
 	last_time = now;
-	printf("%d %d %d + %lf", speed, dt, X, pos.x);
-	// pos = vertex_2d(pos.x + (speed * dt) * X * sin(ang_h), pos.y);
-	pos.x++;
-	printf("move in truckpart zmieniona %lf\n", pos.x);
+	// printf("%lf %d %d + %lf", speed, dt, X, pos.x);
+	pos = vertex_2d(pos.x, pos.y - (speed * dt) * X);
+	// pos.x++;
+	// printf("move in truckpart zmieniona %lf\n", pos.x);
 	// float dspeed = speed * dt
 	// 	,	sn = sin(ang_h)
 	// 	,	cs = cos(ang_h);
