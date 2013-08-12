@@ -116,14 +116,16 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		}
 
 		{
+			ini.select("Truck");
+			float posX = ini.get<float>("posX", 0.0f), posY = ini.get<float>("posY", 0.0f); 
 			ini.select("TruckSteeringWheels");
 			string model_file("./models/");
 			truck->left_steering_wheel = new TruckPart(this
 						,	model_file + ini.get<string>("model", "single_wheel.obj")
 						,	ini.get<float>("leftS", 2.0f)
 						,	ini.get<float>("angleL", 0.0f)
-						,	ini.get<float>("leftX", 2.0f)
-						,	ini.get<float>("leftY", 2.0f)
+						,	posX + ini.get<float>("leftX", 2.0f)
+						,	posY + ini.get<float>("leftY", 2.0f)
 						,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
 						,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
@@ -134,14 +136,16 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		}
 
 		{
+			ini.select("Truck");
+			float posX = ini.get<float>("posX", 0.0f), posY = ini.get<float>("posY", 0.0f); 
 			ini.select("TruckSteeringWheels");
 			string model_file("./models/");
 			truck->right_steering_wheel = new TruckPart(this
 						,	model_file + ini.get<string>("model", "single_wheel.obj")
 						,	ini.get<float>("rightS", 2.0f)
 						,	ini.get<float>("angleR", 0.0f)
-						,	ini.get<float>("rightX", 2.0f)
-						,	ini.get<float>("rightY", 2.0f)
+						,	posX + ini.get<float>("rightX", 2.0f)
+						,	posY + ini.get<float>("rightY", 2.0f)
 						,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
 						,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
@@ -152,6 +156,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		}
 
 		{
+			ini.select("Truck");
+			float posX = ini.get<float>("posX", 0.0f), posY = ini.get<float>("posY", 0.0f); 
 			printf("loading double wheels 1\n");
 			ini.select("TruckDoubleWheels");
 			string model_file("./models/");
@@ -168,8 +174,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 							,	model_file + ini.get<string>("model", "double_wheel.obj")
 							,	ini.get<float>("rightS", 2.0f)
 							,	ini.get<float>("angleL", 0.0f)
-							,	ini.get<float>(leftX, 2.0f)
-							,	ini.get<float>(leftY, 2.0f)
+							,	posX + ini.get<float>(leftX, 2.0f)
+							,	posY + ini.get<float>(leftY, 2.0f)
 							,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
 							,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 							,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
@@ -183,6 +189,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		}
 
 		{
+			ini.select("Truck");
+			float posX = ini.get<float>("posX", 0.0f), posY = ini.get<float>("posY", 0.0f); 
 			printf("loading double wheels 1\n");
 			ini.select("TruckDoubleWheels");
 			string model_file("./models/");
@@ -199,8 +207,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 							,	model_file + ini.get<string>("model", "double_wheel.obj")
 							,	ini.get<float>("rightS", 2.0f)
 							,	ini.get<float>("angleR", 0.0f)
-							,	ini.get<float>(rightX, 2.0f)
-							,	ini.get<float>(rightY, 2.0f)
+							,	posX + ini.get<float>(rightX, 2.0f)
+							,	posY + ini.get<float>(rightY, 2.0f)
 							,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
 							,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 							,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
@@ -236,6 +244,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			}
 
 			{
+				ini.select("Trailer1");
+				float posX = ini.get<float>("posX", 0.0f), posY = ini.get<float>("posY", 0.0f); 
 				printf("loading double wheels 1\n");
 				ini.select("Trailer1DoubleWheels");
 				string model_file("./models/");
@@ -252,8 +262,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 								,	model_file + ini.get<string>("model", "double_wheel.obj")
 								,	ini.get<float>("rightS", 2.0f)
 								,	ini.get<float>("angleL", 0.0f)
-								,	ini.get<float>(leftX, 2.0f)
-								,	ini.get<float>(leftY, 2.0f)
+								,	posX + ini.get<float>(leftX, 2.0f)
+								,	posY + ini.get<float>(leftY, 2.0f)
 								,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
 								,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
@@ -267,6 +277,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			}
 
 			{
+				ini.select("Trailer1");
+				float posX = ini.get<float>("posX", 0.0f), posY = ini.get<float>("posY", 0.0f); 
 				printf("loading double wheels 1\n");
 				ini.select("Trailer1DoubleWheels");
 				string model_file("./models/");
@@ -283,8 +295,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 								,	model_file + ini.get<string>("model", "double_wheel.obj")
 								,	ini.get<float>("rightS", 2.0f)
 								,	ini.get<float>("angleR", 0.0f)
-								,	ini.get<float>(rightX, 2.0f)
-								,	ini.get<float>(rightY, 2.0f)
+								,	posX + ini.get<float>(rightX, 2.0f)
+								,	posY + ini.get<float>(rightY, 2.0f)
 								,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
 								,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
@@ -319,6 +331,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			}
 
 			{
+				ini.select("Trailer2");
+				float posX = ini.get<float>("posX", 0.0f), posY = ini.get<float>("posY", 0.0f); 
 				printf("loading double wheels 1\n");
 				ini.select("Trailer2DoubleWheels");
 				string model_file("./models/");
@@ -335,8 +349,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 								,	model_file + ini.get<string>("model", "double_wheel.obj")
 								,	ini.get<float>("rightS", 2.0f)
 								,	ini.get<float>("angleL", 0.0f)
-								,	ini.get<float>(leftX, 2.0f)
-								,	ini.get<float>(leftY, 2.0f)
+								,	posX + ini.get<float>(leftX, 2.0f)
+								,	posY + ini.get<float>(leftY, 2.0f)
 								,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
 								,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
@@ -350,6 +364,9 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			}
 
 			{
+				ini.select("Trailer2");
+				float posX = ini.get<float>("posX", 0.0f), posY = ini.get<float>("posY", 0.0f); 
+				printf("trailer2X: %f trailer2Y: %f\n", posX, posY);
 				printf("loading double wheels 1\n");
 				ini.select("Trailer2DoubleWheels");
 				string model_file("./models/");
@@ -366,8 +383,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 								,	model_file + ini.get<string>("model", "double_wheel.obj")
 								,	ini.get<float>("rightS", 2.0f)
 								,	ini.get<float>("angleR", 0.0f)
-								,	ini.get<float>(rightX, 2.0f)
-								,	ini.get<float>(rightY, 2.0f)
+								,	posX + ini.get<float>(rightX, 2.0f)
+								,	posY + ini.get<float>(rightY, 2.0f)
 								,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
 								,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
