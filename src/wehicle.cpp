@@ -30,5 +30,5 @@ Truck::~Truck() {
 }
 
 void Truck::move(direct_t X) {
-    //this->body->move(X);
+    this->body->move(X);
 }
