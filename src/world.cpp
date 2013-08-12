@@ -489,55 +489,26 @@ void world_t::draw() {
 	// 	glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
 	// ));
 
-	// truck->set_mv_matrix_to_meshes();
     //printf("mv matrix set\n");
 	galery->set_mv_matrix(glm::mat4(1.0f));
 
-		//for (unsigned i = 0, len = truck.size(); i < len; ++i) {
-		//	truck[i]->set_mv_matrix(glm::mat4(1.0f));
-		//	truck[i]->set_mv_matrix_to_meshes();
-		//}
-		truck->body->set_mv_matrix(glm::mat4(1.0f));
-		truck->body->set_mv_matrix_to_meshes();
-		//printf("truck done\n");
-
-		truck->left_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
-		truck->left_steering_wheel->set_mv_matrix_to_meshes();
-		//printf("left done\n");
-		truck->right_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
-		truck->right_steering_wheel->set_mv_matrix_to_meshes();
-		//printf("right done\n");
-		for (unsigned i = 0, len = truck->left_wheels.size(); i < len; ++i) {
-			truck->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
-			truck->left_wheels[i]->set_mv_matrix_to_meshes();
-		}
-		for (unsigned i = 0, len = truck->right_wheels.size(); i < len; ++i) {
-			truck->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
-			truck->right_wheels[i]->set_mv_matrix_to_meshes();
-		}
-
-		first_trailer->body->set_mv_matrix(glm::mat4(1.0f));
-		first_trailer->body->set_mv_matrix_to_meshes();
-		for (unsigned i = 0, len = first_trailer->left_wheels.size(); i < len; ++i) {
-			first_trailer->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
-			first_trailer->left_wheels[i]->set_mv_matrix_to_meshes();
-		}
-		for (unsigned i = 0, len = first_trailer->right_wheels.size(); i < len; ++i) {
-			first_trailer->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
-			first_trailer->right_wheels[i]->set_mv_matrix_to_meshes();
-		}
-		
-		second_trailer->body->set_mv_matrix(glm::mat4(1.0f));
-		second_trailer->body->set_mv_matrix_to_meshes();
-		for (unsigned i = 0, len = second_trailer->left_wheels.size(); i < len; ++i) {
-			second_trailer->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
-			second_trailer->left_wheels[i]->set_mv_matrix_to_meshes();
-		}
-		for (unsigned i = 0, len = second_trailer->right_wheels.size(); i < len; ++i) {
-			second_trailer->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
-			second_trailer->right_wheels[i]->set_mv_matrix_to_meshes();
-		}
-	//printf("mv matrix set\n");
+	truck->body->set_mv_matrix(glm::mat4(1.0f));
+	truck->left_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
+	truck->right_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
+	for (unsigned i = 0, len = truck->left_wheels.size(); i < len; ++i) {
+		truck->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+		truck->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+	}
+	first_trailer->body->set_mv_matrix(glm::mat4(1.0f));
+	for (unsigned i = 0, len = first_trailer->left_wheels.size(); i < len; ++i) {
+		first_trailer->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+		first_trailer->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+	}
+	second_trailer->body->set_mv_matrix(glm::mat4(1.0f));
+	for (unsigned i = 0, len = second_trailer->left_wheels.size(); i < len; ++i) {
+		second_trailer->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+		second_trailer->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
+	}
 	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);

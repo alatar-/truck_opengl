@@ -28,7 +28,6 @@ public:
 	
 	void set_mv_matrix (glm::mat4 V);
 	void apply_mv();
-	void set_mv_matrix_to_meshes();
 	
 	vertex_2d get_pos();
 	void set_pos(float x, float y);

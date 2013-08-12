@@ -53,14 +53,11 @@ void TruckPart::draw (bool use_mv) {
 
 void TruckPart::set_mv_matrix (glm::mat4 V) {
 	MV = V * get_model_matrix();
+    model->set_mv_matrix(MV);
 }
 
 void TruckPart::apply_mv(){
 	glLoadMatrixf(glm::value_ptr(MV));
-}
-
-void TruckPart::set_mv_matrix_to_meshes() {
-	model->set_mv_matrix(MV);
 }
 
 glm::mat4 TruckPart::get_model_matrix() {
