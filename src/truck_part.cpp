@@ -96,5 +96,4 @@ void TruckPart::move (direct_t X) {
 void TruckPart::rotate (direct_t X) {
 	float angle = 20;
 	in_transform *= glm::rotate(glm::mat4(1.0f), X * angle, glm::vec3(1.0f,0.0f,0.0f));
-
 }

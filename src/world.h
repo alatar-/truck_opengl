@@ -17,7 +17,6 @@ class TruckPart;
 #include "truck_part.h"
 
 class Vehicle;
-class Truck;
 #include "vehicle.h"
 
 using namespace std;
@@ -25,7 +24,7 @@ using namespace std;
 class world_t {
 private: 
 	model_t *galery;
-	Truck* truck;
+	Vehicle* truck;
     Vehicle* first_trailer;
 	Vehicle* second_trailer;
 	player_t *player;
