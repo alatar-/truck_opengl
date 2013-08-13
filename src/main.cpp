@@ -12,7 +12,8 @@ int screen_w, screen_h,
 bool f_key_up, f_key_down,
 	 f_key_left, f_key_right,
 	 f_key_lower, f_key_higher,
-     f_key_w, f_key_s;
+     f_key_w, f_key_s,
+     f_key_a, f_key_d;
 
 world_t *World = new world_t();
 
@@ -46,6 +47,12 @@ void keyDown(unsigned char c, int x, int y) {
             break;
         case 's':
             f_key_s = true;
+            break;
+        case 'a':
+            f_key_a = true;
+            break;
+        case 'd':
+            f_key_d = true;
             break;
     }
 }
@@ -81,6 +88,12 @@ void keyUp(unsigned char c, int x, int y) {
             break;
         case 's':
             f_key_s = false;
+            break;
+        case 'a':
+            f_key_a = false;
+            break;
+        case 'd':
+            f_key_d = false;
             break;
     }
 }
@@ -120,8 +133,9 @@ void next_frame() {
 	World->next_frame(
 		(direct_t)(BACK * f_key_right + FORW * f_key_left)
 	,	(direct_t)(BACK * f_key_down + FORW * f_key_up)
-	,	(direct_t)(BACK * f_key_lower + FORW * f_key_higher),
-		(direct_t)(BACK * f_key_s    + FORW * f_key_w)
+	,	(direct_t)(BACK * f_key_lower + FORW * f_key_higher)
+	,	(direct_t)(BACK * f_key_s    + FORW * f_key_w)
+	,	(direct_t)(BACK * f_key_a + FORW * f_key_d)
 	);
 	glutPostRedisplay();
 }

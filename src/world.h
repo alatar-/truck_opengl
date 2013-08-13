@@ -16,9 +16,9 @@ class player_t;
 class TruckPart;
 #include "truck_part.h"
 
-class Wehicle;
+class Vehicle;
 class Truck;
-#include "wehicle.h"
+#include "vehicle.h"
 
 using namespace std;
 
@@ -26,8 +26,8 @@ class world_t {
 private: 
 	model_t *galery;
 	Truck* truck;
-    Wehicle* first_trailer;
-	Wehicle* second_trailer;
+    Vehicle* first_trailer;
+	Vehicle* second_trailer;
 	player_t *player;
 	vector <material_t*> materials;
 	glm::mat4 P;
@@ -45,7 +45,7 @@ public:
 	
 	bool load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h);
 	void draw();
-	void next_frame (direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle);
+	void next_frame (direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn);
 	
 	void mouse_motion(float dang_h, float dang_v);
 

@@ -5,7 +5,7 @@
 #include <cstring>
 #include <sstream>
 #include <string>
-#include "wehicle.h"
+#include "vehicle.h"
 
 glm::vec3 str_to_vec3(const string &in_s) {
 	float x, y,	z;
@@ -223,7 +223,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 
 
 		{
-			first_trailer = new Wehicle();
+			first_trailer = new Vehicle();
 			{
 				string model_file("./models/");
 				ini.select("Trailer1");
@@ -311,7 +311,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		}
 
 		{
-			second_trailer = new Wehicle();
+			second_trailer = new Vehicle();
 			{
 				string model_file("./models/");
 				ini.select("Trailer2");
@@ -611,7 +611,7 @@ void world_t::draw_in_material_order(glm::mat4 V) {
 }
 
 
-void world_t::next_frame (direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle) {
+void world_t::next_frame (direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn) {
 	player->move(keys_h, keys_v, height);
 	truck->move(vehicle);
 }
