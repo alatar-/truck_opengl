@@ -40,7 +40,7 @@ TruckPart::TruckPart(world_t *in_world,
 	model->load(in_path);
 
 	last_time = glutGet(GLUT_ELAPSED_TIME);
-	speed = 5.0 / 1000;
+	speed = 5;
 }
 
 TruckPart::~TruckPart() {
@@ -81,8 +81,20 @@ void TruckPart::set_pos(float x, float y) {
 }
 
 void TruckPart::move (direct_t X) {
+	// if(speed <= 60)
+	// {
+	// 	speed ++;
+	// 	printf("speed checking, X = %d, speed = %d\n", X, speed);
+	// }
+	float fl_speed = (float) speed/1000;
     int now = glutGet(GLUT_ELAPSED_TIME); 
 	int dt = now - last_time;
 	last_time = now;
-	set_pos(pos.x, pos.y - (speed * dt) * X);
+	set_pos(pos.x, pos.y - (fl_speed * dt) * X);
+}
+
+void TruckPart::rotate (direct_t X) {
+	float angle = 20;
+	in_transform *= glm::rotate(glm::mat4(1.0f), X * angle, glm::vec3(1.0f,0.0f,0.0f));
+
 }

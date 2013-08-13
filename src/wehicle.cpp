@@ -5,12 +5,15 @@ Wehicle::Wehicle() {
 }
 
 void Wehicle::move(direct_t X) {
-    if (this->following_wehicle) {
-        this->following_wehicle->move(X);
-    }
-    for (int i = 0; i < this->left_wheels.size(); ++i) {
+    this->body->move(X);
+    for (unsigned i = 0; i < this->left_wheels.size(); ++i) {
         this->left_wheels[i]->move(X);
         this->right_wheels[i]->move(X);
+        this->left_wheels[i]->rotate((direct_t)(-X));
+        this->right_wheels[i]->rotate(X);
+    }
+    if (this->following_wehicle) {
+        this->following_wehicle->move(X);
     }
 }
 
@@ -26,8 +29,10 @@ Truck::~Truck() {
 }
 
 void Truck::move(direct_t X) {
-    this->body->move(X);
     this->left_steering_wheel->move(X);
     this->right_steering_wheel->move(X);
+    this->left_steering_wheel->rotate((direct_t)(-X));
+    this->right_steering_wheel->rotate(X);
+
     Wehicle::move(X);
 }

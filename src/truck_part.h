@@ -18,7 +18,7 @@ private:
 	world_t *world;
 	model_t *model;
 	int last_time;
-	float speed;
+	int speed;
 	glm::mat4 get_model_matrix();
 public:
 	TruckPart (world_t *in_world, string in_path, float in_size, float ang_in, float x, float y, glm::vec3 in_T, glm::vec3 in_R, glm::vec3 in_S);
@@ -38,6 +38,7 @@ public:
 	}
 
 	void move (direct_t X);
+	void rotate (direct_t X);
 
 };
 
