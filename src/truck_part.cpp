@@ -4,13 +4,15 @@
 TruckPart::TruckPart(world_t *in_world, 
 					string in_path, 
 					float in_size, 
-					float ang_in, 
 					float x, float y, 
 					glm::vec3 in_T, 
 					glm::vec3 in_R, 
 					glm::vec3 in_S): MV(1.0f) {
 	set_pos(x,y);
-	ang_h = ang_in;
+	ang_forward = 0;
+	ang_follow = 0;
+	ang_bend = 0;
+	
 	in_transform = glm::translate(glm::mat4(1.0f), in_T);
 // 	printf("\nvisitor_t::constructor> T\n");
 // 	print_mat4(in_transform);
@@ -61,10 +63,11 @@ void TruckPart::apply_mv(){
 }
 
 glm::mat4 TruckPart::get_model_matrix() {
+	glm::mat4 R_forward = glm::rotate(glm::mat4(1.0f), ang_forward, glm::vec3(1.0f,0.0f,0.0f));
+	glm::mat4 R_bend = glm::rotate(glm::mat4(1.0f), ang_bend, glm::vec3(0.0f,1.0f,0.0f));
+	glm::mat4 R_follow = glm::rotate(glm::mat4(1.0f), ang_follow, glm::vec3(0.0f,1.0f,0.0f));
 	glm::mat4 M = glm::translate(glm::mat4(1.0f), glm::vec3(pos.x, 0.0f, pos.y));
-// 	M = glm::rotate(M, (float)(PI / 2), glm::vec3(0.0f, 1.0f, 0.0f));
-	M = glm::rotate(M, ang_h, glm::vec3(0.0f,1.0f,0.0f));
-	return M * in_transform;
+	return R_forward * R_bend * in_transform * R_follow * M;
 }
 
 vertex_2d TruckPart::get_pos() {
@@ -80,20 +83,12 @@ void TruckPart::set_pos(float x, float y) {
 	pos.y = y;
 }
 
-void TruckPart::move (direct_t X) {
-	// if(speed <= 60)
-	// {
-	// 	speed ++;
-	// 	printf("speed checking, X = %d, speed = %d\n", X, speed);
-	// }
-	float fl_speed = (float) speed/1000;
-    int now = glutGet(GLUT_ELAPSED_TIME); 
-	int dt = now - last_time;
-	last_time = now;
-	set_pos(pos.x, pos.y - (fl_speed * dt) * X);
+void TruckPart::move (float x, float y, float ang, float ds) {
+	set_pos(x, y);
+	ang_forward = fmod(ang_forward + ds / size, 2 * PI);
+	ang_follow = ang;
 }
 
-void TruckPart::rotate (direct_t X) {
-	float angle = 20;
-	in_transform *= glm::rotate(glm::mat4(1.0f), X * angle, glm::vec3(1.0f,0.0f,0.0f));
+void TruckPart::rotate (float in_ang_bend) {
+	ang_bend = in_ang_bend;
 }
