@@ -1,62 +1,46 @@
-#include "player.h"
+#include "camera.h"
 #include <math.h>
 
 #include "shared.h"
 
-player_t::player_t (world_t *in_world, float in_pos_x, float in_pos_y, float in_ang_h, float in_height, float in_speed, float in_size) : pos(in_pos_x, in_pos_y, in_height) {
-	world = in_world;
-	
-	ang_h = in_ang_h;
-	ang_v = 0;
-	speed = in_speed / 1000;
-	size = in_size;
-	
-	height = in_height;
-	last_time = glutGet(GLUT_ELAPSED_TIME);
+camera::camera(float position_x, float position_y, float position_z, float angle_horizontal, float speed) : position(position_x, position_y, position_z) {
+	this->angle_horizontal = angle_horizontal;
+	this->angle_vertical = 0;
+
+    this->speed = speed / 1000;
+	this->last_time = glutGet(GLUT_ELAPSED_TIME);
 }
 
-void player_t::mouse_motion (float dang_h, float dang_v) {
-	ang_h -= dang_h;
-	ang_v -= dang_v;
-	if (ang_v < -PI / 2) {
-		ang_v = -PI / 2;
-	} else if (ang_v > PI / 2) {
-		ang_v = PI / 2;
+void camera::mouse_motion(float angle_horizontal_delta, float angle_vertical_delta) {
+	angle_horizontal -= angle_horizontal_delta;
+	angle_vertical -= angle_vertical_delta;
+	if (angle_vertical < -PI / 2) {
+		angle_vertical = -PI / 2;
+	} else if (angle_vertical > PI / 2) {
+	   angle_vertical = PI / 2;
 	}
 }
 
-void player_t::move (direct_t keys_h, direct_t keys_v, direct_t height) {
-	int now = glutGet(GLUT_ELAPSED_TIME)
-		,	dt = now - last_time;
-	last_time = now;
-	float dspeed = speed * dt
-		,	sn = sin(ang_h)
-		,	cs = cos(ang_h);
-	//printf("height: %d, position: %f\n", height, pos.z);
-	vertex_3d itd(pos.x + dspeed * (keys_v  * sn + keys_h * cs)
-		,	pos.y + dspeed * (keys_v * cs - keys_h * sn) 
-		,	pos.z + dspeed * height
-		);
-	pos = itd;
-	// if (world->test_colls_with_galery(pos, itd, size, height)) {
-	// 	world->lock();
-	// 			pos = itd;
-	// 	world->unlock();
-	// }
+void camera::move(direct_t right_left, direct_t front_back, direct_t up_down) {
+	int time_now = glutGet(GLUT_ELAPSED_TIME);
+    int time_delta = time_now - time_last;
+	time_last = time_now;
+
+	float speed_delta = speed * time_delta;
+	float sinus = sin(angle_horizontal);
+    float cosinus = cos(angle_horizontal);
+
+	position = vertex_3d(
+        position.x + speed_delta * (front_back  * sinus + right_left * cosinus),
+        position.y + speed_delta * (front_back * cosinus - right_left * sinus),
+        position.z + speed_delta * up_down
+    );
 }
 
-glm::mat4 player_t::get_view_matrix() {
+glm::mat4 camera::get_view_matrix() {
 	return glm::lookAt(
-		glm::vec3(pos.x, pos.z, pos.y)
-	,	glm::vec3(pos.x + 10 * sin(ang_h), pos.z + 10 * sin(ang_v), pos.y + 10 * cos(ang_h))
-	,	glm::vec3(0.0f, 1.0f, 0.0f)
+		glm::vec3(position.x, position.z, position.y),
+		glm::vec3(position.x + 10 * sin(angle_horizontal), position.z + 10 * sin(angle_vertical), position.y + 10 * cos(angle_horizontal)),
+		glm::vec3(0.0f, 1.0f, 0.0f)
 	);
-}
-
-vertex_2d player_t::get_pos() {
-	return pos;
-}
-
-float player_t::get_size() {
-	return size;
 }

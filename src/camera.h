@@ -1,5 +1,5 @@
-#ifndef _INCLUDE_PLAYER_H
-#define _INCLUDE_PLAYER_H
+#ifndef CAMERA_H
+#define CAMERA_H
 
 #include "shared.h"
 #include "vertex.h"
@@ -7,23 +7,16 @@
 class world_t;
 #include "world.h"
 
-class player_t {
+class camera {
 private:
-	vertex_3d pos;
-	float ang_h
-		,	ang_v
-		,	height
-		,	speed
-		,	size;
-	int last_time;
-	world_t *world;
+	vertex_3d position;
+	float angle_horizontal, angle_vertical;
+    float speed,
+	int time_last;
 public:
-	player_t (world_t *world, float in_pos_x, float in_pos_y, float in_ang_h, float in_height, float in_speed, float in_size);
-	void mouse_motion (float dang_h, float dang_v);
-	void move (direct_t keys_h, direct_t keys_v, direct_t height);
-	vertex_2d get_pos();
-	float get_size();
-	
+    camera(float position_x, float position_y, float position_z, float angle_horizontal, float speed);
+    void mouse_motion(float angle_horizontal_delta, float angle_vertical_delta);
+	void move(direct_t right_left, direct_t front_back, direct_t up_down);
 	glm::mat4 get_view_matrix();
 };
 

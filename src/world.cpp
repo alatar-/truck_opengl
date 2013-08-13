@@ -56,15 +56,13 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 	}
 	
 	{
-		ini.select("Player");
-		player = new player_t(
-			this
-		,	ini.get<float>("posX", 0.0f)
-		,	ini.get<float>("posZ", 0.0f)
-		,	ini.get<float>("angX", 0.0f)
-		,	ini.get<float>("height", 5.0f)
-		,	ini.get<float>("speed", 20.0f)
-		,	ini.get<float>("size", 2.0f)
+		ini.select("Camera");
+		camera = new camera(
+			ini.get<float>("posX", 0.0f),
+			ini.get<float>("posY", 0.0f),
+			ini.get<float>("posZ", 5.0f),
+            ini.get<float>("angX", 0.0f),
+			ini.get<float>("speed", 20.0f)
 		);
 	}
 	
@@ -455,11 +453,11 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 
 world_t::~world_t() {	
 	delete galery;
-	delete player;
+	delete camera;
 }
 
 void world_t::draw() {
-	glm::mat4 V = player->get_view_matrix();
+	glm::mat4 V = camera->get_view_matrix();
 	
 	/**
 	 * Recalculate models
@@ -602,7 +600,7 @@ void world_t::draw_in_material_order(glm::mat4 V) {
 
 
 void world_t::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct_t cam_up_down, direct_t veh_front_back, direct_t veh_right_left {
-	player->move(cam_right_left, cam_front_back, cam_up_down);
+	camera->move(cam_right_left, cam_front_back, cam_up_down);
 	truck->move_active(veh_front_back, veh_right_left;
 }
 
@@ -610,7 +608,7 @@ void world_t::mouse_motion(float dang_h, float dang_v) {
 	if (invert_mouse_y) {
 		dang_v *= -1;
 	}
-	player->mouse_motion(dang_h * mouse_sensitivity_x / 300, dang_v * mouse_sensitivity_y / 300);
+	camera->mouse_motion(dang_h * mouse_sensitivity_x / 300, dang_v * mouse_sensitivity_y / 300);
 }
 
 

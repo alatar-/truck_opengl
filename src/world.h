@@ -10,8 +10,8 @@
 
 class world_t;
 
-class player_t;
-#include "player.h"
+class camera;
+#include "camera.h"
 
 class TruckPart;
 #include "truck_part.h"
@@ -27,7 +27,7 @@ private:
 	Vehicle* truck;
     Vehicle* first_trailer;
 	Vehicle* second_trailer;
-	player_t *player;
+	camera *camera;
 	vector <material_t*> materials;
 	glm::mat4 P;
 	float mouse_sensitivity_x, mouse_sensitivity_y;
