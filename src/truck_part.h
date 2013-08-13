@@ -12,16 +12,19 @@ using namespace std;
 
 class TruckPart {
 private:
-	float ang_h, size;	
-	glm::mat4 in_transform,	MV;
 	vertex_2d pos;
+	float ang_forward
+		,	ang_follow
+		,	ang_bend
+		,	size;
+	glm::mat4 in_transform,	MV;
 	world_t *world;
 	model_t *model;
 	int last_time;
 	int speed;
 	glm::mat4 get_model_matrix();
 public:
-	TruckPart (world_t *in_world, string in_path, float in_size, float ang_in, float x, float y, glm::vec3 in_T, glm::vec3 in_R, glm::vec3 in_S);
+	TruckPart (world_t *in_world, string in_path, float in_size, float x, float y, glm::vec3 in_T, glm::vec3 in_R, glm::vec3 in_S);
 	~TruckPart();
 	
 	void draw (bool use_mv);
@@ -37,9 +40,8 @@ public:
 		return model->get_materials();
 	}
 
-	void move (direct_t X);
-	void rotate (direct_t X);
-
+	void move (float x, float y, float ang, float ds);
+	void rotate (float in_ang_bend);
 };
 
 #endif
