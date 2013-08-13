@@ -33,6 +33,8 @@ typedef enum {
 
 typedef INI <string, string, string> ini_t;
 
+int sign (float a);
+
 float module (float a, float b);
 float module (vertex_2d a, vertex_2d b);
 string get_file (const char *filename);
