@@ -612,9 +612,9 @@ void world_t::draw_in_material_order(glm::mat4 V) {
 }
 
 
-void world_t::next_frame (direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn) {
-	player->move(keys_h, keys_v, height);
-	truck->move(vehicle);
+void world_t::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct_t cam_up_down, direct_t veh_front_back, direct_t veh_right_left {
+	player->move(cam_right_left, cam_front_back, cam_up_down);
+	truck->move_active(veh_front_back, veh_right_left;
 }
 
 void world_t::mouse_motion(float dang_h, float dang_v) {
