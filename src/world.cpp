@@ -397,8 +397,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 				}
 			}
 		}
-		//truck->following_vehicle = first_trailer;
-		//first_trailer-> following_vehicle = second_trailer;
+		truck->following_vehicle = first_trailer;
+		first_trailer-> following_vehicle = second_trailer;
 		/*--------------------------------------------------------------------------------*/
 		// {
 		// 	ini.select("TruckDoubleWheels");
