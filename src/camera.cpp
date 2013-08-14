@@ -3,22 +3,20 @@
 
 #include "shared.h"
 
-Camera::Camera(float position_x, float position_y, float position_z, float angle_horizontal, float speed) : position(position_x, position_y, position_z) {
+Camera::Camera(float position_x, float position_y, float position_z, float angle_horizontal, float speed, float in_max_vertical_angle_up, float in_max_vertical_angle_down) : position(position_x, position_y, position_z) {
 	this->angle_horizontal = angle_horizontal;
 	this->angle_vertical = 0;
+
+  max_vertical_angle_up = PI / 2 * in_max_vertical_angle_up;
+  max_vertical_angle_down = PI / 2 * in_max_vertical_angle_down;
 
     this->speed = speed / 1000;
 	this->time_last = glutGet(GLUT_ELAPSED_TIME);
 }
 
 void Camera::mouse_motion(float angle_horizontal_delta, float angle_vertical_delta) {
-	angle_horizontal -= angle_horizontal_delta;
-	angle_vertical -= angle_vertical_delta;
-	if (angle_vertical < -PI / 2) {
-		angle_vertical = -PI / 2;
-	} else if (angle_vertical > PI / 2) {
-	   angle_vertical = PI / 2;
-	}
+	angle_horizontal = normalize_angle(angle_horizontal - angle_horizontal_delta);
+  angle_vertical = max(min(angle_vertical - angle_vertical_delta, max_vertical_angle_up), -max_vertical_angle_down);
 }
 
 void Camera::move(direct_t right_left, direct_t front_back, direct_t up_down) {
@@ -38,9 +36,14 @@ void Camera::move(direct_t right_left, direct_t front_back, direct_t up_down) {
 }
 
 glm::mat4 Camera::get_view_matrix() {
+  float xy = CAMERA_RADIUS * cos(angle_vertical)
+    , o_xz = -sin(angle_vertical)
+    , sin_h = sin(angle_horizontal)
+    , cos_h = cos(angle_horizontal);
+  // float xy = CAMERA_RADIUS;
 	return glm::lookAt(
 		glm::vec3(position.x, position.z, position.y),
-		glm::vec3(position.x + 10 * sin(angle_horizontal), position.z + 10 * sin(angle_vertical), position.y + 10 * cos(angle_horizontal)),
-		glm::vec3(0.0f, 1.0f, 0.0f)
+		glm::vec3(position.x + xy * sin_h, position.z + CAMERA_RADIUS * sin(angle_vertical), position.y + xy * cos_h),
+		glm::vec3(o_xz * sin_h, cos(angle_vertical), o_xz * cos_h)
 	);
 }

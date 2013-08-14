@@ -47,7 +47,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		ini.select("Projection");
 		P = glm::perspective(
 			ini.get<float>("fovy", 50.0f)
-		,	ini.get<float>("aspect", (float)screen_w/screen_h)
+		,	ini.get<float>("aspect", (float)in_screen_w / in_screen_h)
 		,	ini.get<float>("zNear", 1.0f)
 		,	ini.get<float>("zFar", 400.0f)
 		);
@@ -62,7 +62,9 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			ini.get<float>("posY", 0.0f),
 			ini.get<float>("posZ", 5.0f),
             ini.get<float>("angX", 0.0f),
-			ini.get<float>("speed", 20.0f)
+			ini.get<float>("speed", 20.0f),
+      ini.get<float>("max_vertical_angle_up", 0.5f),
+      ini.get<float>("max_vertical_angle_down", 0.5f)
 		);
 	}
 	
