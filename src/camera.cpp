@@ -7,8 +7,8 @@ Camera::Camera(float position_x, float position_y, float position_z, float angle
 	this->angle_horizontal = angle_horizontal;
 	this->angle_vertical = 0;
 
-  max_vertical_angle_up = PI / 2 * in_max_vertical_angle_up;
-  max_vertical_angle_down = PI / 2 * in_max_vertical_angle_down;
+    max_vertical_angle_up = PI / 2 * in_max_vertical_angle_up;
+    max_vertical_angle_down = PI / 2 * in_max_vertical_angle_down;
 
     this->speed = speed / 1000;
 	this->time_last = glutGet(GLUT_ELAPSED_TIME);
@@ -16,7 +16,7 @@ Camera::Camera(float position_x, float position_y, float position_z, float angle
 
 void Camera::mouse_motion(float angle_horizontal_delta, float angle_vertical_delta) {
 	angle_horizontal = normalize_angle(angle_horizontal - angle_horizontal_delta);
-  angle_vertical = max(min(angle_vertical - angle_vertical_delta, max_vertical_angle_up), -max_vertical_angle_down);
+    angle_vertical = max(min(angle_vertical - angle_vertical_delta, max_vertical_angle_up), -max_vertical_angle_down);
 }
 
 void Camera::move(direct_t right_left, direct_t front_back, direct_t up_down) {
@@ -36,11 +36,10 @@ void Camera::move(direct_t right_left, direct_t front_back, direct_t up_down) {
 }
 
 glm::mat4 Camera::get_view_matrix() {
-  float xy = CAMERA_RADIUS * cos(angle_vertical)
-    , o_xz = -sin(angle_vertical)
-    , sin_h = sin(angle_horizontal)
-    , cos_h = cos(angle_horizontal);
-  // float xy = CAMERA_RADIUS;
+    float xy = CAMERA_RADIUS * cos(angle_vertical)
+    float o_xz = -sin(angle_vertical)
+    float sin_h = sin(angle_horizontal)
+    float cos_h = cos(angle_horizontal);
 	return glm::lookAt(
 		glm::vec3(position.x, position.z, position.y),
 		glm::vec3(position.x + xy * sin_h, position.z + CAMERA_RADIUS * sin(angle_vertical), position.y + xy * cos_h),
