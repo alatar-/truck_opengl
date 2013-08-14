@@ -1,17 +1,30 @@
 #ifndef _INCLUDE_VERTEX_H
 #define _INCLUDE_VERTEX_H
 
+#include <cmath>
+
 class vertex_2d {
 public:
 	float x
 		,	y;
 	
 	vertex_2d() {
-		
+		x = 0;
+		y = 0;
+	}
+	vertex_2d(float in) {
+		x = in;
+		y = in;
 	}
 	vertex_2d(float in_x, float in_y) {
 		x = in_x;
 		y = in_y;
+	}
+
+	vertex_2d rotate (float angle) {
+		float sn = sin(angle)
+			,	cs = cos(angle);
+		return vertex_2d(x * cs - y * sn, x * sn + y * cs);
 	}
 	
 	bool operator==(const vertex_2d &o) const {
@@ -20,6 +33,26 @@ public:
 	
 	bool operator!=(const vertex_2d &o) const {
 		return !(*this == o);
+	}
+
+	vertex_2d operator+(const vertex_2d &o) const {
+		return vertex_2d(x + o.x, y + o.y);
+	}
+
+	vertex_2d operator-(const vertex_2d &o) const {
+		return vertex_2d(x - o.x, y - o.y);
+	}
+
+	vertex_2d operator+=(const vertex_2d &o) {
+		x += o.x;
+		y += o.y;
+		return *this;
+	}
+	
+	vertex_2d operator-=(const vertex_2d &o) {
+		x -= o.x;
+		y -= o.y;
+		return *this;
 	}
 
 	vertex_2d operator-() const {

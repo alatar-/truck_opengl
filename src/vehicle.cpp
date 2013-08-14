@@ -95,29 +95,38 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left) {
     position.x += ds * sin(angle);
     position.y += ds * cos(angle);
 
-    move(0, position, angle - following_bend, ds, following_bend);
+    move(0, position, angle, ds, following_bend);
 }
 
 // TODO: FRONT WHEEL TURN
 // MAX_WHEEL_ROTATING_TIME
 
-void Vehicle::move(float parent_size, vertex_2d position, float in_angle, float ds, float in_following_bend) {
-    in_angle += in_following_bend;
-    body->move(parent_size, position, in_angle, 0);
+void Vehicle::move(float parent_size, vertex_2d in_position, float in_angle, float ds, float in_following_bend) {
+    if (parent_size != 0) {
+        vertex_2d d_pos(0, size / 2);
+        d_pos = d_pos.rotate(-in_following_bend);
+        d_pos.y += parent_size;
+        d_pos = d_pos.rotate(-in_angle);
+        position = in_position + d_pos;
+
+        angle = in_angle + in_following_bend;
+    }
+
+    body->move(position, angle, 0);
     for (unsigned i = 0; i < this->left_wheels.size(); ++i) {
-        left_wheels[i]->move(parent_size, position, in_angle, ds);
-        right_wheels[i]->move(parent_size, position, in_angle, -ds);
+        left_wheels[i]->move(position, angle, ds);
+        right_wheels[i]->move(position, angle, -ds);
     }
     if(left_steering_wheel) {
-        left_steering_wheel->move(parent_size, position, in_angle, ds);
+        left_steering_wheel->move(position, angle, ds);
         // left_steering_wheel->rotate((direct_t)(-X));
     }
     if(right_steering_wheel) {
-        right_steering_wheel->move(parent_size, position, in_angle, -ds);
+        right_steering_wheel->move(position, angle, -ds);
         // right_steering_wheel->rotate(X);
     }
     if (following_vehicle) {
-        following_vehicle->move(size + parent_size, position, in_angle, ds, in_following_bend);
+        following_vehicle->move(size, position, angle, ds, in_following_bend);
     }
 }
 

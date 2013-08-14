@@ -12,7 +12,6 @@ TruckPart::TruckPart(world_t *in_world,
 	ang_forward = 0;
 	ang_follow = 0;
 	ang_bend = 0;
-	parent_size = 0;
 
 	in_transform = glm::translate(glm::mat4(1.0f), in_T);
 // 	printf("\nvisitor_t::constructor> T\n");
@@ -66,10 +65,9 @@ void TruckPart::apply_mv(){
 glm::mat4 TruckPart::get_model_matrix() {
 	glm::mat4 R_forward = glm::rotate(glm::mat4(1.0f), to_degrees(ang_forward), glm::vec3(1.0f,0.0f,0.0f));
 	glm::mat4 R_bend = glm::rotate(glm::mat4(1.0f), to_degrees(ang_bend), glm::vec3(0.0f,1.0f,0.0f));
-	glm::mat4 M_parent = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, parent_size));
 	glm::mat4 R_follow = glm::rotate(glm::mat4(1.0f), to_degrees(ang_follow), glm::vec3(0.0f,1.0f,0.0f));
 	glm::mat4 M = glm::translate(glm::mat4(1.0f), glm::vec3(pos.x, 0.0f, pos.y));
-	return M * R_follow * M_parent * in_transform * R_bend * R_forward;
+	return M * R_follow * in_transform * R_bend * R_forward;
 }
 
 vertex_2d TruckPart::get_pos() {
@@ -85,8 +83,7 @@ void TruckPart::set_pos(float x, float y) {
 	pos.y = y;
 }
 
-void TruckPart::move (float in_parent_size, vertex_2d position, float ang, float ds) {
-	parent_size = in_parent_size;
+void TruckPart::move (vertex_2d position, float ang, float ds) {
 	pos = position;
 	ang_forward = normalize_angle(ang_forward + ds / size);
 	ang_follow = ang;
