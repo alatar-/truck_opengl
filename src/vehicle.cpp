@@ -7,6 +7,9 @@ Vehicle::Vehicle(float in_size,
     float in_turn_acceleration,
     float in_min_turn,
     float in_max_turn,
+    float in_begining_turn_point,
+    float in_max_turn_point,
+    float in_final_turn_point,
     float in_max_following_bend,
     float in_time_following_bend
     // float max_wheel,
@@ -26,8 +29,13 @@ Vehicle::Vehicle(float in_size,
     min_turn = in_min_turn;
     max_turn = in_max_turn;
 
+    begining_turn_point = in_begining_turn_point;
+    max_turn_point = in_max_turn_point;
+    final_turn_point = in_final_turn_point;
+
     max_following_bend = in_max_following_bend;
     time_following_bend = in_time_following_bend;
+    current_max_following_bend = max_following_bend;
     // max_wheel_rotating_time = max_wheel;
 
     velocity = 0.0;
@@ -57,7 +65,7 @@ float Vehicle::acceleration(direct_t front_back, float velocity) {
 float Vehicle::bend_acceleration(direct_t right_left, float in_following_bend, float in_velocity) {
     if (in_velocity > 0) {
         in_velocity /= max_velocity;
-        if (right_left) {
+        if (right_left && abs(in_following_bend) <= current_max_following_bend ) {
             return right_left * max_following_bend * in_velocity;
         } else {
             return -sign(in_following_bend) * max_following_bend * in_velocity;
@@ -68,7 +76,21 @@ float Vehicle::bend_acceleration(direct_t right_left, float in_following_bend, f
 }
 
 float Vehicle::turn_factor() {
-    return min(max(turn_acceleration / abs(velocity), min_turn), max_turn);
+    float norm_x = abs(velocity) / max_velocity - begining_turn_point;
+    float x = norm_x * PI;
+    float y;
+
+    if ( norm_x > 0 && norm_x < (final_turn_point + 1) * max_turn_point ) {
+        if ( norm_x < max_turn_point ) {
+            y = sin( x / (2 * max_turn_point));
+        } else {
+            y = cos( (x - max_turn_point * PI) / (2 * (1 - max_turn_point)));
+        }
+    } else {
+        y = 0;
+    }
+
+    return min_turn + y * (max_turn - min_turn);
 }
 
 void Vehicle::calculate(direct_t front_back, direct_t right_left) {
@@ -83,23 +105,27 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left) {
         velocity = min(max(new_velocity, -max_reverse_velocity), max_velocity);
     }
 
+    float new_turn_factor = turn_factor();
+
     if (velocity != 0.0) {
         float new_following_bend = following_bend + bend_acceleration(right_left, following_bend, velocity) * dt / time_following_bend;
         if ((right_left == STOP) && (sign(new_following_bend) * sign(following_bend) < 0)) {
             following_bend = 0;
         } else {
-            if (new_following_bend < -max_following_bend && following_bend >= -max_following_bend) {
-                following_bend = -max_following_bend;
-            } else if (new_following_bend > max_following_bend && following_bend <= max_following_bend) {
-                following_bend = max_following_bend;
+            float new_max_bend = min(new_turn_factor, max_following_bend);
+            if (new_following_bend < -current_max_following_bend && following_bend >= -current_max_following_bend) {
+                following_bend = -current_max_following_bend;
+            } else if (new_following_bend > current_max_following_bend && following_bend <= current_max_following_bend) {
+                following_bend = current_max_following_bend;
             } else {
                 following_bend = new_following_bend;
             }
+            current_max_following_bend = new_max_bend;
         }
     }
 
     if (velocity != 0 && right_left != STOP) {
-        angle = normalize_angle(angle - sign(velocity) * right_left * dt * turn_factor());
+        angle = normalize_angle(angle - sign(velocity) * right_left * dt * new_turn_factor);
     }
 
     float ds = -velocity * dt;
@@ -124,9 +150,9 @@ void Vehicle::move(float parent_size, vertex_2d in_position, float in_angle, flo
     } else {
         if (left_steering_wheel) {
             left_steering_wheel->move(position, angle, ds);
-            left_steering_wheel->rotate(-2 * in_following_bend);
+            left_steering_wheel->rotate(-in_following_bend);
             right_steering_wheel->move(position, angle, -ds);
-            right_steering_wheel->rotate(-2 * in_following_bend);
+            right_steering_wheel->rotate(-in_following_bend);
         }
     }
     body->move(position, angle, 0);
