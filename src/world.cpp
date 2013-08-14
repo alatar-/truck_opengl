@@ -102,6 +102,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			,	ini.get<float>("max_velocity", 90)
 			,	ini.get<float>("max_reverse_velocity", 30)
 			, ini.get<float>("turn_acceleration", 1)
+			, ini.get<float>("min_turn", 1)
+			, ini.get<float>("max_turn", 10)
 				);
 		}
 		{
@@ -176,7 +178,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 				leftY = ssY.str();
 				truck->left_wheels.push_back(new TruckPart(this
 							,	model_file + ini.get<string>("model", "double_wheel.obj")
-							,	ini.get<float>("rightS", 2.0f)
+							,	ini.get<float>("leftS", 2.0f)
 							,	posX
 							,	posY
 							,	glm::vec3(ini.get<float>(leftX, 2.0f), 0.0f, ini.get<float>(leftY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))
@@ -226,7 +228,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 
 		{
 			ini.select("Trailer1");
-			first_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0);
+			first_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0);
 			{
 				string model_file("./models/");
 				printf("trailer1!!!!!!!\n");
@@ -261,7 +263,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 					leftY = ssY.str();
 					first_trailer->left_wheels.push_back(new TruckPart(this
 								,	model_file + ini.get<string>("model", "double_wheel.obj")
-								,	ini.get<float>("rightS", 2.0f)
+								,	ini.get<float>("leftS", 2.0f)
 								,	posX
 								,	posY
 								,	glm::vec3(ini.get<float>(leftX, 2.0f), 0.0f, ini.get<float>(leftY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))
@@ -311,7 +313,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 
 		{
 			ini.select("Trailer2");
-			second_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0);
+			second_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0);
 			{
 				string model_file("./models/");
 				second_trailer->body = new TruckPart(this
@@ -345,7 +347,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 					leftY = ssY.str();
 					second_trailer->left_wheels.push_back(new TruckPart(this
 								,	model_file + ini.get<string>("model", "double_wheel.obj")
-								,	ini.get<float>("rightS", 2.0f)
+								,	ini.get<float>("leftS", 2.0f)
 								,	posX
 								,	posY
 								,	glm::vec3(ini.get<float>(leftX, 2.0f), 0.0f, ini.get<float>(leftY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))

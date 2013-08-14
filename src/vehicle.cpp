@@ -4,7 +4,9 @@ Vehicle::Vehicle(float in_size,
     float in_max_acceleration,
     float in_max_velocity,
     float in_max_reverse_velocity,
-    float in_turn_acceleration
+    float in_turn_acceleration,
+    float in_min_turn,
+    float in_max_turn
     // float max_wheel,
     // float in_rotate_time
 ) {
@@ -13,10 +15,14 @@ Vehicle::Vehicle(float in_size,
     this->right_steering_wheel = NULL;
 
     size = in_size;
+
     max_acceleration = in_max_acceleration;
     max_velocity = in_max_velocity;
     max_reverse_velocity = in_max_reverse_velocity;
+
     turn_acceleration = in_turn_acceleration;
+    min_turn = in_min_turn;
+    max_turn = in_max_turn;
     // max_wheel_rotating_time = max_wheel;
 
     velocity = 0.0;
@@ -42,6 +48,10 @@ float Vehicle::acceleration(direct_t front_back, float velocity) {
     }
 }
 
+float Vehicle::turn_factor() {
+    return min(max(turn_acceleration / abs(velocity), min_turn), max_turn);
+}
+
 void Vehicle::calculate(direct_t front_back, direct_t right_left) {
     int now = glutGet(GLUT_ELAPSED_TIME); 
     float dt = ((float)now - last_time) / 1000.0;
@@ -55,7 +65,7 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left) {
     }
 
     if (velocity != 0 && right_left != STOP) {
-        angle = normalize_angle(angle + -right_left * dt / abs(cut_fractions(velocity)) * turn_acceleration);
+        angle = normalize_angle(angle + -right_left * dt * turn_factor());
     }
 
     float ds = velocity * dt;

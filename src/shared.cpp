@@ -20,15 +20,6 @@ float to_degrees (float radians) {
 	return radians * 180 / PI;
 }
 
-float cut_fractions (float a) {
-	if (a < 0) {
-		return min(a, -1.0f);
-	} else if (a > 0) {
-		return max(a, 1.0f);
-	} else {
-		return 0;
-	}
-}
 
 
 float module (float a, float b) {

@@ -9,9 +9,12 @@ private:
     float max_velocity;
     float max_reverse_velocity;
     float turn_acceleration;
+    float min_turn;
+    float max_turn;
     // int max_wheel_rotating_time;
     // float max_angle;
-  float acceleration(direct_t front_back, float velocity);
+    float acceleration(direct_t front_back, float velocity);
+    float turn_factor();
 public:
   vector <TruckPart*> left_wheels;
   vector <TruckPart*> right_wheels;
@@ -31,9 +34,13 @@ public:
     float in_max_acceleration,
     float in_max_velocity,
     float in_max_reverse_velocity,
-    float in_turn_acceleration);
+    float in_turn_acceleration,
+    float in_min_turn,
+    float in_max_turn
+    );
  
 	~Vehicle();
+
 
     void calculate(direct_t front_back, direct_t right_left);
     void move(float parent_size, vertex_2d position, float angle, float ds);
