@@ -19,7 +19,7 @@ private:
     // float max_angle;
     float acceleration(direct_t front_back, float velocity);
     float turn_factor();
-    float bend_acceleration(direct_t right_left, float following_bend);
+    float bend_acceleration(direct_t right_left, float in_following_bend, float in_velocity);
 public:
   vector <TruckPart*> left_wheels;
   vector <TruckPart*> right_wheels;

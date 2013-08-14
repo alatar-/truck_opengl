@@ -613,7 +613,7 @@ void world_t::draw_in_material_order(glm::mat4 V) {
 
 void world_t::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct_t cam_up_down, direct_t veh_front_back, direct_t veh_right_left) {
 	camera->move(cam_right_left, cam_front_back, cam_up_down);
-	truck->calculate((direct_t)(-veh_front_back), veh_right_left);
+	truck->calculate(veh_front_back, veh_right_left);
 }
 
 void world_t::mouse_motion(float dang_h, float dang_v) {

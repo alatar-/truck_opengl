@@ -54,11 +54,16 @@ float Vehicle::acceleration(direct_t front_back, float velocity) {
     }
 }
 
-float Vehicle::bend_acceleration(direct_t right_left, float following_bend) {
-    if (right_left) {
-        return right_left * max_following_bend;
+float Vehicle::bend_acceleration(direct_t right_left, float in_following_bend, float in_velocity) {
+    if (in_velocity > 0) {
+        in_velocity /= max_velocity;
+        if (right_left) {
+            return right_left * max_following_bend * in_velocity;
+        } else {
+            return -sign(in_following_bend) * max_following_bend * in_velocity;
+        }
     } else {
-        return -sign(following_bend) * max_following_bend;
+        return 0;
     }
 }
 
@@ -79,7 +84,7 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left) {
     }
 
     if (velocity != 0.0) {
-        float new_following_bend = following_bend + bend_acceleration((direct_t)(right_left * -sign(velocity)), following_bend) * dt / time_following_bend;
+        float new_following_bend = following_bend + bend_acceleration(right_left, following_bend, velocity) * dt / time_following_bend;
         if ((right_left == STOP) && (sign(new_following_bend) * sign(following_bend) < 0)) {
             following_bend = 0;
         } else {
@@ -88,10 +93,10 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left) {
     }
 
     if (velocity != 0 && right_left != STOP) {
-        angle = normalize_angle(angle + -right_left * dt * turn_factor());
+        angle = normalize_angle(angle - sign(velocity) * right_left * dt * turn_factor());
     }
 
-    float ds = velocity * dt;
+    float ds = -velocity * dt;
     position.x += ds * sin(angle);
     position.y += ds * cos(angle);
 
