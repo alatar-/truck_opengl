@@ -109,7 +109,7 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left) {
     move(0, position, angle, ds, following_bend);
 }
 
-// TODO: FRONT WHEEL TURN
+// TODO
 // MAX_WHEEL_ROTATING_TIME
 
 void Vehicle::move(float parent_size, vertex_2d in_position, float in_angle, float ds, float in_following_bend) {
@@ -121,20 +121,18 @@ void Vehicle::move(float parent_size, vertex_2d in_position, float in_angle, flo
         position = in_position + d_pos;
 
         angle = in_angle + in_following_bend;
+    } else {
+        if (left_steering_wheel) {
+            left_steering_wheel->move(position, angle, ds);
+            left_steering_wheel->rotate(-2 * in_following_bend);
+            right_steering_wheel->move(position, angle, -ds);
+            right_steering_wheel->rotate(-2 * in_following_bend);
+        }
     }
-
     body->move(position, angle, 0);
     for (unsigned i = 0; i < this->left_wheels.size(); ++i) {
         left_wheels[i]->move(position, angle, ds);
         right_wheels[i]->move(position, angle, -ds);
-    }
-    if(left_steering_wheel) {
-        left_steering_wheel->move(position, angle, ds);
-        //left_steering_wheel->rotate(10);
-    }
-    if(right_steering_wheel) {
-        right_steering_wheel->move(position, angle, -ds);
-        //right_steering_wheel->rotate(10);
     }
     if (following_vehicle) {
         following_vehicle->move(size, position, angle, ds, in_following_bend);
