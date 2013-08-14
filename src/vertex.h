@@ -21,6 +21,10 @@ public:
 	bool operator!=(const vertex_2d &o) const {
 		return !(*this == o);
 	}
+
+	vertex_2d operator-() const {
+		return vertex_2d(-x, -y);
+	}
 };
 
 class vertex_3d : public vertex_2d {

@@ -16,7 +16,8 @@ private:
 	float ang_forward
 		,	ang_follow
 		,	ang_bend
-		,	size;
+		,	size
+		,	parent_size;
 	glm::mat4 in_transform,	MV;
 	world_t *world;
 	model_t *model;
@@ -40,7 +41,7 @@ public:
 		return model->get_materials();
 	}
 
-	void move (float x, float y, float ang, float ds);
+	void move (float in_parent_size, vertex_2d position, float ang, float ds);
 	void rotate (float in_ang_bend);
 };
 
