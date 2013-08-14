@@ -8,10 +8,14 @@
 
 #include "mesh.h"
 #include "material.h"
+#include "vertex.h"
 
 using namespace std;
 
 class model_t {
+private:
+	float width;
+	float length;
 protected:
 	vector <mesh_t*> meshes;
 	vector <material_t*> materials;

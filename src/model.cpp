@@ -30,6 +30,25 @@ bool model_t::parse_scene (const aiScene *pScene, string &model_file) {
 			const aiMesh* paiMesh = pScene->mMeshes[i];
 			meshes.push_back(new mesh_t(paiMesh, materials[paiMesh->mMaterialIndex]));
 		}
+		vertex_2d local_min = meshes[0]->get_cords_min(), local_max = meshes[0]->get_cords_max();
+		for (unsigned i = 1; i < meshes.size(); i++)
+		{
+			if(meshes[i]->get_cords_min().x < local_min.x) {
+					local_min.x = meshes[i]->get_cords_min().x;
+			}
+			if(meshes[i]->get_cords_min().y < local_min.y) {
+					local_min.y = meshes[i]->get_cords_min().y;
+			}
+			if(meshes[i]->get_cords_max().x > local_max.x) {
+					local_max.x = meshes[i]->get_cords_max().x;
+			}
+			if(meshes[i]->get_cords_max().y > local_max.y) {
+					local_max.y = meshes[i]->get_cords_max().y;
+			}			
+		}
+		length = local_max.x - local_min.x;
+		width = local_max.y - local_min.y;
+		printf("model length: %f, model width: %f\n", length, width);
 	} else {
 		return false;
 	}

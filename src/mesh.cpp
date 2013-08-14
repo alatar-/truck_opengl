@@ -30,18 +30,29 @@ mesh_t::mesh_t (const aiMesh *paiMesh, material_t *in_material) {
 	vertices.reserve(paiMesh->mNumVertices);
 	
 	{
-		vertex_3d r_p
-			,	r_m;
 		for (unsigned i = 0, len = paiMesh->mNumVertices; i < len; ++i) {
 			const aiVector3D* pos = &(paiMesh->mVertices[i]);
 			const aiVector3D* norm = &(paiMesh->mNormals[i]);
 			vertex_3d v_pos(pos->x, pos->y, pos->z);
 			
 			if (i == 0) {
-				r_p = v_pos;
-				r_m = v_pos;
+				cords_min.x = v_pos.x;
+				cords_min.y = v_pos.z;
+				cords_max.x = v_pos.x;
+				cords_max.y = v_pos.z;
 			} else {
-				//
+				if(v_pos.x < cords_min.x) {
+					cords_min.x = v_pos.x;
+				}
+				if(v_pos.z < cords_min.y) {
+					cords_min.y = v_pos.z;
+				}
+				if(v_pos.x > cords_max.x) {
+					cords_max.x = v_pos.x;
+				}
+				if(v_pos.z > cords_min.y) {
+					cords_max.y = v_pos.z;
+				}
 			}
 			
 			vertices.push_back(bone_vertex_t(v_pos, vertex_3d(norm->x, norm->y, norm->z)));
@@ -140,4 +151,12 @@ bool mesh_t::test_intersection (vertex_3d pos0, vertex_3d pos1) {
 		}
 	}
 	return false;
+}
+
+vertex_2d mesh_t::get_cords_min() {
+	return cords_min;
+}
+
+vertex_2d mesh_t::get_cords_max() {
+	return cords_max;
 }

@@ -58,6 +58,11 @@ public:
 	vertex_2d operator-() const {
 		return vertex_2d(-x, -y);
 	}
+
+	float operator*(const vertex_2d &o){
+		return x * o.x + y * o.y;
+	}
+
 };
 
 class vertex_3d : public vertex_2d {
