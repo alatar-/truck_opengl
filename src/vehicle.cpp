@@ -88,7 +88,13 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left) {
         if ((right_left == STOP) && (sign(new_following_bend) * sign(following_bend) < 0)) {
             following_bend = 0;
         } else {
-            following_bend = min(max(new_following_bend, -max_following_bend), max_following_bend);
+            if (new_following_bend < -max_following_bend && following_bend >= -max_following_bend) {
+                following_bend = -max_following_bend;
+            } else if (new_following_bend > max_following_bend && following_bend <= max_following_bend) {
+                following_bend = max_following_bend;
+            } else {
+                following_bend = new_following_bend;
+            }
         }
     }
 

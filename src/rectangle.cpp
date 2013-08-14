@@ -1,4 +1,5 @@
 #include "rectangle.h"
+#include <cstdio>
 
 float max(float* tab, int size) {
 	float tmp = tab[0];
@@ -17,6 +18,14 @@ float min(float* tab, int size) {
 	return tmp;
 }
 
+void print_arr(float *arr, int size, const char *comment = "") {
+	printf("\n%s\n", comment);
+	for (int i = 0; i < size; ++i) {
+		printf(" %f", arr[i]);
+	}
+	printf("\n");
+}
+
 Rectangle::Rectangle (vertex_2d in_ul, vertex_2d in_ur, vertex_2d in_ll, vertex_2d in_lr) {
 	UL = in_ul;
 	UR = in_ur;
@@ -25,10 +34,9 @@ Rectangle::Rectangle (vertex_2d in_ul, vertex_2d in_ur, vertex_2d in_ll, vertex_
 }
 
 Rectangle::~Rectangle() {
-	delete this;
 }
 
-bool Rectangle::intersection(Rectangle rect) {
+bool Rectangle::intersection(Rectangle &rect) {
 	vertex_2d Axis[4];
 	Axis[0].x = UR.x - UL.x;
 	Axis[0].y = UR.y - UL.y;
@@ -62,17 +70,14 @@ bool Rectangle::intersection(Rectangle rect) {
 		for(int j = 0; j < 4; ++j) {
 			rect.points[j] = rect.projection[j]*Axis[i];
 		}
-		if((min(points, 4) <= max(rect.points, 4) && min(rect.points, 4) <= max(points, 4)) || (min(rect.points, 4) <= max(points, 4) && min(points, 4) <= max(rect.points, 4))) {
-			continue;
-		}
-		else{
+		if(!((min(points, 4) <= max(rect.points, 4) && min(rect.points, 4) <= max(points, 4)) || (min(rect.points, 4) <= max(points, 4) && min(points, 4) <= max(rect.points, 4)))) {
 			return false;
 		}
 	}
 	return true;
 }
 
-bool Rectangle::has_point_inside(vertex_2d in_vertex) {
+bool Rectangle::has_point_inside(vertex_2d &in_vertex) {
 	vertex_2d Axis[2];
 	Axis[0].x = UR.x - UL.x;
 	Axis[0].y = UR.y - UL.y;
@@ -93,13 +98,11 @@ bool Rectangle::has_point_inside(vertex_2d in_vertex) {
 		for(int j = 0; j < 4; ++j) {
 			points[j] = projection[j]*Axis[i];
 		}
-		inv_projection.x = Axis[i].x * ( inv_projection.x * Axis[i].x + inv_projection.y * Axis[i].y ) / Ax_squere;
-		inv_projection.y = Axis[i].y * ( inv_projection.x * Axis[i].x + inv_projection.y * Axis[i].y ) / Ax_squere;
+		inv_projection.x = Axis[i].x * ( in_vertex.x * Axis[i].x + in_vertex.y * Axis[i].y ) / Ax_squere;
+		inv_projection.y = Axis[i].y * ( in_vertex.x * Axis[i].x + in_vertex.y * Axis[i].y ) / Ax_squere;
 		point = inv_projection*Axis[i];
-		if( min(points, 4) <= point && point <= max(points, 4) ) {
-			continue;
-		}
-		else{
+
+		if( !(min(points, 4) <= point && point <= max(points, 4) ) ) {
 			return false;
 		}
 	}
@@ -108,7 +111,7 @@ bool Rectangle::has_point_inside(vertex_2d in_vertex) {
 
 }
 
-bool Rectangle::full_inclusion(Rectangle rect) {
+bool Rectangle::full_inclusion(Rectangle &rect) {
 	if(	
 			has_point_inside(rect.UL) 
 		&&	has_point_inside(rect.UR) 

@@ -2,6 +2,7 @@
 #define _INCLUDE_VERTEX_H
 
 #include <cmath>
+#include <cstdio>
 
 class vertex_2d {
 public:
@@ -61,6 +62,10 @@ public:
 
 	float operator*(const vertex_2d &o){
 		return x * o.x + y * o.y;
+	}
+
+	void print() const {
+		printf("(%f %f)\n", x, y);
 	}
 
 };

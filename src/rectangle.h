@@ -11,8 +11,9 @@ private:
 public:
 	Rectangle(vertex_2d in_ul, vertex_2d in_ur, vertex_2d in_ll, vertex_2d in_lr);
 	~Rectangle();
-	bool intersection(Rectangle rect);
-	bool full_inclusion(Rectangle rect);
-	bool has_point_inside(vertex_2d);
+	bool intersection(Rectangle &rect);
+	bool full_inclusion(Rectangle &rect);
+	bool has_point_inside(vertex_2d &in_vertex);
 };
+
 #endif
