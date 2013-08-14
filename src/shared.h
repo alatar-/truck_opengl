@@ -35,6 +35,11 @@ typedef INI <string, string, string> ini_t;
 
 int sign (float a);
 
+float normalize_angle (float ang);
+float to_degrees (float radians);
+
+float cut_fractions (float a);
+
 float module (float a, float b);
 float module (vertex_2d a, vertex_2d b);
 string get_file (const char *filename);

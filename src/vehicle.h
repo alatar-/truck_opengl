@@ -6,27 +6,37 @@
 class Vehicle {
 private:
     float max_acceleration;
-    int max_wheel_rotating_time;
-    int rotate_time;
-    float max_angle;
+    float max_velocity;
+    float max_reverse_velocity;
+    float turn_acceleration;
+    // int max_wheel_rotating_time;
+    // float max_angle;
+  float acceleration(direct_t front_back, float velocity);
 public:
-	vector <TruckPart*> left_wheels;
-	vector <TruckPart*> right_wheels;
-	TruckPart* left_steering_wheel;
-	TruckPart* right_steering_wheel;
-	TruckPart* body;
-	Vehicle* following_vehicle;
+  vector <TruckPart*> left_wheels;
+  vector <TruckPart*> right_wheels;
+  TruckPart* left_steering_wheel;
+  TruckPart* right_steering_wheel;
+  TruckPart* body;
+  Vehicle* following_vehicle;
 
     float velocity;
     float angle;
+    float size;
     vertex_2d position;
     int last_time;
+
 	
-	Vehicle();
+	Vehicle(float in_size,
+    float in_max_acceleration,
+    float in_max_velocity,
+    float in_max_reverse_velocity,
+    float in_turn_acceleration);
+ 
 	~Vehicle();
 
     void calculate(direct_t front_back, direct_t right_left);
-    void move();
+    void move(float parent_size, vertex_2d position, float angle, float ds);
 	// void set_mv_matrix(glm::mat4 V);
 	// void apply_mv();
 };
