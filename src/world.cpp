@@ -104,6 +104,8 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			, ini.get<float>("turn_acceleration", 1)
 			, ini.get<float>("min_turn", 1)
 			, ini.get<float>("max_turn", 10)
+			, ini.get<float>("max_following_bend", 0.4)
+			, ini.get<float>("time_following_bend", 2)
 				);
 		}
 		{
@@ -228,7 +230,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 
 		{
 			ini.select("Trailer1");
-			first_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0);
+			first_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0, 0, 0);
 			{
 				string model_file("./models/");
 				printf("trailer1!!!!!!!\n");
@@ -313,7 +315,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 
 		{
 			ini.select("Trailer2");
-			second_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0);
+			second_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0, 0, 0);
 			{
 				string model_file("./models/");
 				second_trailer->body = new TruckPart(this
