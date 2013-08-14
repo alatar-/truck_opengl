@@ -124,9 +124,9 @@ void Vehicle::move(float parent_size, vertex_2d in_position, float in_angle, flo
     } else {
         if (left_steering_wheel) {
             left_steering_wheel->move(position, angle, ds);
-            left_steering_wheel->rotate(-2 * in_following_bend);
+            left_steering_wheel->rotate(-2 * in_following_bend * sign(velocity));
             right_steering_wheel->move(position, angle, -ds);
-            right_steering_wheel->rotate(-2 * in_following_bend);
+            right_steering_wheel->rotate(-2 * in_following_bend * sign(velocity));
         }
     }
     body->move(position, angle, 0);
