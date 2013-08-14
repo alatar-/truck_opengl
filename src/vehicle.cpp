@@ -55,7 +55,7 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left) {
     }
 
     if (velocity != 0 && right_left != STOP) {
-        angle = normalize_angle(angle + right_left * dt / cut_fractions(velocity) * turn_acceleration);
+        angle = normalize_angle(angle + -right_left * dt / abs(cut_fractions(velocity)) * turn_acceleration);
     }
 
     float ds = velocity * dt;
