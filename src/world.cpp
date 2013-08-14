@@ -57,7 +57,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 	
 	{
 		ini.select("Camera");
-		camera = new camera(
+		camera = new Camera(
 			ini.get<float>("posX", 0.0f),
 			ini.get<float>("posY", 0.0f),
 			ini.get<float>("posZ", 5.0f),
@@ -608,7 +608,7 @@ void world_t::draw_in_material_order(glm::mat4 V) {
 }
 
 void world_t::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct_t cam_up_down, direct_t veh_front_back, direct_t veh_right_left) {
-	player->move(cam_right_left, cam_front_back, cam_up_down);
+	camera->move(cam_right_left, cam_front_back, cam_up_down);
 	truck->calculate((direct_t)(-veh_front_back), veh_right_left);
 }
 

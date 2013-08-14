@@ -7,14 +7,14 @@
 class world_t;
 #include "world.h"
 
-class camera {
+class Camera {
 private:
 	vertex_3d position;
 	float angle_horizontal, angle_vertical;
-    float speed,
+    float speed;
 	int time_last;
 public:
-    camera(float position_x, float position_y, float position_z, float angle_horizontal, float speed);
+    Camera(float position_x, float position_y, float position_z, float angle_horizontal, float speed);
     void mouse_motion(float angle_horizontal_delta, float angle_vertical_delta);
 	void move(direct_t right_left, direct_t front_back, direct_t up_down);
 	glm::mat4 get_view_matrix();
