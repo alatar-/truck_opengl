@@ -110,6 +110,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			, ini.get<float>("time_following_bend", 2)
 				);
 		}
+
 		{
 			string model_file("./models/");
 			ini.select("Truck");
@@ -125,6 +126,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			vector <material_t*> &vis_mats = truck->body->get_materials();
 			materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 			printf("Got materials\n");
+			truck->set_verticies(truck->get_body_vertices());
 		}
 
 		{
@@ -248,6 +250,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 				vector <material_t*> &vis_mats = first_trailer->body->get_materials();
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 				printf("Got materials\n");
+				first_trailer->set_verticies(first_trailer->get_body_vertices());
 			}
 
 			{
@@ -332,6 +335,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 				vector <material_t*> &vis_mats = second_trailer->body->get_materials();
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 				printf("Got materials\n");
+				second_trailer->set_verticies(second_trailer->get_body_vertices());
 			}
 
 			{

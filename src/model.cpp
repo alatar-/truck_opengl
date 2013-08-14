@@ -46,6 +46,8 @@ bool model_t::parse_scene (const aiScene *pScene, string &model_file) {
 					local_max.y = meshes[i]->get_cords_max().y;
 			}			
 		}
+		overall_min_point = local_min;
+		overall_max_point = local_max;
 		length = local_max.x - local_min.x;
 		width = local_max.y - local_min.y;
 		printf("model length: %f, model width: %f\n", length, width);
@@ -118,4 +120,20 @@ bool model_t::test_intersection (vertex_3d pos0, vertex_3d pos1) {
 		}
 	}
 	return false;
+}
+
+float model_t::get_width() {
+	return width;
+}
+
+float model_t::get_length() {
+	return length;
+}
+
+vertex_2d model_t::get_min_point() {
+	return overall_min_point;
+}
+
+vertex_2d model_t::get_max_point() {
+	return overall_max_point;
 }

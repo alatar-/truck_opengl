@@ -11,7 +11,7 @@ Vehicle::Vehicle(float in_size,
     float in_time_following_bend
     // float max_wheel,
     // float in_rotate_time
-) {
+) : Rectangle() {
 	following_vehicle = NULL;
     this->left_steering_wheel = NULL;
     this->right_steering_wheel = NULL;
@@ -130,11 +130,11 @@ void Vehicle::move(float parent_size, vertex_2d in_position, float in_angle, flo
     }
     if(left_steering_wheel) {
         left_steering_wheel->move(position, angle, ds);
-        // left_steering_wheel->rotate((direct_t)(-X));
+        //left_steering_wheel->rotate(10);
     }
     if(right_steering_wheel) {
         right_steering_wheel->move(position, angle, -ds);
-        // right_steering_wheel->rotate(X);
+        //right_steering_wheel->rotate(10);
     }
     if (following_vehicle) {
         following_vehicle->move(size, position, angle, ds, in_following_bend);
@@ -145,4 +145,22 @@ Vehicle::~Vehicle() {
 	left_wheels.clear();
 	right_wheels.clear();
 	delete body;
+}
+
+vector <vertex_2d>  Vehicle::get_body_vertices() {
+    dimensions.clear();
+    vertex_2d pos_min = body->get_model_min_point();
+    printf("vertex: ( %f ; %f ) \n", pos_min.x, pos_min.y);
+    vertex_2d pos_max = body->get_model_max_point();
+    dimensions.push_back(pos_min);
+    float tmp = pos_min.y;
+    pos_min.y = pos_max.y;
+    printf("vertex: ( %f ; %f ) \n", pos_min.x, pos_min.y);
+    dimensions.push_back(pos_min);
+    printf("vertex: ( %f ; %f ) \n", pos_max.x, pos_max.y);
+    dimensions.push_back(pos_max);
+    pos_max.y = tmp;
+    printf("vertex: ( %f ; %f ) \n", pos_max.x, pos_max.y);
+    dimensions.push_back(pos_max);
+    return dimensions;
 }

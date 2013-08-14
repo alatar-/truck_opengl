@@ -13,15 +13,15 @@
 using namespace std;
 
 class model_t {
-private:
-	float width;
-	float length;
 protected:
 	vector <mesh_t*> meshes;
 	vector <material_t*> materials;
 	
 	virtual bool parse_scene (const aiScene *pScene, string &model_file);
 public:
+	float width;
+	float length;
+	vertex_2d overall_min_point, overall_max_point;
 	model_t();
 	virtual ~model_t();
 	bool load_materials (const aiScene* pScene, const string& model_file);
@@ -37,6 +37,10 @@ public:
 	void draw (bool use_mv = false);
 	
 	bool test_intersection (vertex_3d pos0, vertex_3d pos1);
+	float get_width();
+	float get_length();
+	vertex_2d get_min_point();
+	vertex_2d get_max_point();
 };
 
 #endif

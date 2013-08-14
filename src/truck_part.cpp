@@ -92,3 +92,19 @@ void TruckPart::move (vertex_2d position, float ang, float ds) {
 void TruckPart::rotate (float in_ang_bend) {
 	ang_bend = in_ang_bend;
 }
+
+float TruckPart::get_model_width() {
+	return model->get_width();
+}
+
+float TruckPart::get_model_length() {
+	return model->get_length();
+}
+
+vertex_2d TruckPart::get_model_min_point() {
+	return model->get_min_point();
+}
+
+vertex_2d TruckPart::get_model_max_point() {
+	return model->get_max_point();
+}

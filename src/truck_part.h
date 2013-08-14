@@ -42,6 +42,10 @@ public:
 
 	void move (vertex_2d position, float ang, float ds);
 	void rotate (float in_ang_bend);
+	float get_model_width();
+	float get_model_length();
+	vertex_2d get_model_min_point();
+	vertex_2d get_model_max_point();
 };
 
 #endif

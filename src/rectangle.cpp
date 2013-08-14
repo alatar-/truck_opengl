@@ -1,6 +1,8 @@
 #include "rectangle.h"
 #include <cstdio>
 
+using namespace std;
+
 float max(float* tab, int size) {
 	float tmp = tab[0];
 	for (int i = 1 ; i < size ; ++i) {
@@ -24,6 +26,10 @@ void print_arr(float *arr, int size, const char *comment = "") {
 		printf(" %f", arr[i]);
 	}
 	printf("\n");
+}
+
+Rectangle::Rectangle() {
+
 }
 
 Rectangle::Rectangle (vertex_2d in_ul, vertex_2d in_ur, vertex_2d in_ll, vertex_2d in_lr) {
@@ -120,6 +126,12 @@ bool Rectangle::full_inclusion(Rectangle &rect) {
 	) {
 		return true;	
 	}
-	return false;
-	
+	return false;	
+}
+
+void Rectangle::set_verticies(vector <vertex_2d> in) {
+	UL = in[0];
+	UR = in[1];
+	LL = in[2];
+	LR = in[3];
 }
