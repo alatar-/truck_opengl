@@ -76,6 +76,16 @@ bool Rectangle::intersection(Rectangle &rect) {
 		for(int j = 0; j < 4; ++j) {
 			rect.points[j] = rect.projection[j]*Axis[i];
 		}
+
+		printf("\nAxis %u:\t\t", i);
+		Axis[i].print();
+		print_arr(points, 4, "points");
+		printf("min: %f \t max: %f\n", min(points, 4), max(points, 4));
+
+		print_arr(rect.points, 4, "rect.points");
+		printf("min: %f \t max: %f\n", min(rect.points, 4), max(rect.points, 4));
+
+		printf("overlapping: %d\n", (min(points, 4) <= max(rect.points, 4) && min(rect.points, 4) <= max(points, 4)) || (min(rect.points, 4) <= max(points, 4) && min(points, 4) <= max(rect.points, 4)));
 		if(!((min(points, 4) <= max(rect.points, 4) && min(rect.points, 4) <= max(points, 4)) || (min(rect.points, 4) <= max(points, 4) && min(points, 4) <= max(rect.points, 4)))) {
 			return false;
 		}
@@ -151,6 +161,6 @@ void Rectangle::print() {
   printf("\n");
   vector<vertex_2d> verts = get_vertices();
   for (unsigned i = 0; i < 4; ++i) {
-    printf("vertex #%u: ( %f ; %f ) \n", i, verts[i].x, verts[i].y);
+    printf("vertex #%u: ( %f , %f ) \n", i, verts[i].x, verts[i].y);
   }
 }

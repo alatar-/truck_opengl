@@ -129,41 +129,53 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left, vector <Obstac
     }
 
     float ds = -velocity * dt;
-    position.x += ds * sin(angle);
-    position.y += ds * cos(angle);
-    move(0, position, angle, ds, following_bend);
-    if(detect_collision(obstacles)) {
-        collision();
+    vertex_2d new_position(position.x + ds * sin(angle), position.y + ds * cos(angle));
+
+    printf("\nNew movement:\n");
+    position.print();
+    new_position.print();
+    if(!move(0, new_position, angle, ds, following_bend, obstacles)) {
+        velocity = 0;
     }
-        
 }
 
-void Vehicle::move(float parent_size, vertex_2d in_position, float in_angle, float ds, float in_following_bend) {
+bool Vehicle::move(float parent_size, vertex_2d in_position, float in_angle, float ds, float in_following_bend, vector <Obstacle*> &obstacles) {
     if (parent_size != 0) {
         vertex_2d d_pos(0, size / 2);
         d_pos = d_pos.rotate(-in_following_bend);
         d_pos.y += parent_size;
         d_pos = d_pos.rotate(-in_angle);
-        position = in_position + d_pos;
+        in_position += d_pos;
 
         angle = in_angle + in_following_bend;
-    } else {
-        if (left_steering_wheel) {
-            left_steering_wheel->move(position, angle, ds);
-            left_steering_wheel->rotate(-in_following_bend);
-            right_steering_wheel->move(position, angle, -ds);
-            right_steering_wheel->rotate(-in_following_bend);
-        }
     }
 
+    vertex_2d temp_position = position;
+    position = in_position;
     set_vertices();
-    body->move(position, angle, 0);
-    for (unsigned i = 0; i < this->left_wheels.size(); ++i) {
-        left_wheels[i]->move(position, angle, ds);
-        right_wheels[i]->move(position, angle, -ds);
-    }
-    if (following_vehicle) {
-        following_vehicle->move(size, position, angle, ds, in_following_bend);
+    position = temp_position;
+    if (!detect_collision(obstacles)) {
+        if (!following_vehicle || following_vehicle->move(size, in_position, angle, ds, in_following_bend, obstacles)) {
+            position = in_position;
+            body->move(in_position, angle, 0);
+            if (left_steering_wheel && right_steering_wheel) {
+                left_steering_wheel->move(in_position, angle, ds);
+                left_steering_wheel->rotate(-in_following_bend);
+                right_steering_wheel->move(in_position, angle, -ds);
+                right_steering_wheel->rotate(-in_following_bend);
+            }
+
+            for (unsigned i = 0; i < this->left_wheels.size(); ++i) {
+                left_wheels[i]->move(in_position, angle, ds);
+                right_wheels[i]->move(in_position, angle, -ds);
+            }
+        }
+        set_vertices();
+        return true;
+    } else {
+        collision();
+        set_vertices();
+        return false;
     }
 }
 
@@ -178,17 +190,18 @@ vector <vertex_2d>  Vehicle::get_body_vertices() {
 
     dimensions.clear();
     vertex_2d pos_min = body->get_model_min_point();
-    // printf("vertex: ( %f ; %f ) \n", pos_min.x, pos_min.y);
+    // printf("vertex: ( %f , %f ) \n", pos_min.x, pos_min.y);
     vertex_2d pos_max = body->get_model_max_point();
     dimensions.push_back(pos_min);
     float tmp = pos_min.y;
     pos_min.y = pos_max.y;
-    // printf("vertex: ( %f ; %f ) \n", pos_min.x, pos_min.y);
+    // printf("vertex: ( %f , %f ) \n", pos_min.x, pos_min.y);
     dimensions.push_back(pos_min);
-    // printf("vertex: ( %f ; %f ) \n", pos_max.x, pos_max.y);
-    dimensions.push_back(pos_max);
-    pos_max.y = tmp;
-    // printf("vertex: ( %f ; %f ) \n", pos_max.x, pos_max.y);
+    pos_min.y = tmp;
+    pos_min.x = pos_max.x;
+    // printf("vertex: ( %f , %f ) \n", pos_min.x, pos_min.y);
+    dimensions.push_back(pos_min);
+    // printf("vertex: ( %f , %f ) \n", pos_max.x, pos_max.y);
     dimensions.push_back(pos_max);
     return dimensions;
 }
@@ -208,9 +221,9 @@ bool Vehicle::detect_collision(vector <Obstacle*> &obstacles) {
     for(unsigned i = 0; i < obstacles.size(); ++i) {
         if(intersection(*obstacles[i])) {
             printf("collision with obstacle %d\n", i);
-            // obstacles[i]->print();
-            printf("wehicle position:\n");
-            // print();
+            obstacles[i]->print();
+            printf("vehicle position:\n");
+            print();
             return true;
         }
     }

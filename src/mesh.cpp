@@ -33,7 +33,7 @@ mesh_t::mesh_t (const aiMesh *paiMesh, material_t *in_material) : MV(1.0f) {
 		for (unsigned i = 0, len = paiMesh->mNumVertices; i < len; ++i) {
 			const aiVector3D* pos = &(paiMesh->mVertices[i]);
 			const aiVector3D* norm = &(paiMesh->mNormals[i]);
-			vertex_3d v_pos(pos->x, pos->y, pos->z);
+			vertex_3d<float> v_pos(pos->x, pos->y, pos->z);
 			
 			if (i == 0) {
 				cords_min.x = v_pos.x;
@@ -47,7 +47,7 @@ mesh_t::mesh_t (const aiMesh *paiMesh, material_t *in_material) : MV(1.0f) {
 				cords_max.y = max(cords_max.y, v_pos.z);
 			}
 			
-			vertices.push_back(bone_vertex_t(v_pos, vertex_3d(norm->x, norm->y, norm->z)));
+			vertices.push_back(bone_vertex_t(v_pos, vertex_3d<float>(norm->x, norm->y, norm->z)));
 		}
 	}
 	
@@ -96,7 +96,7 @@ void mesh_t::set_vertices_data() {
 	for (unsigned i = 0, v = indices[i], len = indices.size()
 		;	i < len
 		;	++i, v = indices[i]) {
-		vertex_3d pos = vertices[v].get_pos()
+		vertex_3d<float> pos = vertices[v].get_pos()
 			,	norm = vertices[v].get_norm();
 		pos_data[i * 3] = pos.x;
 		pos_data[i * 3 + 1] = pos.y;
@@ -119,7 +119,7 @@ unsigned mesh_t::vertices_size() {
 
 void mesh_t::print() {
 	for (unsigned i = 0, len = vertices.size(); i < len; ++i) {
-		vertex_3d v = vertices[i].get_pos();
+		vertex_3d<float> v = vertices[i].get_pos();
 		printf("v[%u] = (%.2f, %.2f, %.2f)\n", i, v.x, v.y, v.z);
 	}
 }
@@ -132,19 +132,10 @@ void mesh_t::set_material (material_t *in_material) {
 	material = in_material;
 }
 
-bool mesh_t::test_intersection (vertex_3d pos0, vertex_3d pos1) {
-	for (unsigned i = 0, ilen = indices.size(); i < ilen; i += 9) {
-		if (check_intersect_tri(vertex_3d(pos_data + i), vertex_3d(pos_data + i + 3), vertex_3d(pos_data + i + 6), pos0, pos1)) {
-			return true;
-		}
-	}
-	return false;
-}
-
-vertex_2d mesh_t::get_cords_min() {
+vertex_2d<float> mesh_t::get_cords_min() {
 	return cords_min;
 }
 
-vertex_2d mesh_t::get_cords_max() {
+vertex_2d<float> mesh_t::get_cords_max() {
 	return cords_max;
 }

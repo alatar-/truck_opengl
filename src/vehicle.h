@@ -66,7 +66,7 @@ public:
 
 
     void calculate(direct_t front_back, direct_t right_left, vector <Obstacle*> &obstacles);
-    void move(float parent_size, vertex_2d in_position, float in_angle, float ds, float in_following_bend);
+    bool move(float parent_size, vertex_2d in_position, float in_angle, float ds, float in_following_bend, vector <Obstacle*> &obstacles);
     vector <vertex_2d> get_body_vertices();
     void set_vertices();
 	bool detect_collision(vector <Obstacle*> &obstacles);

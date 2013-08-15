@@ -459,6 +459,10 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		}
 	}
 
+	{
+		vector <Obstacle*> empty_obst;
+		truck->calculate(STOP, STOP, empty_obst);
+	}
 
   return true;
 }
