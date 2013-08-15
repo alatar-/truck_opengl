@@ -59,7 +59,7 @@ void keyDown(unsigned char c, int x, int y) {
     }
 }
 
-void key_up (int c, int x, int y) {
+void key_up(int c, int x, int y) {
 	switch (c) {
 		case GLUT_KEY_LEFT:
 			f_key_left = false;

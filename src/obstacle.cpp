@@ -30,9 +30,7 @@ Vertex2D<float>Obstacle::get_model_max_point() {
 	return model->get_max_point();
 }
 
-vector <Vertex2D<float> >  Obstacle::get_model_vertices() {
-    // printf("\n%p> Vehicle::get_body_vertices\n", this);
-
+vector <Vertex2D<float> > Obstacle::get_model_vertices() {
     dimensions.clear();
     Vertex2D<float>pos_min = get_model_min_point();
     // printf("vertex: ( %f , %f ) \n", pos_min.x, pos_min.y);

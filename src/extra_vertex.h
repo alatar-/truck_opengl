@@ -17,8 +17,8 @@ public:
 	Vertex3D<float> get_pos();
 	Vertex3D<float> get_norm();
 	
-	void set_pos (Vertex3D<float> in_pos);
-	void set_norm (Vertex3D<float> in_norm);
+	void set_pos(Vertex3D<float> in_pos);
+	void set_norm(Vertex3D<float> in_norm);
 };
 
 #endif

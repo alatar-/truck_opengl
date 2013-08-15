@@ -17,24 +17,24 @@ protected:
 	vector <Mesh*> meshes;
 	vector <Material*> materials;
 	
-	virtual bool parse_scene (const aiScene *pScene, string &model_file);
+	virtual bool parse_scene(const aiScene *pScene, string &model_file);
 public:
 	float width;
 	float length;
 	Vertex2D<float>overall_min_point, overall_max_point;
 	Model();
 	virtual ~Model();
-	bool load_materials (const aiScene* pScene, const string& model_file);
+	bool load_materials(const aiScene* pScene, const string& model_file);
 	virtual void clear();
-	bool load (string model_file);
+	bool load(string model_file);
 	
 	vector <Material*> &get_materials() {
 		return materials;
 	}
 	
-	void set_mv_matrix (glm::mat4 MV);
+	void set_mv_matrix(glm::mat4 MV);
 	
-	void draw (bool use_mv = false, bool apply_material = true);
+	void draw(bool use_mv = false, bool apply_material = true);
 	
 	float get_width();
 	float get_length();

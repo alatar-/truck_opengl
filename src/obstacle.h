@@ -22,13 +22,13 @@ public:
 	}
 	float get_model_width();
 	float get_model_length();
-	Vertex2D<float>get_model_min_point();
-	Vertex2D<float>get_model_max_point();
+	Vertex2D <float> get_model_min_point();
+	Vertex2D <float> get_model_max_point();
 
-	Vertex2D<float>get_pos() {
+	Vertex2D <float> get_pos() {
 		return pos;
 	}
-	vector <Vertex2D<float> > get_model_vertices();
+	vector <Vertex2D <float> > get_model_vertices();
 	void set_vertices();
 };
 

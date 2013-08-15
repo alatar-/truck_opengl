@@ -31,10 +31,10 @@ Vertex3D<float> ExtraVertex::get_norm() {
 	return norm;
 }
 
-void ExtraVertex::set_pos (Vertex3D<float> in_pos) {
+void ExtraVertex::set_pos(Vertex3D<float> in_pos) {
 	pos = in_pos;
 }
 
-void ExtraVertex::set_norm (Vertex3D<float> in_norm) {
+void ExtraVertex::set_norm(Vertex3D<float> in_norm) {
 	norm = in_norm;
 }

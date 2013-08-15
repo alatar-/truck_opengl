@@ -28,7 +28,7 @@ public:
 	
 	vector <Mesh*> meshes;
 	void clear();
-	bool load (aiMaterial *material, string &dir);
+	bool load(aiMaterial *material, string &dir);
 	void apply();
 	
 	void draw_associated_meshes(glm::mat4 V = glm::mat4(1.0f));

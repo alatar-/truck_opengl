@@ -52,7 +52,7 @@ public:
 	bool load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h);
 	void clear();
 	void draw();
-	void next_frame (direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn);
+	void next_frame(direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn);
 	
 	void mouse_motion(float dang_h, float dang_v);
 

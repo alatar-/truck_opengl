@@ -1,6 +1,6 @@
 #include "material.h"
 
-void load_color (aiMaterial *material, const char *pKey, unsigned type, unsigned idx, float *store, float dflt) {
+void load_color(aiMaterial *material, const char *pKey, unsigned type, unsigned idx, float *store, float dflt) {
 	aiColor3D color (0.f, 0.f, 0.f);
 	material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
 	if ( color.IsBlack() ) {
@@ -23,7 +23,7 @@ Material::Material() {
 	shininess = 0;
 }
 
-bool Material::load (aiMaterial *material, string &dir) {
+bool Material::load(aiMaterial *material, string &dir) {
 	bool res = true;
 	
 	clear();
