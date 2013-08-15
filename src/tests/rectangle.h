@@ -29,7 +29,7 @@ protected:
     void test_intersection_positives_only_1();
     void test_intersection_positives_only_2();
     void test_intersection_bent_1();
-    
+        
     void test_full_inclusion_positives_only_1();
     void test_full_inclusion_positives_only_2();
 
@@ -37,6 +37,7 @@ protected:
     void test_point_inside_positives_only_2();
     void test_point_inside_bent_1();
     void test_point_inside_bent_2();
+
 
 private:
 

@@ -93,7 +93,7 @@ float Vehicle::turn_factor() {
     return min_turn + y * (max_turn - min_turn);
 }
 
-void Vehicle::calculate(direct_t front_back, direct_t right_left) {
+void Vehicle::calculate(direct_t front_back, direct_t right_left, vector <Obstacle*> obstacles) {
     int now = glutGet(GLUT_ELAPSED_TIME); 
     float dt = ((float)now - last_time) / 1000.0;
     last_time = now;
@@ -131,8 +131,11 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left) {
     float ds = -velocity * dt;
     position.x += ds * sin(angle);
     position.y += ds * cos(angle);
-
+    if(detect_collision(obstacles)) {
+        collision();
+    }
     move(0, position, angle, ds, following_bend);
+        
 }
 
 void Vehicle::move(float parent_size, vertex_2d in_position, float in_angle, float ds, float in_following_bend) {
@@ -196,4 +199,25 @@ void Vehicle::set_vertices() {
     }
 
     Rectangle::set_vertices(verts);
+}
+
+
+bool Vehicle::detect_collision(vector <Obstacle*> obstacles) {
+    for(unsigned i = 0; i < obstacles.size(); ++i) {
+        if(intersection(*obstacles[i])) {
+            printf("collision with obstacle %d\n", i);
+            obstacles[i]->print();
+            printf("wehicle position:\n");
+            print();
+            return true;
+        }
+    }
+    if (following_vehicle) {
+        return following_vehicle->detect_collision(obstacles);
+    }
+    return false;
+}
+
+void Vehicle::collision() {
+    printf("KOLIZJA!\n");
 }
