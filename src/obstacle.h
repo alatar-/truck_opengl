@@ -13,8 +13,9 @@ private:
 	model_t* model;
 	world_t* world;
 	vertex_2d pos;
+	vector <vertex_2d> dimensions;
 public:
-	Obstacle();
+	Obstacle(world_t* world, string in_path);
 	~Obstacle();
 	vector <material_t*> &get_materials() {
 		return model->get_materials();
@@ -27,6 +28,8 @@ public:
 	vertex_2d get_pos() {
 		return pos;
 	}
+	vector <vertex_2d> get_model_vertices();
+	void set_vertices();
 };
 
 #endif

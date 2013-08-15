@@ -70,16 +70,35 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 	
 	{
 		ini.select("Parking");
-		galery = new model_t();
+		parking = new model_t();
 		string model_file("./models/");
-		model_file += ini.get<string>("model", "galery.obj");
-		if (!galery->load(model_file)) {
+		model_file += ini.get<string>("model", "Parking.obj");
+		if (!parking->load(model_file)) {
 			return false;
 		}
-		
-		vector <material_t*> &gal_mats = galery->get_materials();
-		materials.insert(materials.begin(), gal_mats.begin(), gal_mats.end());
-		printf("done\n");
+		vector <material_t*> &parking_mats = parking->get_materials();
+		materials.insert(materials.begin(), parking_mats.begin(), parking_mats.end());
+		int obstacle_number = ini.get<int>("obstacle_number", 0);
+		string pre = ini.get<string>("obstacle_model", "Parking/Obstacle");
+		string post = ini.get<string>("obstacle_suffix", ".obj");
+		for(int i = 0 ; i < obstacle_number; ++i)
+		{
+			char number[4];
+			sprintf(number, "%03d", i);
+			string name("");
+			name += pre;
+			name += number;
+			name += post;
+			printf("%s\n", name.c_str());
+			obstacles.push_back(new Obstacle(
+						this
+					,	name
+				));
+			obstacles.back()->set_vertices();
+			vector <material_t*> &obst_mats = obstacles.back()->get_materials();
+			materials.insert(materials.begin(), obst_mats.begin(), obst_mats.end());
+			printf("Got materials\n");
+		}
 	}
 
 	// {
@@ -408,6 +427,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		}
 		truck->following_vehicle = first_trailer;
 		first_trailer-> following_vehicle = second_trailer;
+
 		/*--------------------------------------------------------------------------------*/
 		// {
 		// 	ini.select("TruckDoubleWheels");
@@ -474,7 +494,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 }
 
 world_t::~world_t() {	
-	delete galery;
+	delete parking;
 	delete camera;
 }
 
@@ -488,20 +508,7 @@ void world_t::draw() {
 	for (unsigned i = 0, ilen = materials.size(); i < ilen; ++i) {
 		materials[i]->set_marker(false);
 	}
-	galery->set_mv_matrix(glm::mat4(1.0f));
-	// glm::mat4(
-	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)
-	// 	glm::vec4(0.0f, 0.5f, 0.0f, 0.0f),
-	// 	glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
-	// 	glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
-	// ));
-
-    //printf("mv matrix set\n");
-	galery->set_mv_matrix(glm::mat4(1.0f));
-
+	parking->set_mv_matrix(glm::mat4(1.0f));
 	truck->body->set_mv_matrix(glm::mat4(1.0f));
 	truck->left_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
 	truck->right_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
@@ -539,79 +546,6 @@ void world_t::draw() {
 	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
-// void world_t::draw_with_shadows (glm::mat4 V) {
-// 	/**
-// 	 * First draw - from all lights into shadow map
-// 	 */
-	
-// 	glCullFace(GL_FRONT);
-// 	glColorMask(0, 0, 0, 0);
-
-// 	glMatrixMode(GL_PROJECTION);
-// 	glMatrixMode(GL_MODELVIEW);
-// 	glViewport(0, 0, shadow_map_size, shadow_map_size);
-	
-// 	glBindTexture(GL_TEXTURE_2D, shadow_map);
-// 	glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, shadow_map_size, shadow_map_size);
-	
-// 	glCullFace(GL_BACK);
-// 	glShadeModel(GL_SMOOTH);
-// 	glColorMask(1, 1, 1, 1);
-	
-// 	/**
-// 	 * Second draw
-// 	 */
-// 	glClear(GL_DEPTH_BUFFER_BIT);
-// 	glMatrixMode(GL_PROJECTION);
-// 	glLoadMatrixf(glm::value_ptr(P));
-	
-// 	glViewport(0, 0, screen_w, screen_h);
-// 	glEnable(GL_LIGHTING);
-	
-// 	draw_in_material_order(V);
-	
-// 	/**
-// 	 * Third draw
-// 	 */
-	
-// 	glEnable(GL_TEXTURE_GEN_S);
-// 	glEnable(GL_TEXTURE_GEN_T);
-// 	glEnable(GL_TEXTURE_GEN_R);
-// 	glEnable(GL_TEXTURE_GEN_Q);
-// 	glBindTexture(GL_TEXTURE_2D, shadow_map);
-// 	glEnable(GL_TEXTURE_2D);
-// 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
-// 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
-// 	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE_ARB, GL_INTENSITY);
-// 	glAlphaFunc(GL_GEQUAL, 0.99f);
-// 	glEnable(GL_ALPHA_TEST);
-	
-// 	glDisable(GL_CULL_FACE);
-	
-// 		glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-// 		glTexGenfv(GL_S, GL_EYE_PLANE, glm::value_ptr(texture_matrix[0]));
-
-// 		glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-// 		glTexGenfv(GL_T, GL_EYE_PLANE, glm::value_ptr(texture_matrix[1]));
-
-// 		glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-// 		glTexGenfv(GL_R, GL_EYE_PLANE, glm::value_ptr(texture_matrix[2]));
-
-// 		glTexGeni(GL_Q, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-// 		glTexGenfv(GL_Q, GL_EYE_PLANE, glm::value_ptr(texture_matrix[3]));
-
-// 		draw_in_material_order(V);
-// 	glDisable(GL_TEXTURE_GEN_S);
-// 	glDisable(GL_TEXTURE_GEN_T);
-// 	glDisable(GL_TEXTURE_GEN_R);
-// 	glDisable(GL_TEXTURE_GEN_Q);
-
-// 	//Restore other states
-// 	glDisable(GL_LIGHTING);
-// 	glDisable(GL_TEXTURE_2D);
-// 	glDisable(GL_ALPHA_TEST);
-// }
-
 void world_t::draw_in_material_order(glm::mat4 V) {
 	glMatrixMode(GL_MODELVIEW);
 	
@@ -633,7 +567,7 @@ void world_t::mouse_motion(float dang_h, float dang_v) {
 }
 
 
-bool world_t::test_colls_with_galery(vertex_2d pos, vertex_2d itd, float size, float height) {
+bool world_t::test_colls_with_parking(vertex_2d pos, vertex_2d itd, float size, float height) {
 	float scale = module(pos, itd);
 	scale = (scale + size) / size;
 	
@@ -644,5 +578,5 @@ bool world_t::test_colls_with_galery(vertex_2d pos, vertex_2d itd, float size, f
 		|| (abs(pos1.x) <= 3 && abs(20 - abs(pos1.z)) >= 2)
 		|| (abs(pos1.z - 1) <= 3 && abs(20 - abs(pos1.x)) >= 2)
 		);
-	return !galery->test_intersection(pos0, pos1);
+	return !parking->test_intersection(pos0, pos1);
 }

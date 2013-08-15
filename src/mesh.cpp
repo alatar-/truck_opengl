@@ -4,7 +4,7 @@
 
 using namespace std;
 
-mesh_t::mesh_t (const aiMesh *paiMesh, material_t *in_material) {
+mesh_t::mesh_t (const aiMesh *paiMesh, material_t *in_material) : MV(1.0f) {
 	material = in_material;
 	material->meshes.push_back(this);
 	
