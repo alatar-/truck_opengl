@@ -81,11 +81,12 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		{
 			string model_file("./models/");
 			model_file += ini.get<string>("meta_model", "Parking/meta.obj");
-					meta = new Obstacle(
-						this,
-						model_file
-					);
-					vector <material_t*> &meta_mats = meta->get_materials();
+			meta = new Obstacle(
+				this,
+				model_file
+			);
+			vector <material_t*> &meta_mats = meta->get_materials();
+			meta->set_vertices();
 			materials.insert(materials.begin(), meta_mats.begin(), meta_mats.end());
 		}
 
@@ -539,13 +540,16 @@ bool world_t::test_colls_with_parking(vertex_2d pos, vertex_2d itd, float size, 
 }
 
 bool world_t::is_win() {
-		Vehicle *curr_vehicle = truck;
-		while (curr_vehicle != NULL) {
-			if (meta->full_inclusion(*curr_vehicle)) {
-				curr_vehicle = curr_vehicle->following_vehicle;
-			} else {
-				return false;
-			}
+	int i = 0;
+	Vehicle *curr_vehicle = truck;
+
+	while (curr_vehicle != NULL) {
+		if (meta->full_inclusion(*curr_vehicle)) {
+			i += 1;
+			curr_vehicle = curr_vehicle->following_vehicle;
+		} else {
+			return false;
 		}
-		return true;
+	}
+	return true;
 }
