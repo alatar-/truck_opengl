@@ -39,7 +39,7 @@ bool Material::load (aiMaterial *material, string &dir) {
 		
 		if (material->GetTexture(aiTextureType_DIFFUSE, 0, &path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 			string full_path = dir + "/" + path.data;
-			texture = new texture_t(GL_TEXTURE_2D, full_path.c_str());
+			texture = new Texture(GL_TEXTURE_2D, full_path.c_str());
 			
 			if (!texture->load()) {
 				fprintf(stderr, "Error loading texture '%s'\n", full_path.c_str());
@@ -55,7 +55,7 @@ bool Material::load (aiMaterial *material, string &dir) {
 	// Load a white texture in case the model does not include its own texture
 	if (!texture) {
 		printf("loading white\n");
-		texture = new texture_t(GL_TEXTURE_2D, "./models/white.png");
+		texture = new Texture(GL_TEXTURE_2D, "./models/white.png");
 		
 		res = texture->load();
 	}

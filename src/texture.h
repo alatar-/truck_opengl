@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class texture_t {
+class Texture {
 private:
 	string file_name;
 	GLenum texture_target;
@@ -14,7 +14,7 @@ private:
 	Magick::Image* image;
 	Magick::Blob blob;
 public:
-	texture_t(GLenum in_texture_target, const string& in_file_name);
+	Texture(GLenum in_texture_target, const string& in_file_name);
 	void init_bind();
 
 	string get_file_name();
@@ -23,7 +23,7 @@ public:
 	void bind();
 	double size();
 
-	bool operator==(const texture_t &o) const;
+	bool operator==(const Texture &o) const;
 };
 
 

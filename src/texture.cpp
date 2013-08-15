@@ -2,12 +2,12 @@
 
 #include <cstdio>
 
-texture_t::texture_t(GLenum in_texture_target, const string& in_file_name) : file_name(in_file_name) {
+Texture::Texture(GLenum in_texture_target, const string& in_file_name) : file_name(in_file_name) {
 	texture_target = in_texture_target;
 	image = NULL;
 }
 
-bool texture_t::load() {
+bool Texture::load() {
 	try {
 		image = new Magick::Image(file_name);
 		image->write(&blob, "RGBA");
@@ -19,7 +19,7 @@ bool texture_t::load() {
 	return true;
 }
 
-void texture_t::init_bind() {
+void Texture::init_bind() {
 	glGenTextures(1, &texture_obj);
 	glBindTexture(texture_target, texture_obj);
 	glTexImage2D(texture_target, 0, GL_RGB, image->columns(), image->rows(), 0, GL_RGBA, GL_UNSIGNED_BYTE, blob.data());
@@ -27,12 +27,12 @@ void texture_t::init_bind() {
 	glTexParameterf(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
-void texture_t::bind() {
+void Texture::bind() {
 	glBindTexture(texture_target, texture_obj);
 // 	printf("Binding (%p): '%s'\n", this, file_name.c_str());
 }
 
-double texture_t::size() {
+double Texture::size() {
 	if (this && image) {
 		return (double)image->columns() * image->rows();
 	} else {
@@ -40,10 +40,10 @@ double texture_t::size() {
 	}
 }
 
-string texture_t::get_file_name() {
+string Texture::get_file_name() {
 	return file_name;
 }
 
-bool texture_t::operator==(const texture_t &o) const {
+bool Texture::operator==(const Texture &o) const {
 	return file_name == o.file_name;
 }

@@ -14,7 +14,7 @@ using namespace std;
 
 class Material {
 private:
-	texture_t *texture;
+	Texture *texture;
 	float ambient[4]
 		,	emission[4]
 		,	diffuse[4]
