@@ -68,7 +68,7 @@ bool anim_mesh_model_t::load_frame (string filename, unsigned idx) {
 				const aiVector3D* pos = &(paiMesh->mVertices[j]);
 				const aiVector3D* norm = &(paiMesh->mNormals[j]);
 				
-				the_mesh.push_back(bone_vertex_t(vertex_3d(pos->x, pos->y, pos->z), vertex_3d(norm->x, norm->y, norm->z)));
+				the_mesh.push_back(bone_vertex_t(vertex_3d<float>pos->x, pos->y, pos->z), vertex_3d<float>norm->x, norm->y, norm->z)));
 				
 // 				printf("loaded vertex> (%.2f, %.2f, %.2f) - (%.2f, %.2f, %.2f)\n", the_mesh.back().get_pos().x, the_mesh.back().get_pos().y, the_mesh.back().get_pos().z, the_mesh.back().get_norm().x, the_mesh.back().get_norm().y, the_mesh.back().get_norm().z);
 // 				printf("loaded vertex> (%.2f, %.2f, %.2f) - (%.2f, %.2f, %.2f)\n", pos->x, pos->y, pos->z, norm->x, norm->y, norm->z);
@@ -115,8 +115,8 @@ void anim_mesh_model_t::prepare_vertices (float frame) {
 				,	&jth_frame_mesh = jth_frame[i];
 			for (unsigned j = 0, jlen = the_mesh.vertices_size(); j < jlen; ++j) {
 				// or slerp??
-				the_mesh[j].set_pos(vertex_3d::lerp(ith_frame_mesh[j].get_pos(), jth_frame_mesh[j].get_pos(), frame));
-				the_mesh[j].set_norm(vertex_3d::lerp(ith_frame_mesh[j].get_norm(), jth_frame_mesh[j].get_norm(), frame));
+				the_mesh[j].set_pos(vertex_3d<float>:lerp(ith_frame_mesh[j].get_pos(), jth_frame_mesh[j].get_pos(), frame));
+				the_mesh[j].set_norm(vertex_3d<float>:lerp(ith_frame_mesh[j].get_norm(), jth_frame_mesh[j].get_norm(), frame));
 			}
 		}
 	}

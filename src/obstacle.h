@@ -12,8 +12,8 @@ class Obstacle : public Rectangle {
 private:
 	model_t* model;
 	world_t* world;
-	vertex_2d pos;
-	vector <vertex_2d> dimensions;
+	vertex_2d<float>pos;
+	vector <vertex_2d<float> > dimensions;
 public:
 	Obstacle(world_t* world, string in_path);
 	~Obstacle();
@@ -22,13 +22,13 @@ public:
 	}
 	float get_model_width();
 	float get_model_length();
-	vertex_2d get_model_min_point();
-	vertex_2d get_model_max_point();
+	vertex_2d<float>get_model_min_point();
+	vertex_2d<float>get_model_max_point();
 
-	vertex_2d get_pos() {
+	vertex_2d<float>get_pos() {
 		return pos;
 	}
-	vector <vertex_2d> get_model_vertices();
+	vector <vertex_2d<float> > get_model_vertices();
 	void set_vertices();
 };
 

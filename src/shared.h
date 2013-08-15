@@ -38,16 +38,12 @@ int sign (float a);
 float normalize_angle (float ang);
 float to_degrees (float radians);
 
-float module (float a, float b);
-float module (vertex_2d a, vertex_2d b);
+template<class T> T module (T a, T b);
 string get_file (const char *filename);
 
 void print_mat4 (glm::mat4 M);
 void print_ai_mat4 (aiMatrix4x4 M);
 void print_quat (glm::quat Q);
 glm::mat4 quat_to_mat4 (glm::quat Q);
-
-bool check_same_clock_dir (vertex_3d pt1, vertex_3d pt2, vertex_3d pt3, vertex_3d norm);
-bool check_intersect_tri (vertex_3d pt1, vertex_3d pt2, vertex_3d pt3, vertex_3d linept, vertex_3d vect);
 
 #endif

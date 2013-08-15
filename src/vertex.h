@@ -3,116 +3,120 @@
 
 #include <cmath>
 #include <cstdio>
+#include "shared.h"
 
-class vertex_2d {
+template<class T> class vertex_2d {
 public:
-	float x
-		,	y;
+	T x
+	,	y;
 	
-	vertex_2d() {
+	vertex_2d	() {
 		x = 0;
 		y = 0;
 	}
-	vertex_2d(float in) {
+	vertex_2d(T in) {
 		x = in;
 		y = in;
 	}
-	vertex_2d(float in_x, float in_y) {
+	vertex_2d(T in_x, T in_y) {
 		x = in_x;
 		y = in_y;
 	}
 
-	vertex_2d rotate (float angle) {
-		float sn = sin(angle)
+	vertex_2d<T> rotate (T angle) {
+		T sn = sin(angle)
 			,	cs = cos(angle);
-		return vertex_2d(x * cs - y * sn, x * sn + y * cs);
+		return vertex_2d<T>(x * cs - y * sn, x * sn + y * cs);
 	}
 	
-	bool operator==(const vertex_2d &o) const {
+	bool operator==(const vertex_2d<T> &o) const {
 		return x == o.x && y == o.y;
 	}
 	
-	bool operator!=(const vertex_2d &o) const {
+	bool operator!=(const vertex_2d<T> &o) const {
 		return !(*this == o);
 	}
 
-	vertex_2d operator+(const vertex_2d &o) const {
-		return vertex_2d(x + o.x, y + o.y);
+	vertex_2d<T> operator+(const vertex_2d<T> &o) const {
+		return vertex_2d<T>(x + o.x, y + o.y);
 	}
 
-	vertex_2d operator-(const vertex_2d &o) const {
-		return vertex_2d(x - o.x, y - o.y);
+	vertex_2d<T> operator-(const vertex_2d<T> &o) const {
+		return vertex_2d<T>(x - o.x, y - o.y);
 	}
 
-	vertex_2d operator+=(const vertex_2d &o) {
+	vertex_2d<T> operator+=(const vertex_2d<T> &o) {
 		x += o.x;
 		y += o.y;
 		return *this;
 	}
 	
-	vertex_2d operator-=(const vertex_2d &o) {
+	vertex_2d<T> operator-=(const vertex_2d<T> &o) {
 		x -= o.x;
 		y -= o.y;
 		return *this;
 	}
 
-	vertex_2d operator-() const {
-		return vertex_2d(-x, -y);
+	vertex_2d<T> operator-() const {
+		return vertex_2d<T>(-x, -y);
 	}
 
-	float operator*(const vertex_2d &o){
+	T operator*(const vertex_2d<T> &o){
 		return x * o.x + y * o.y;
 	}
 
 	void print() const {
-		printf("(%f %f)\n", x, y);
+		printf("(%Lf %Lf)\n", x, y);
 	}
 
+	T module(const T &o) const {
+		return module(x - o.x, y - o.y);
+	}
 };
 
-class vertex_3d : public vertex_2d {
+template<class T> class vertex_3d : public vertex_2d<T> {
 public:
-	float z;
+	T z;
 	
-	vertex_3d() : vertex_2d() {
+	vertex_3d() : vertex_2d<T>() {
 		
 	}
 	
-	vertex_3d (float *arr) {
-		x = arr[0];
-		y = arr[1];
-		z = arr[2];
+	vertex_3d (T *arr) : vertex_2d<T>() {
+		this->x = arr[0];
+		this->y = arr[1];
+		this->z = arr[2];
 	}
 	
-	vertex_3d(float in_x, float in_y, float in_z) : vertex_2d(in_x, in_y) {
-		z = in_z;
+	vertex_3d(T in_x, T in_y, T in_z) : vertex_2d<T>(in_x, in_y) {
+		this->z = in_z;
 	}
 	
-	bool operator==(const vertex_3d &o) const {
-		return x == o.x && y == o.y && z == o.z;
+	bool operator==(const vertex_3d<T> &o) const {
+		return this->x == o.x && this->y == o.y && this->z == o.z;
 	}
 	
-	bool operator!=(const vertex_3d &o) const {
+	bool operator!=(const vertex_3d<T> &o) const {
 		return !(*this == o);
 	}
 	
-	vertex_3d operator+(const vertex_3d &o) const {
-		return vertex_3d(x + o.x, y + o.y, z + o.z);
+	vertex_3d<T> operator+(const vertex_3d<T> &o) const {
+		return vertex_3d<T>(this->x + o.x, this->y + o.y, this->z + o.z);
 	}
 	
-	vertex_3d operator-(const vertex_3d &o) const {
-		return vertex_3d(x - o.x, y - o.y, z - o.z);
+	vertex_3d<T> operator-(const vertex_3d<T> &o) const {
+		return vertex_3d<T>(this->x - o.x, this->y - o.y, this->z - o.z);
 	}
 	
-	vertex_3d operator*(float scalar) const {
-		return vertex_3d(x * scalar, y * scalar, z * scalar);
+	vertex_3d<T> operator*(T scalar) const {
+		return vertex_3d<T>(this->x * scalar, this->y * scalar, this->z * scalar);
 	}
 	
-	float operator*(vertex_3d &o) const {
-		return x * o.x + y * o.y + z * o.z;
+	T operator*(vertex_3d<T> &o) const {
+		return this->x * o.x + this->y * o.y + this->z * o.z;
 	}
 	
-	static vertex_3d lerp(const vertex_3d &a, const vertex_3d &b, float factor) {
+	static vertex_3d<T> lerp(const vertex_3d<T> &a, const vertex_3d<T> &b, T factor) {
 		return a + (b - a) * factor;
 	}
 };

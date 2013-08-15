@@ -22,8 +22,8 @@ path_t::path_t (string in_arr, bool looped) {
 // 			printf("3 lev: idx2 = %u\n", idx2);
 			if (idx2 != string::npos) {
 				string pts = in_arr.substr(idx, idx2 - idx);
-				points.push_back(vector <vertex_2d>());
-				vector <vertex_2d> &arr = points.back();
+				points.push_back(vector <vertex_2d<float>());
+				vector <vertex_2d<float> &arr = points.back();
 				
 // 				printf("4 lev\n");
 				for (size_t jdx = pts.find("(", 0, 1)
@@ -38,7 +38,7 @@ path_t::path_t (string in_arr, bool looped) {
 					
 					if (jdx2 != string::npos) {
 						sscanf(pts.substr(jdx, jdx2 - jdx).c_str(), " %f, %f", &x, &y);
-						arr.push_back(vertex_2d(x, y));
+						arr.push_back(vertex_2d<float>x, y));
 					}
 					jdx = jdx2;
 				}
@@ -50,10 +50,10 @@ path_t::path_t (string in_arr, bool looped) {
 	}
 	
 	if (points.empty()) {
-		points.push_back(vector <vertex_2d>());
+		points.push_back(vector <vertex_2d<float>());
 	}
 	if (points[0].empty()) {
-		points[0].push_back(vertex_2d(0.f, 0.f));
+		points[0].push_back(vertex_2d<float>0.f, 0.f));
 	}
 	
 	array = 0;
@@ -130,8 +130,8 @@ bool path_t::move (float step) {
 		return STOP_AND_STARE;
 	}
 	
-	vector <vertex_2d> &p = points[array];
-	vertex_2d pnext = p[next];
+	vector <vertex_2d<float> &p = points[array];
+	vertex_2d<float>pnext = p[next];
 	if (extremal() && pos == pnext) {
 // 		printf("path_t::move> extremal\n");
 		inc_next();
@@ -160,7 +160,7 @@ bool path_t::move (float step) {
 	return STILL_MOVING;
 }
 
-vertex_2d path_t::position() {
+vertex_2d<float>path_t::position() {
 	return pos;
 }
 

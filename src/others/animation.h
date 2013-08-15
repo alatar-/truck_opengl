@@ -9,12 +9,12 @@ using namespace std;
 
 typedef struct {
 	float time;
-	vertex_3d trans;
+	vertex_3d<float>trans;
 } trans_key_t;
 
 typedef struct {
 	float time;
-	vertex_3d scale;
+	vertex_3d<float>scale;
 } scale_key_t;
 
 typedef struct {
@@ -33,8 +33,8 @@ private:
 	float full_time;
 	
 	glm::quat get_rotation (float anim_time);
-	vertex_3d get_scaling (float anim_time);
-	vertex_3d get_translation (float anim_time);
+	vertex_3d<float>get_scaling (float anim_time);
+	vertex_3d<float>get_translation (float anim_time);
 	
 public:
 	animation_t();

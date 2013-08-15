@@ -17,7 +17,7 @@ private:
 	vector <bone_vertex_t> vertices;
 	material_t *material;
 	
-	vertex_2d cords_min, cords_max;
+	vertex_2d<float> cords_min, cords_max;
 	
 	glm::mat4 MV;
 public:
@@ -35,9 +35,8 @@ public:
 	
 	void print();
 	
-	bool test_intersection (vertex_3d pos0, vertex_3d pos1);
-	vertex_2d get_cords_min();
-	vertex_2d get_cords_max();
+	vertex_2d<float> get_cords_min();
+	vertex_2d<float> get_cords_max();
 };
 
 #endif
