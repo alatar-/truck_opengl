@@ -40,6 +40,12 @@ private:
 	bool invert_mouse_y;
 	
 	unsigned screen_w,	screen_h;
+
+	model_t *red_marker;
+	void draw_all_markers(glm::mat4 V);
+	void draw_rectangle(Rectangle &rect, glm::mat4 V);
+	void draw_marker (vertex_2d pos, glm::mat4 V);
+
 public:
 	bool win;
 	world_t(){}

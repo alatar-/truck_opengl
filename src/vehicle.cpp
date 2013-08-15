@@ -131,10 +131,10 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left, vector <Obstac
     float ds = -velocity * dt;
     position.x += ds * sin(angle);
     position.y += ds * cos(angle);
+    move(0, position, angle, ds, following_bend);
     if(detect_collision(obstacles)) {
         collision();
     }
-    move(0, position, angle, ds, following_bend);
         
 }
 
@@ -174,6 +174,8 @@ Vehicle::~Vehicle() {
 }
 
 vector <vertex_2d>  Vehicle::get_body_vertices() {
+    // printf("\n%p> Vehicle::get_body_vertices\n", this);
+
     dimensions.clear();
     vertex_2d pos_min = body->get_model_min_point();
     // printf("vertex: ( %f ; %f ) \n", pos_min.x, pos_min.y);
@@ -195,7 +197,7 @@ void Vehicle::set_vertices() {
     vector <vertex_2d> verts = get_body_vertices();
 
     for (unsigned i = 0; i < 4; ++i) {
-        verts[i] = verts[i].rotate(angle) + position;
+        verts[i] = verts[i].rotate(-angle) + position;
     }
 
     Rectangle::set_vertices(verts);
@@ -206,9 +208,9 @@ bool Vehicle::detect_collision(vector <Obstacle*> &obstacles) {
     for(unsigned i = 0; i < obstacles.size(); ++i) {
         if(intersection(*obstacles[i])) {
             printf("collision with obstacle %d\n", i);
-            obstacles[i]->print();
+            // obstacles[i]->print();
             printf("wehicle position:\n");
-            print();
+            // print();
             return true;
         }
     }

@@ -430,6 +430,17 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 	}
 
 	{
+		red_marker = NULL;
+		ini.select("RedMarker");
+		if (ini.get<bool>("on", false)) {
+			string model_file("./models/");
+			model_file += ini.get<string>("model", "Parking/red_marker.obj");
+			red_marker = new model_t();
+			red_marker->load(model_file);
+		}
+	}
+
+	{
 		sort(materials.begin(), materials.end(), materials_ptr_less);
 		unsigned i = 0, j = 1, len = materials.size();
 		for (; j < len; ++j) {
@@ -447,6 +458,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			materials.resize(i + 1);
 		}
 	}
+
 
   return true;
 }
@@ -494,8 +506,10 @@ void world_t::draw() {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glDisable(GL_CULL_FACE);
+	draw_all_markers(V);
+
 	draw_in_material_order(V);
-	
+
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
@@ -508,6 +522,41 @@ void world_t::draw_in_material_order(glm::mat4 V) {
 		materials[i]->draw_associated_meshes(V);
 	}
 }
+
+void world_t::draw_all_markers(glm::mat4 V) {
+	if (red_marker) {
+		glMatrixMode(GL_MODELVIEW);
+		
+		red_marker->get_materials().back()->apply();
+		for (unsigned i = 0, ilen = obstacles.size(); i < ilen; ++i) {
+			draw_rectangle(*obstacles[i], V);
+		}
+		draw_rectangle(*meta, V);
+
+		Vehicle *curr_vehicle = truck;
+		bool flag = false;
+		while (curr_vehicle != NULL) {
+			draw_rectangle(*curr_vehicle, V);
+			curr_vehicle = curr_vehicle->following_vehicle;
+			red_marker->get_materials()[flag]->apply();
+			flag = !flag;
+		}
+	}
+}
+
+void world_t::draw_rectangle(Rectangle &rect, glm::mat4 V) {
+	vector <vertex_2d> verts = rect.get_vertices();
+	for (unsigned i = 0, ilen = verts.size(); i < ilen; ++i) {
+		draw_marker(verts[i], V);
+	}
+}
+
+void world_t::draw_marker (vertex_2d pos, glm::mat4 V) {
+	glm::mat4 M = glm::translate(glm::mat4(1.0f), glm::vec3(pos.x, 0.0f, pos.y));
+	red_marker->set_mv_matrix(V * M);
+	red_marker->draw(true, false);
+}
+
 
 void world_t::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct_t cam_up_down, direct_t veh_front_back, direct_t veh_right_left) {
 	camera->move(cam_right_left, cam_front_back, cam_up_down);

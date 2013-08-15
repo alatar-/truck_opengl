@@ -31,26 +31,28 @@ bool model_t::parse_scene (const aiScene *pScene, string &model_file) {
 			meshes.push_back(new mesh_t(paiMesh, materials[paiMesh->mMaterialIndex]));
 		}
 		vertex_2d local_min = meshes[0]->get_cords_min(), local_max = meshes[0]->get_cords_max();
-		for (unsigned i = 1; i < meshes.size(); i++)
-		{
-			if(meshes[i]->get_cords_min().x < local_min.x) {
-					local_min.x = meshes[i]->get_cords_min().x;
-			}
-			if(meshes[i]->get_cords_min().y < local_min.y) {
-					local_min.y = meshes[i]->get_cords_min().y;
-			}
-			if(meshes[i]->get_cords_max().x > local_max.x) {
-					local_max.x = meshes[i]->get_cords_max().x;
-			}
-			if(meshes[i]->get_cords_max().y > local_max.y) {
-					local_max.y = meshes[i]->get_cords_max().y;
-			}			
+
+		// printf("\n\n\n\t\t%s\n\n%s> 0\n", model_file.c_str(), model_file.c_str());
+		// local_min.print();
+		// local_max.print();
+		for (unsigned i = 1; i < meshes.size(); i++) {
+			local_min.x = min(meshes[i]->get_cords_min().x, local_min.x);
+			local_min.y = min(meshes[i]->get_cords_min().y, local_min.y);
+			local_max.x = max(meshes[i]->get_cords_max().x, local_max.x);
+			local_max.y = max(meshes[i]->get_cords_max().y, local_max.y);
+
+			// printf("\n%s> %u\n\tmesh:\n", model_file.c_str(), i);
+			// meshes[i]->get_cords_min().print();
+			// meshes[i]->get_cords_max().print();
+			// printf("locals:\n");
+			// local_min.print();
+			// local_max.print();
 		}
 		overall_min_point = local_min;
 		overall_max_point = local_max;
 		length = local_max.x - local_min.x;
 		width = local_max.y - local_min.y;
-		printf("model length: %f, model width: %f\n", length, width);
+		// printf("model length: %f, model width: %f\n", length, width);
 	} else {
 		return false;
 	}
@@ -107,9 +109,9 @@ void model_t::set_mv_matrix (glm::mat4 MV) {
 	}
 }
 
-void model_t::draw (bool use_mv) {
+void model_t::draw (bool use_mv, bool apply_material) {
 	for (unsigned i = 0, len = meshes.size(); i < len; ++i) {
-		meshes[i]->draw(false, true);
+		meshes[i]->draw(use_mv, apply_material);
 	}
 }
 

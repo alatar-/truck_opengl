@@ -41,18 +41,10 @@ mesh_t::mesh_t (const aiMesh *paiMesh, material_t *in_material) : MV(1.0f) {
 				cords_max.x = v_pos.x;
 				cords_max.y = v_pos.z;
 			} else {
-				if(v_pos.x < cords_min.x) {
-					cords_min.x = v_pos.x;
-				}
-				if(v_pos.z < cords_min.y) {
-					cords_min.y = v_pos.z;
-				}
-				if(v_pos.x > cords_max.x) {
-					cords_max.x = v_pos.x;
-				}
-				if(v_pos.z > cords_min.y) {
-					cords_max.y = v_pos.z;
-				}
+				cords_min.x = min(cords_min.x, v_pos.x);
+				cords_min.y = min(cords_min.y, v_pos.z);
+				cords_max.x = max(cords_max.x, v_pos.x);
+				cords_max.y = max(cords_max.y, v_pos.z);
 			}
 			
 			vertices.push_back(bone_vertex_t(v_pos, vertex_3d(norm->x, norm->y, norm->z)));

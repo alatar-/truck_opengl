@@ -34,7 +34,7 @@ public:
 	
 	void set_mv_matrix (glm::mat4 MV);
 	
-	void draw (bool use_mv = false);
+	void draw (bool use_mv = false, bool apply_material = true);
 	
 	bool test_intersection (vertex_3d pos0, vertex_3d pos1);
 	float get_width();
