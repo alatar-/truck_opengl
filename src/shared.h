@@ -26,21 +26,17 @@
 using namespace std;
 
 typedef enum {
-	BACK = -1
-,	STOP = 0
-,	FRONT = 1
+	BACK = -1,
+	STOP = 0,
+	FRONT = 1,
 } direct_t;
 
 typedef INI <string, string, string> ini_t;
-
 int sign (float a);
-
 float normalize_angle (float ang);
 float to_degrees (float radians);
-
 template<class T> T module (T a, T b);
 string get_file (const char *filename);
-
 void print_mat4 (glm::mat4 M);
 void print_ai_mat4 (aiMatrix4x4 M);
 void print_quat (glm::quat Q);

@@ -38,7 +38,6 @@ private:
 	glm::mat4 P;
 	float mouse_sensitivity_x, mouse_sensitivity_y;
 	bool invert_mouse_y;
-	
 	Model *red_marker;
 	void draw_all_markers(glm::mat4 V);
 	void draw_rectangle(Rectangle &rect, glm::mat4 V);
@@ -48,19 +47,15 @@ public:
 	bool win;
 	World(){}
 	~World();
-	
-	bool load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h);
 	void clear();
-	void draw();
 	void next_frame(direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn);
-	
-	void mouse_motion(float dang_h, float dang_v);
+	bool is_win();
+	bool load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h);
 
 	bool test_colls_with_parking(Vertex2D<float>pos, Vertex2D<float>itd, float size, float height);
-	
+	void draw();
 	void draw_in_material_order(glm::mat4 V);
-	bool is_win();
-	// void draw_with_shadows (glm::mat4 V);
+	void mouse_motion(float dang_h, float dang_v);
     void tmp_animate();
 };
 
