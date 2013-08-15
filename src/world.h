@@ -27,7 +27,7 @@ using namespace std;
 
 class World {
 private: 
-	model_t *parking;
+	Model *parking;
 	Vehicle* truck;
     Vehicle* first_trailer;
 	Vehicle* second_trailer;
@@ -41,7 +41,7 @@ private:
 	
 	unsigned screen_w,	screen_h;
 
-	model_t *red_marker;
+	Model *red_marker;
 	void draw_all_markers(glm::mat4 V);
 	void draw_rectangle(Rectangle &rect, glm::mat4 V);
 	void draw_marker (Vertex2D<float>pos, glm::mat4 V);

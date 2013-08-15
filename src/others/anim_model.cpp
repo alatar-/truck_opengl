@@ -1,5 +1,5 @@
 #include "anim_model.h"
 
-anim_model_t::anim_model_t() : model_t() {
+anim_Model::anim_Model() : Model() {
 	full_time = 0;
 }

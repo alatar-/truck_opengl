@@ -33,7 +33,7 @@ private:
 	
 	World *world;
 	
-	anim_model_t *model;
+	anim_Model *model;
 	
 	glm::mat4 get_model_matrix();
 public:

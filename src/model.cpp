@@ -1,9 +1,9 @@
 #include "model.h"
 
-model_t::model_t () {
+Model::Model () {
 }
 
-bool model_t::load (string model_file) {
+bool Model::load (string model_file) {
 	clear();
 	
 	Assimp::Importer Importer;
@@ -17,7 +17,7 @@ bool model_t::load (string model_file) {
 	}
 }
 
-bool model_t::parse_scene (const aiScene *pScene, string &model_file) {
+bool Model::parse_scene (const aiScene *pScene, string &model_file) {
 	if (pScene) {
 		meshes.reserve(pScene->mNumMeshes);
 		materials.reserve(pScene->mNumMaterials);
@@ -61,7 +61,7 @@ bool model_t::parse_scene (const aiScene *pScene, string &model_file) {
 }
 
 
-bool model_t::load_materials (const aiScene* pScene, const string& model_file) {
+bool Model::load_materials (const aiScene* pScene, const string& model_file) {
 	// Extract the directory part from the file name
 	string::size_type SlashIndex = model_file.find_last_of("/");
 	string dir;
@@ -85,7 +85,7 @@ bool model_t::load_materials (const aiScene* pScene, const string& model_file) {
 	return true;
 }
 
-void model_t::clear() {
+void Model::clear() {
 	for (unsigned i = 0, len = materials.size(); i < len; ++i) {
 		delete materials[i];
 	}
@@ -99,34 +99,34 @@ void model_t::clear() {
 	meshes.clear();
 }
 
-model_t::~model_t() {
+Model::~Model() {
 	clear();
 }
 
-void model_t::set_mv_matrix (glm::mat4 MV) {
+void Model::set_mv_matrix (glm::mat4 MV) {
 	for (unsigned i = 0, ilen = meshes.size(); i < ilen; ++i) {
 		meshes[i]->set_mv_matrix(MV);
 	}
 }
 
-void model_t::draw (bool use_mv, bool apply_material) {
+void Model::draw (bool use_mv, bool apply_material) {
 	for (unsigned i = 0, len = meshes.size(); i < len; ++i) {
 		meshes[i]->draw(use_mv, apply_material);
 	}
 }
 
-float model_t::get_width() {
+float Model::get_width() {
 	return width;
 }
 
-float model_t::get_length() {
+float Model::get_length() {
 	return length;
 }
 
-Vertex2D<float>model_t::get_min_point() {
+Vertex2D<float>Model::get_min_point() {
 	return overall_min_point;
 }
 
-Vertex2D<float>model_t::get_max_point() {
+Vertex2D<float>Model::get_max_point() {
 	return overall_max_point;
 }

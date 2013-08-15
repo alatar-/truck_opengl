@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class anim_skeletal_model_t : public anim_model_t {
+class anim_skeletal_Model : public anim_Model {
 protected:
 	skeleton_t skeleton;
 	float fps;
@@ -23,8 +23,8 @@ protected:
 	void set_structure_and_animations (const aiScene *pScene, aiNode *node, bone_t *parent, map <string, bone_t*> &bone_map);
 	const aiNodeAnim* find_node_anim (const aiAnimation* pAnimation, const string NodeName);
 public:
-	anim_skeletal_model_t();
-	~anim_skeletal_model_t();
+	anim_skeletal_Model();
+	~anim_skeletal_Model();
 	void clear();
 	
 	void animate (float anim_time);

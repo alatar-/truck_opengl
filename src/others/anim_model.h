@@ -6,11 +6,11 @@
 
 using namespace std;
 
-class anim_model_t : public model_t {
+class anim_Model : public Model {
 protected:
 	float full_time;
 public:
-	anim_model_t();
+	anim_Model();
 	
 	virtual void animate (float anim_time) = 0;
 	virtual bool load (string filename, float in_fps, unsigned in_frames) = 0;

@@ -38,9 +38,9 @@ visitor_t::visitor_t (World *in_world, string in_path, string visiting_path, boo
 	world = in_world;
 	
 	if (skeletal) {
-		model = new anim_skeletal_model_t();
+		model = new anim_skeletal_Model();
 	} else {
-		model = new anim_mesh_model_t();
+		model = new anim_mesh_Model();
 	}
 	model->load(in_path, fps, frames);
 }

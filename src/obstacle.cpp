@@ -5,7 +5,7 @@ using namespace std;
 
 Obstacle::Obstacle(World* in_world, string in_path) : Rectangle() {
 	world = in_world;
-	model = new model_t();
+	model = new Model();
 	model->load(in_path);
 }
 

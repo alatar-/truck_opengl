@@ -38,7 +38,7 @@ TruckPart::TruckPart(World *in_world,
 	
 	world = in_world;
 	
-	model = new model_t();//new anim_mesh_model_t();
+	model = new Model();//new anim_mesh_Model();
 	model->load(in_path);
 
 	last_time = glutGet(GLUT_ELAPSED_TIME);

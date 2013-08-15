@@ -75,7 +75,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 	{
 		{
 			ini.select("Parking");
-			parking = new model_t();
+			parking = new Model();
 			string model_file("./models/");
 			model_file += ini.get<string>("model", "Parking.obj");
 			if (!parking->load(model_file)) {
@@ -442,7 +442,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 		if (ini.get<bool>("on", false)) {
 			string model_file("./models/");
 			model_file += ini.get<string>("model", "Parking/red_marker.obj");
-			red_marker = new model_t();
+			red_marker = new Model();
 			red_marker->load(model_file);
 		}
 	}

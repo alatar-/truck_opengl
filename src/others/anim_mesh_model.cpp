@@ -1,22 +1,22 @@
 #include "anim_mesh_model.h"
 
-anim_mesh_model_t::anim_mesh_model_t() : anim_model_t() {
+anim_mesh_Model::anim_mesh_Model() : anim_Model() {
 }
 
-anim_mesh_model_t::~anim_mesh_model_t() {
+anim_mesh_Model::~anim_mesh_Model() {
 	clear();
 }
 
-void anim_mesh_model_t::clear() {
-	model_t::clear();
+void anim_mesh_Model::clear() {
+	Model::clear();
 	frames.clear();
 }
 
-bool anim_mesh_model_t::load (string filename, float in_fps, unsigned in_frames) {
+bool anim_mesh_Model::load (string filename, float in_fps, unsigned in_frames) {
 	bool res;
 	
 	filename += "/";
-	res = model_t::load(filename + "001.obj");
+	res = Model::load(filename + "001.obj");
 	
 	if (!res) {
 		return false;
@@ -39,7 +39,7 @@ bool anim_mesh_model_t::load (string filename, float in_fps, unsigned in_frames)
 	return true;
 }
 
-bool anim_mesh_model_t::load_frame (string filename, unsigned idx) {
+bool anim_mesh_Model::load_frame (string filename, unsigned idx) {
 	char number[11];
 	sprintf(number, "%03u", idx);
 	number[3] = '\0';
@@ -81,16 +81,16 @@ bool anim_mesh_model_t::load_frame (string filename, unsigned idx) {
 	return true;
 }
 
-void anim_mesh_model_t::recalc_vertices() {
-// 	printf("anim_mesh_model_t::recalc_vertices\n");
+void anim_mesh_Model::recalc_vertices() {
+// 	printf("anim_mesh_Model::recalc_vertices\n");
 	for (unsigned i = 0, len = meshes.size(); i < len; ++i) {
 		meshes[i]->set_vertices_data();
 	}
 }
 
-void anim_mesh_model_t::prepare_vertices (float frame) {
+void anim_mesh_Model::prepare_vertices (float frame) {
 	unsigned ith = ((unsigned)frame) % frames.size();
-// 	printf("anim_mesh_model_t::prepare_vertices(%.2f)> ith=%u\n", frame, ith);
+// 	printf("anim_mesh_Model::prepare_vertices(%.2f)> ith=%u\n", frame, ith);
 	if ((float)ith == frame) {
 		
 		vector <vector <ExtraVertex> > &the_frame = frames[ith];
@@ -122,8 +122,8 @@ void anim_mesh_model_t::prepare_vertices (float frame) {
 	}
 }
 
-void anim_mesh_model_t::animate (float anim_time) {
-// 	printf("anim_mesh_model_t::animate(%.2f)> %.2f\n", anim_time, fmod(anim_time, full_time) / full_time * frames.size());
+void anim_mesh_Model::animate (float anim_time) {
+// 	printf("anim_mesh_Model::animate(%.2f)> %.2f\n", anim_time, fmod(anim_time, full_time) / full_time * frames.size());
 	if (full_time) {
 		prepare_vertices(fmod(anim_time, full_time) / full_time * frames.size());
 		recalc_vertices();

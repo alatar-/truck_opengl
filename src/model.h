@@ -12,7 +12,7 @@
 
 using namespace std;
 
-class model_t {
+class Model {
 protected:
 	vector <Mesh*> meshes;
 	vector <Material*> materials;
@@ -22,8 +22,8 @@ public:
 	float width;
 	float length;
 	Vertex2D<float>overall_min_point, overall_max_point;
-	model_t();
-	virtual ~model_t();
+	Model();
+	virtual ~Model();
 	bool load_materials (const aiScene* pScene, const string& model_file);
 	virtual void clear();
 	bool load (string model_file);

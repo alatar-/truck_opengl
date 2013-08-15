@@ -10,7 +10,7 @@ using namespace std;
 
 class Obstacle : public Rectangle {
 private:
-	model_t* model;
+	Model* model;
 	World* world;
 	Vertex2D<float>pos;
 	vector <Vertex2D<float> > dimensions;

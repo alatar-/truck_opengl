@@ -19,7 +19,7 @@ private:
 		,	size;
 	glm::mat4 in_transform,	MV;
 	World *world;
-	model_t *model;
+	Model *model;
 	int last_time;
 	int speed;
 	glm::mat4 get_model_matrix();

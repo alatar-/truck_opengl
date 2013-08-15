@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class anim_mesh_model_t : public anim_model_t {
+class anim_mesh_Model : public anim_Model {
 protected:
 	vector < vector <vector <ExtraVertex> > > frames;
 	
@@ -17,8 +17,8 @@ protected:
 	void prepare_vertices (float frame);
 	bool load_frame (string filename, unsigned idx);
 public:
-	anim_mesh_model_t();
-	~anim_mesh_model_t();
+	anim_mesh_Model();
+	~anim_mesh_Model();
 	void clear();
 	bool load (string filename, float in_fps, unsigned in_frames);
 	void animate (float anim_time);
