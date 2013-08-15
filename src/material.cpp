@@ -124,12 +124,12 @@ bool Material::operator<(const Material &o) const {
 }
 
 bool Material::operator==(const Material &o) const {
-	return (compare_textures(o) == 0)
-			&& !(memcmp(ambient, o.ambient, 4)
-			|| memcmp(emission, o.emission, 4)
-			|| memcmp(diffuse, o.diffuse, 4)
-			|| memcmp(specular, o.specular, 4)
-			|| shininess != o.shininess);
+	return (compare_textures(o) == 0) &&
+			!(memcmp(ambient, o.ambient, 4) ||
+			memcmp(emission, o.emission, 4) ||
+			memcmp(diffuse, o.diffuse, 4) ||
+			memcmp(specular, o.specular, 4) ||
+			shininess != o.shininess);
 }
 
 void Material::substitute(Material *o) {

@@ -15,11 +15,11 @@ using namespace std;
 class Material {
 private:
 	Texture *texture;
-	float ambient[4]
-		,	emission[4]
-		,	diffuse[4]
-		,	specular[4]
-		,	shininess;
+	float ambient[4];
+	float emission[4];
+	float diffuse[4];
+	float specular[4];
+	float shininess;
 	
 	double texture_size;
 public:

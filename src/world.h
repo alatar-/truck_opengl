@@ -39,8 +39,6 @@ private:
 	float mouse_sensitivity_x, mouse_sensitivity_y;
 	bool invert_mouse_y;
 	
-	unsigned screen_w,	screen_h;
-
 	Model *red_marker;
 	void draw_all_markers(glm::mat4 V);
 	void draw_rectangle(Rectangle &rect, glm::mat4 V);

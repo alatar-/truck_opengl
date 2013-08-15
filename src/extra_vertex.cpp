@@ -5,11 +5,6 @@ ExtraVertex::ExtraVertex(Vertex3D<float> in_pos, Vertex3D<float> in_norm) {
 	norm = in_norm;
 }
 
-ExtraVertex::~ExtraVertex() {
-
-}
-
-
 aiMatrix4x4 ai_M_mul(const aiMatrix4x4 &M, float a) {
 	aiMatrix4x4 I;
 	for (unsigned i = 0; i < 4; ++i) {

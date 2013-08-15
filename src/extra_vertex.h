@@ -14,7 +14,6 @@ private:
 		,	norm;
 public:
 	ExtraVertex(Vertex3D<float> in_pos, Vertex3D<float> in_norm);
-	~ExtraVertex();
 	Vertex3D<float> get_pos();
 	Vertex3D<float> get_norm();
 	

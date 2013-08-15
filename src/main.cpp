@@ -6,8 +6,8 @@
 
 #define MOUSE_OVERFLOW 300
 
-int screen_w, screen_h,	
-    m_x, m_y;
+int screen_width, screen_height,	
+    mouse_x, mouse_y;
 
 bool f_key_up, f_key_down,
 	 f_key_left, f_key_right,
@@ -101,24 +101,24 @@ void keyUp(unsigned char c, int x, int y) {
 }
 
 void mouse_motion(int x, int y) {
-	int dx = x - m_x, 
-        dy = y - m_y;
+	int dx = x - mouse_x, 
+        dy = y - mouse_y;
 	
 	if ((abs(dx) < MOUSE_OVERFLOW) && (abs(dy) < MOUSE_OVERFLOW)) {
 		world->mouse_motion(dx, dy);
 	}
 
 	if (x <= 10 ||
-    	x >= screen_w - 10 ||
+    	x >= screen_width - 10 ||
     	y <= 10 ||
-    	y >= screen_h - 10
+    	y >= screen_height - 10
 	) {
-		m_x = screen_w / 2;
-		m_y = screen_h / 2;
-		glutWarpPointer(m_x, m_y);
+		mouse_x = screen_width / 2;
+		mouse_y = screen_height / 2;
+		glutWarpPointer(mouse_x, mouse_y);
 	} else {
-		m_x = x;
-		m_y = y;
+		mouse_x = x;
+		mouse_y = y;
 	}
 }
 
@@ -133,11 +133,11 @@ void display_frame() {
 
 void next_frame() {
 	world->next_frame(
-		(direct_t)(BACK * f_key_right + FRONT * f_key_left)
-	,	(direct_t)(BACK * f_key_down + FRONT * f_key_up)
-	,	(direct_t)(BACK * f_key_lower + FRONT * f_key_higher)
-	,	(direct_t)(BACK * f_key_s    + FRONT * f_key_w)
-	,	(direct_t)(BACK * f_key_a + FRONT * f_key_d)
+		(direct_t)(BACK * f_key_right + FRONT * f_key_left),
+		(direct_t)(BACK * f_key_down + FRONT * f_key_up),
+		(direct_t)(BACK * f_key_lower + FRONT * f_key_higher),
+		(direct_t)(BACK * f_key_s    + FRONT * f_key_w),
+		(direct_t)(BACK * f_key_a + FRONT * f_key_d)
 	);
 	glutPostRedisplay();
 }
@@ -146,10 +146,10 @@ void gl_init(int *argc, char **argv) {
 	glutInit(argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_STENCIL);
 	
-	screen_w = glutGet(GLUT_SCREEN_WIDTH);
-	screen_h = glutGet(GLUT_SCREEN_HEIGHT);
+	screen_width = glutGet(GLUT_SCREEN_WIDTH);
+	screen_height = glutGet(GLUT_SCREEN_HEIGHT);
 	
-	glutInitWindowSize(screen_w, screen_h);
+	glutInitWindowSize(screen_width, screen_height);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Truck Master");
 	glutFullScreen();
@@ -187,7 +187,7 @@ void gl_init(int *argc, char **argv) {
 
 int main(int argc, char **argv) {
 	gl_init(&argc, argv);
-	world->load("config.ini", screen_w, screen_h);
+	world->load("config.ini", screen_width, screen_height);
 	
 	glutMainLoop();
 	return 0;
