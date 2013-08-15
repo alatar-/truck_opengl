@@ -65,8 +65,16 @@ public:
 		return x * o.x + y * o.y;
 	}
 
-	void print() const {
-		printf("(%Lf %Lf)\n", x, y);
+	void print() {
+		if (sizeof(T) == sizeof(float)) {
+			printf("( %f, %f)\n", x, y);
+		} else if (sizeof(T) == sizeof(double)) {
+			printf("( %lf, %lf)\n", x, y);
+		} else if (sizeof(T) == sizeof(long double)) {
+			printf("( %Lf, %Lf)\n", x, y);
+		} else {
+			printf("You do what?!\n");
+		}
 	}
 
 	T module(const T &o) const {

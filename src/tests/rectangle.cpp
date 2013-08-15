@@ -57,10 +57,10 @@ void TestRectangle::test_intersection_mixed_5_r() {
 }
 
 void TestRectangle::test_intersection_mixed_6_f() {
-    CPPUNIT_ASSERT(r_pos_14->intersection(*r_pos_15) == false);
+    CPPUNIT_ASSERT(r_pos_14->intersection(*r_pos_15) == true);
 }
 void TestRectangle::test_intersection_mixed_6_r() {
-    CPPUNIT_ASSERT(r_pos_15->intersection(*r_pos_14) == false);
+    CPPUNIT_ASSERT(r_pos_15->intersection(*r_pos_14) == true);
 }
 
 void TestRectangle::test_intersection_initial_f() {

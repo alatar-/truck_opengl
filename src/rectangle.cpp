@@ -81,15 +81,16 @@ bool Rectangle::intersection(Rectangle &rect) {
 			rect_points[j] = rect_projection[j]*Axis[i];
 		}
 
-		printf("\nAxis %u:\t\t", i);
-		Axis[i].print();
-		print_arr(points, 4, "points");
-		printf("min: %Lf \t max: %Lf\n", min(points, 4), max(points, 4));
+		// printf("\nAxis %u:\t\t", i);
+		// Axis[i].print();
+		// print_arr(points, 4, "points");
+		// printf("min: %Lf \t max: %Lf\n", min(points, 4), max(points, 4));
 
-		print_arr(rect_points, 4, "rect_points");
-		printf("min: %Lf \t max: %Lf\n", min(rect_points, 4), max(rect_points, 4));
+		// print_arr(rect_points, 4, "rect_points");
+		// printf("min: %Lf \t max: %Lf\n", min(rect_points, 4), max(rect_points, 4));
 
-		printf("overlapping: %d\n", (min(points, 4) <= max(rect_points, 4) && min(rect_points, 4) <= max(points, 4)) || (min(rect_points, 4) <= max(points, 4) && min(points, 4) <= max(rect_points, 4)));
+		// printf("overlapping: %d\n", (min(points, 4) <= max(rect_points, 4) && min(rect_points, 4) <= max(points, 4)) || (min(rect_points, 4) <= max(points, 4) && min(points, 4) <= max(rect_points, 4)));
+		
 		if(!((min(points, 4) <= max(rect_points, 4) && min(rect_points, 4) <= max(points, 4)) || (min(rect_points, 4) <= max(points, 4) && min(points, 4) <= max(rect_points, 4)))) {
 			return false;
 		}
