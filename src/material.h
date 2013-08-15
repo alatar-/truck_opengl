@@ -12,7 +12,7 @@ class mesh_t;
 
 using namespace std;
 
-class material_t {
+class Material {
 private:
 	texture_t *texture;
 	float ambient[4]
@@ -23,8 +23,8 @@ private:
 	
 	double texture_size;
 public:
-	material_t();
-	~material_t();
+	Material();
+	~Material();
 	
 	vector <mesh_t*> meshes;
 	void clear();
@@ -38,11 +38,11 @@ public:
 	}
 	
 	string get_texture_file_name();
-	int compare_textures(const material_t &o) const;
-	bool operator<(const material_t &o) const;
-	bool operator==(const material_t &o) const;
+	int compare_textures(const Material &o) const;
+	bool operator<(const Material &o) const;
+	bool operator==(const Material &o) const;
 
-	void substitute(material_t *o);
+	void substitute(Material *o);
 };
 
 #endif

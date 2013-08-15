@@ -17,7 +17,7 @@ private:
 public:
 	Obstacle(World* world, string in_path);
 	~Obstacle();
-	vector <material_t*> &get_materials() {
+	vector <Material*> &get_materials() {
 		return model->get_materials();
 	}
 	float get_model_width();

@@ -76,7 +76,7 @@ bool model_t::load_materials (const aiScene* pScene, const string& model_file) {
 	
 	// Initialize the materials
 	for (unsigned i = 0; i < pScene->mNumMaterials; ++i) {
-		materials.push_back(new material_t());
+		materials.push_back(new Material());
 		if (!materials[i]->load(pScene->mMaterials[i], dir)) {
 			return false;
 		}

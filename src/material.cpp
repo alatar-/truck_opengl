@@ -14,7 +14,7 @@ void load_color (aiMaterial *material, const char *pKey, unsigned type, unsigned
 	}
 }
 
-material_t::material_t() {
+Material::Material() {
 	texture = NULL;
 	ambient[3] = 1;
 	emission[3] = 1;
@@ -23,7 +23,7 @@ material_t::material_t() {
 	shininess = 0;
 }
 
-bool material_t::load (aiMaterial *material, string &dir) {
+bool Material::load (aiMaterial *material, string &dir) {
 	bool res = true;
 	
 	clear();
@@ -70,7 +70,7 @@ bool material_t::load (aiMaterial *material, string &dir) {
 	return res;
 }
 
-void material_t::clear() {
+void Material::clear() {
 	if (texture) {
 		delete texture;
 		texture = NULL;
@@ -78,11 +78,11 @@ void material_t::clear() {
 	texture_size = 0;
 }
 
-material_t::~material_t() {
+Material::~Material() {
 	clear();
 }
 
-void material_t::apply() {
+void Material::apply() {
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emission);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
@@ -96,7 +96,7 @@ void material_t::apply() {
 	}
 }
 
-void material_t::draw_associated_meshes(glm::mat4 V) {
+void Material::draw_associated_meshes(glm::mat4 V) {
 	if (meshes.size()) {
 		apply();
 		for (unsigned i = 0, ilen = meshes.size(); i < ilen; ++i) {
@@ -105,11 +105,11 @@ void material_t::draw_associated_meshes(glm::mat4 V) {
 	}
 }
 
-string material_t::get_texture_file_name() {
+string Material::get_texture_file_name() {
 	return texture->get_file_name();
 }
 
-int material_t::compare_textures(const material_t &o) const {
+int Material::compare_textures(const Material &o) const {
 	if (texture == o.texture) {
 		return 0;
 	} else if (texture != NULL && o.texture != NULL) {
@@ -119,11 +119,11 @@ int material_t::compare_textures(const material_t &o) const {
 	}
 }
 
-bool material_t::operator<(const material_t &o) const {
+bool Material::operator<(const Material &o) const {
 	return compare_textures(o) < 0;
 }
 
-bool material_t::operator==(const material_t &o) const {
+bool Material::operator==(const Material &o) const {
 	return (compare_textures(o) == 0)
 			&& !(memcmp(ambient, o.ambient, 4)
 			|| memcmp(emission, o.emission, 4)
@@ -132,7 +132,7 @@ bool material_t::operator==(const material_t &o) const {
 			|| shininess != o.shininess);
 }
 
-void material_t::substitute(material_t *o) {
+void Material::substitute(Material *o) {
 	unsigned ilen = meshes.size();
 	o->meshes.reserve(o->meshes.size() + ilen);
 	for (unsigned i = 0; i < ilen; ++i) {

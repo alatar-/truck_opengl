@@ -32,7 +32,7 @@ private:
     Vehicle* first_trailer;
 	Vehicle* second_trailer;
 	Camera *camera;
-	vector <material_t*> materials;
+	vector <Material*> materials;
 	vector <Obstacle*> obstacles;
 	Obstacle* meta;
 	glm::mat4 P;

@@ -36,7 +36,7 @@ public:
 	void set_pos(float x, float y);
 	float get_size();
 	
-	vector <material_t*> &get_materials() {
+	vector <Material*> &get_materials() {
 		return model->get_materials();
 	}
 

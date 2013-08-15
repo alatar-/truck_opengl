@@ -15,7 +15,7 @@ using namespace std;
 class model_t {
 protected:
 	vector <mesh_t*> meshes;
-	vector <material_t*> materials;
+	vector <Material*> materials;
 	
 	virtual bool parse_scene (const aiScene *pScene, string &model_file);
 public:
@@ -28,7 +28,7 @@ public:
 	virtual void clear();
 	bool load (string model_file);
 	
-	vector <material_t*> &get_materials() {
+	vector <Material*> &get_materials() {
 		return materials;
 	}
 	

@@ -25,7 +25,7 @@ vector <float> str_to_vec(const string &in_s) {
 	return result;
 }
 
-bool materials_ptr_less(const material_t *a, const material_t *b) {
+bool materials_ptr_less(const Material *a, const Material *b) {
 	return *a < *b;
 }
 
@@ -81,7 +81,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 			if (!parking->load(model_file)) {
 				return false;
 			}
-			vector <material_t*> &parking_mats = parking->get_materials();
+			vector <Material*> &parking_mats = parking->get_materials();
 			materials.insert(materials.begin(), parking_mats.begin(), parking_mats.end());
 		}
 
@@ -92,7 +92,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 				this,
 				model_file
 			);
-			vector <material_t*> &meta_mats = meta->get_materials();
+			vector <Material*> &meta_mats = meta->get_materials();
 			meta->set_vertices();
 			materials.insert(materials.begin(), meta_mats.begin(), meta_mats.end());
 		}
@@ -115,7 +115,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 						,	name
 					));
 				obstacles.back()->set_vertices();
-				vector <material_t*> &obst_mats = obstacles.back()->get_materials();
+				vector <Material*> &obst_mats = obstacles.back()->get_materials();
 				materials.insert(materials.begin(), obst_mats.begin(), obst_mats.end());
 			}
 		}
@@ -152,7 +152,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 					,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 					,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 					);
-			vector <material_t*> &vis_mats = truck->body->get_materials();
+			vector <Material*> &vis_mats = truck->body->get_materials();
 			materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 			printf("Got materials\n");
 			truck->set_vertices();
@@ -172,7 +172,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 						,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 						);
-			vector <material_t*> &vis_mats = truck->left_steering_wheel->get_materials();
+			vector <Material*> &vis_mats = truck->left_steering_wheel->get_materials();
 			materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 			printf("Got materials\n");
 		}
@@ -191,7 +191,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 						,	str_to_vec3(ini.get<string>("rotate", "0/180/0"))
 						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 						);
-			vector <material_t*> &vis_mats = truck->right_steering_wheel->get_materials();
+			vector <Material*> &vis_mats = truck->right_steering_wheel->get_materials();
 			materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 			printf("Got materials\n");
 		}
@@ -221,7 +221,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 							,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 							));
 				printf("loading double wheels 2\n");
-				vector <material_t*> &vis_mats = truck->left_wheels.back()->get_materials();
+				vector <Material*> &vis_mats = truck->left_wheels.back()->get_materials();
 				printf("loading double wheels 3\n");
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 				printf("Got materials\n");
@@ -253,7 +253,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 							,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 							));
 				printf("loading double wheels 2\n");
-				vector <material_t*> &vis_mats = truck->right_wheels.back()->get_materials();
+				vector <Material*> &vis_mats = truck->right_wheels.back()->get_materials();
 				printf("loading double wheels 3\n");
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 				printf("Got materials\n");
@@ -276,7 +276,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 						,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 						);
-				vector <material_t*> &vis_mats = first_trailer->body->get_materials();
+				vector <Material*> &vis_mats = first_trailer->body->get_materials();
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 				printf("Got materials\n");
 				first_trailer->set_vertices();
@@ -307,7 +307,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 								));
 					printf("loading double wheels 2\n");
-					vector <material_t*> &vis_mats = first_trailer->left_wheels.back()->get_materials();
+					vector <Material*> &vis_mats = first_trailer->left_wheels.back()->get_materials();
 					printf("loading double wheels 3\n");
 					materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 					printf("Got materials\n");
@@ -339,7 +339,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 								));
 					printf("loading double wheels 2\n");
-					vector <material_t*> &vis_mats = first_trailer->right_wheels.back()->get_materials();
+					vector <Material*> &vis_mats = first_trailer->right_wheels.back()->get_materials();
 					printf("loading double wheels 3\n");
 					materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 					printf("Got materials\n");
@@ -361,7 +361,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 						,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
 						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 						);
-				vector <material_t*> &vis_mats = second_trailer->body->get_materials();
+				vector <Material*> &vis_mats = second_trailer->body->get_materials();
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 				printf("Got materials\n");
 				second_trailer->set_vertices();
@@ -392,7 +392,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 								));
 					printf("loading double wheels 2\n");
-					vector <material_t*> &vis_mats = second_trailer->left_wheels.back()->get_materials();
+					vector <Material*> &vis_mats = second_trailer->left_wheels.back()->get_materials();
 					printf("loading double wheels 3\n");
 					materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 					printf("Got materials\n");
@@ -425,7 +425,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
 								));
 					printf("loading double wheels 2\n");
-					vector <material_t*> &vis_mats = second_trailer->right_wheels.back()->get_materials();
+					vector <Material*> &vis_mats = second_trailer->right_wheels.back()->get_materials();
 					printf("loading double wheels 3\n");
 					materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 					printf("Got materials\n");

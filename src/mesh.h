@@ -3,7 +3,7 @@
 
 #include "shared.h"
 
-class material_t;
+class Material;
 #include "material.h"
 #include "extra_vertex.h"
 #include <vector>
@@ -15,13 +15,13 @@ private:
 	float *pos_data, *norm_data, *tex_coords;
 	vector <unsigned> indices;
 	vector <ExtraVertex> vertices;
-	material_t *material;
+	Material *material;
 	
 	Vertex2D<float> cords_min, cords_max;
 	
 	glm::mat4 MV;
 public:
-	mesh_t (const aiMesh *paiMesh, material_t *in_material);
+	mesh_t (const aiMesh *paiMesh, Material *in_material);
 	~mesh_t();
 
 	void set_vertices_data();
@@ -31,7 +31,7 @@ public:
 	unsigned vertices_size();
 	
 	void set_mv_matrix (glm::mat4 in_MV);
-	void set_material (material_t *in_material);
+	void set_material (Material *in_material);
 	
 	void print();
 	
