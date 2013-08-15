@@ -65,6 +65,7 @@ public:
     void calculate(direct_t front_back, direct_t right_left);
     void move(float parent_size, vertex_2d in_position, float in_angle, float ds, float in_following_bend);
     vector <vertex_2d> get_body_vertices();
+    void set_vertices();
 	// void set_mv_matrix(glm::mat4 V);
 	// void apply_mv();
 };

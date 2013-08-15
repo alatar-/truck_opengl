@@ -129,7 +129,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			vector <material_t*> &vis_mats = truck->body->get_materials();
 			materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 			printf("Got materials\n");
-			truck->set_verticies(truck->get_body_vertices());
+			truck->set_vertices();
 		}
 
 		{
@@ -253,7 +253,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 				vector <material_t*> &vis_mats = first_trailer->body->get_materials();
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 				printf("Got materials\n");
-				first_trailer->set_verticies(first_trailer->get_body_vertices());
+				first_trailer->set_vertices();
 			}
 
 			{
@@ -338,7 +338,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 				vector <material_t*> &vis_mats = second_trailer->body->get_materials();
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 				printf("Got materials\n");
-				second_trailer->set_verticies(second_trailer->get_body_vertices());
+				second_trailer->set_vertices();
 			}
 
 			{
