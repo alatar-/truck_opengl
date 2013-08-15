@@ -28,7 +28,7 @@ bool model_t::parse_scene (const aiScene *pScene, string &model_file) {
 		
 		for (unsigned i = 0, len = pScene->mNumMeshes; i < len; ++i) {
 			const aiMesh* paiMesh = pScene->mMeshes[i];
-			meshes.push_back(new mesh_t(paiMesh, materials[paiMesh->mMaterialIndex]));
+			meshes.push_back(new Mesh(paiMesh, materials[paiMesh->mMaterialIndex]));
 		}
 		Vertex2D<float>local_min = meshes[0]->get_cords_min(), local_max = meshes[0]->get_cords_max();
 

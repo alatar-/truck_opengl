@@ -7,7 +7,7 @@
 #include "shared.h"
 #include "texture.h"
 
-class mesh_t;
+class Mesh;
 #include "mesh.h"
 
 using namespace std;
@@ -26,7 +26,7 @@ public:
 	Material();
 	~Material();
 	
-	vector <mesh_t*> meshes;
+	vector <Mesh*> meshes;
 	void clear();
 	bool load (aiMaterial *material, string &dir);
 	void apply();

@@ -26,7 +26,7 @@ bool anim_mesh_model_t::load (string filename, float in_fps, unsigned in_frames)
 		frames[0].push_back(vector <ExtraVertex>());
 		frames[0][i].reserve(meshes[i]->vertices_size());
 		for (unsigned j = 0, jlen = meshes[i]->vertices_size(); j < jlen; ++j) {
-			mesh_t &curr_mesh = (*meshes[i]);
+			Mesh &curr_mesh = (*meshes[i]);
 			frames[0][i].push_back(curr_mesh[j]);
 		}
 	}
@@ -95,7 +95,7 @@ void anim_mesh_model_t::prepare_vertices (float frame) {
 		
 		vector <vector <ExtraVertex> > &the_frame = frames[ith];
 		for (unsigned i = 0, ilen = meshes.size(); i < ilen; ++i) {
-			mesh_t &the_mesh = (*meshes[i]);
+			Mesh &the_mesh = (*meshes[i]);
 			vector <ExtraVertex> &frame_mesh = the_frame[i];
 			for (unsigned j = 0, jlen = the_mesh.vertices_size(); j < jlen; ++j) {
 				the_mesh[j] = frame_mesh[j];
@@ -110,7 +110,7 @@ void anim_mesh_model_t::prepare_vertices (float frame) {
 		vector <vector <ExtraVertex> > &ith_frame = frames[ith]
 			,	&jth_frame = frames[jth];
 		for (unsigned i = 0, ilen = meshes.size(); i < ilen; ++i) {
-			mesh_t &the_mesh = (*meshes[i]);
+			Mesh &the_mesh = (*meshes[i]);
 			vector <ExtraVertex> &ith_frame_mesh = ith_frame[i]
 				,	&jth_frame_mesh = jth_frame[i];
 			for (unsigned j = 0, jlen = the_mesh.vertices_size(); j < jlen; ++j) {

@@ -58,7 +58,7 @@ void anim_skeletal_model_t::init_bones (const aiScene *pScene) {
 // 	printf("anim_skeletal_model_t::init_bones> structure set\n");
 }
 
-void anim_skeletal_model_t::map_bones (aiMesh *paiMesh, mesh_t *mesh, map <string, bone_t*> &bone_map) {
+void anim_skeletal_model_t::map_bones (aiMesh *paiMesh, Mesh *mesh, map <string, bone_t*> &bone_map) {
 // 	printf("anim_skeletal_model_t::map_bones(%p, %p)\n", paiMesh, mesh);
 	for (unsigned i = 0, ilen = paiMesh->mNumBones; i < ilen; ++i) {
 // 	printf("anim_skeletal_model_t::map_bones(%p, %p)> in loop #%u\n", paiMesh, mesh, i);

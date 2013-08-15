@@ -10,7 +10,7 @@ class Material;
 
 using namespace std;
 
-class mesh_t {
+class Mesh {
 private:
 	float *pos_data, *norm_data, *tex_coords;
 	vector <unsigned> indices;
@@ -21,8 +21,8 @@ private:
 	
 	glm::mat4 MV;
 public:
-	mesh_t (const aiMesh *paiMesh, Material *in_material);
-	~mesh_t();
+	Mesh (const aiMesh *paiMesh, Material *in_material);
+	~Mesh();
 
 	void set_vertices_data();
 	void draw (bool use_mv, bool apply_material, glm::mat4 V = glm::mat4(1.0f));

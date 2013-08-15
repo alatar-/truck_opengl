@@ -4,7 +4,7 @@
 
 using namespace std;
 
-mesh_t::mesh_t (const aiMesh *paiMesh, Material *in_material) : MV(1.0f) {
+Mesh::Mesh (const aiMesh *paiMesh, Material *in_material) : MV(1.0f) {
 	material = in_material;
 	material->meshes.push_back(this);
 	
@@ -62,7 +62,7 @@ mesh_t::mesh_t (const aiMesh *paiMesh, Material *in_material) : MV(1.0f) {
 	}
 }
 
-mesh_t::~mesh_t() {
+Mesh::~Mesh() {
 	indices.clear();
 	vertices.clear();
 	delete pos_data;
@@ -74,7 +74,7 @@ mesh_t::~mesh_t() {
 	material = NULL;
 }
 
-void mesh_t::draw (bool use_mv, bool apply_material, glm::mat4 V) {
+void Mesh::draw (bool use_mv, bool apply_material, glm::mat4 V) {
 	if (use_mv) {
 		glLoadMatrixf(glm::value_ptr(V * MV));
 	}
@@ -91,8 +91,8 @@ void mesh_t::draw (bool use_mv, bool apply_material, glm::mat4 V) {
 }
 
 
-void mesh_t::set_vertices_data() {
-// 	printf("mesh_t::set_vertices_data(%p)> recalced\n", this);
+void Mesh::set_vertices_data() {
+// 	printf("Mesh::set_vertices_data(%p)> recalced\n", this);
 	for (unsigned i = 0, v = indices[i], len = indices.size()
 		;	i < len
 		;	++i, v = indices[i]) {
@@ -106,36 +106,36 @@ void mesh_t::set_vertices_data() {
 		norm_data[i * 3 + 1] = norm.y;
 		norm_data[i * 3 + 2] = norm.z;
 	}
-// 	printf("mesh_t::set_vertices_data(%p)> set\n", this);
+// 	printf("Mesh::set_vertices_data(%p)> set\n", this);
 }
 
-ExtraVertex& mesh_t::operator[] (unsigned i) {
+ExtraVertex& Mesh::operator[] (unsigned i) {
 	return vertices[i];
 }
 
-unsigned mesh_t::vertices_size() {
+unsigned Mesh::vertices_size() {
 	return vertices.size();
 }
 
-void mesh_t::print() {
+void Mesh::print() {
 	for (unsigned i = 0, len = vertices.size(); i < len; ++i) {
 		Vertex3D<float> v = vertices[i].get_pos();
 		printf("v[%u] = (%.2f, %.2f, %.2f)\n", i, v.x, v.y, v.z);
 	}
 }
 
-void mesh_t::set_mv_matrix (glm::mat4 in_MV) {
+void Mesh::set_mv_matrix (glm::mat4 in_MV) {
 	MV = in_MV;
 }
 
-void mesh_t::set_material (Material *in_material) {
+void Mesh::set_material (Material *in_material) {
 	material = in_material;
 }
 
-Vertex2D<float> mesh_t::get_cords_min() {
+Vertex2D<float> Mesh::get_cords_min() {
 	return cords_min;
 }
 
-Vertex2D<float> mesh_t::get_cords_max() {
+Vertex2D<float> Mesh::get_cords_max() {
 	return cords_max;
 }

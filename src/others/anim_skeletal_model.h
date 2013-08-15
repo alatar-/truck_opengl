@@ -19,7 +19,7 @@ protected:
 	bool parse_scene (const aiScene *pScene, string &model_file);
 	
 	void init_bones (const aiScene *pScene);
-	void map_bones (aiMesh *paiMesh, mesh_t *mesh, map <string, bone_t*> &bone_map);
+	void map_bones (aiMesh *paiMesh, Mesh *mesh, map <string, bone_t*> &bone_map);
 	void set_structure_and_animations (const aiScene *pScene, aiNode *node, bone_t *parent, map <string, bone_t*> &bone_map);
 	const aiNodeAnim* find_node_anim (const aiAnimation* pAnimation, const string NodeName);
 public:
