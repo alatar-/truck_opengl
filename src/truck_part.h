@@ -12,7 +12,7 @@ using namespace std;
 
 class TruckPart {
 private:
-	vertex_2d<float>pos;
+	Vertex2D<float>pos;
 	float ang_forward
 		,	ang_follow
 		,	ang_bend
@@ -32,7 +32,7 @@ public:
 	void set_mv_matrix (glm::mat4 V);
 	void apply_mv();
 	
-	vertex_2d<float>get_pos();
+	Vertex2D<float>get_pos();
 	void set_pos(float x, float y);
 	float get_size();
 	
@@ -40,12 +40,12 @@ public:
 		return model->get_materials();
 	}
 
-	void move (vertex_2d<float>position, float ang, float ds);
+	void move (Vertex2D<float>position, float ang, float ds);
 	void rotate (float in_ang_bend);
 	float get_model_width();
 	float get_model_length();
-	vertex_2d<float>get_model_min_point();
-	vertex_2d<float>get_model_max_point();
+	Vertex2D<float>get_model_min_point();
+	Vertex2D<float>get_model_max_point();
 };
 
 #endif

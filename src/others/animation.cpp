@@ -43,7 +43,7 @@ aiMatrix4x4 animation_t::transform (float anim_time) {
 		aiQ.z = Q.z;
 		R = aiMatrix4x4(aiQ.GetMatrix());
 		
-		vertex_3d<float>v = get_scaling(anim_time);
+		Vertex3D<float>v = get_scaling(anim_time);
 		aiVector3t<float> ai_v(v.x, v.y, v.z);
 		aiMatrix4x4::Scaling(ai_v, S);
 		
@@ -75,32 +75,32 @@ glm::quat animation_t::get_rotation (float anim_time) {
 	}
 }
 
-vertex_3d<float>animation_t::get_scaling (float anim_time) {
+Vertex3D<float>animation_t::get_scaling (float anim_time) {
 	if (rotations.size() == 0) {
-		return vertex_3d<float>1.0f, 1.0f, 1.0f);
+		return Vertex3D<float>1.0f, 1.0f, 1.0f);
 	} else if (rotations.size() == 1) {
-		vertex_3d<float>sc = scalings[0].scale;
+		Vertex3D<float>sc = scalings[0].scale;
 		return sc;
 	} else {
 		unsigned i
 			,	j;
 		float factor = key_bisection(scalings, anim_time, full_time, i, j);
-		vertex_3d<float>sc = vertex_3d<float>:lerp(scalings[i].scale, scalings[j].scale, factor);
+		Vertex3D<float>sc = Vertex3D<float>:lerp(scalings[i].scale, scalings[j].scale, factor);
 		return sc;
 	}
 }
 
-vertex_3d<float>animation_t::get_translation (float anim_time) {
+Vertex3D<float>animation_t::get_translation (float anim_time) {
 	if (translations.size() == 0) {
-		return vertex_3d<float>0.0f, 0.0f, 0.0f);
+		return Vertex3D<float>0.0f, 0.0f, 0.0f);
 	} else if (translations.size() == 1) {
-		vertex_3d<float>tr = translations[0].trans;
+		Vertex3D<float>tr = translations[0].trans;
 		return tr;
 	} else {
 		unsigned i
 			,	j;
 		float factor = key_bisection(translations, anim_time, full_time, i, j);
-		vertex_3d<float>tr = vertex_3d<float>:lerp(translations[i].trans, translations[j].trans, factor);
+		Vertex3D<float>tr = Vertex3D<float>:lerp(translations[i].trans, translations[j].trans, factor);
 		return tr;
 	}
 }

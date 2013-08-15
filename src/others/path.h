@@ -12,8 +12,8 @@ using namespace std;
 
 class path_t {
 private:
-	vector <vector <vertex_2d<float> > points;
-	vertex_2d<float>pos;
+	vector <vector <Vertex2D<float> > points;
+	Vertex2D<float>pos;
 	int next;
 	int array;
 	float ang_h;
@@ -30,7 +30,7 @@ public:
 	path_t (string in_arr, bool looped);
 	~path_t();
 	bool move (float step);
-	vertex_2d<float>position();
+	Vertex2D<float>position();
 	float rotation();
 	
 	void print();

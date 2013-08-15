@@ -41,7 +41,7 @@ Vehicle::Vehicle(float in_size,
     velocity = 0.0;
     angle = 0;
     following_bend = 0;
-    position = vertex_2d<float>(0, 0);
+    position = Vertex2D<float>(0, 0);
 }
 
 float Vehicle::acceleration(direct_t front_back, float velocity) {
@@ -129,7 +129,7 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left, vector <Obstac
     }
 
     float ds = -velocity * dt;
-    vertex_2d<float>new_position(position.x + ds * sin(angle), position.y + ds * cos(angle));
+    Vertex2D<float>new_position(position.x + ds * sin(angle), position.y + ds * cos(angle));
 
     printf("\nNew movement:\n");
     position.print();
@@ -139,9 +139,9 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left, vector <Obstac
     }
 }
 
-bool Vehicle::move(float parent_size, vertex_2d<float>in_position, float in_angle, float ds, float in_following_bend, vector <Obstacle*> &obstacles) {
+bool Vehicle::move(float parent_size, Vertex2D<float>in_position, float in_angle, float ds, float in_following_bend, vector <Obstacle*> &obstacles) {
     if (parent_size != 0) {
-        vertex_2d<float>d_pos(0, size / 2);
+        Vertex2D<float>d_pos(0, size / 2);
         d_pos = d_pos.rotate(-in_following_bend);
         d_pos.y += parent_size;
         d_pos = d_pos.rotate(-in_angle);
@@ -150,7 +150,7 @@ bool Vehicle::move(float parent_size, vertex_2d<float>in_position, float in_angl
         angle = in_angle + in_following_bend;
     }
 
-    vertex_2d<float>temp_position = position;
+    Vertex2D<float>temp_position = position;
     position = in_position;
     set_vertices();
     position = temp_position;
@@ -185,13 +185,13 @@ Vehicle::~Vehicle() {
 	delete body;
 }
 
-vector <vertex_2d<float> > Vehicle::get_body_vertices() {
+vector <Vertex2D<float> > Vehicle::get_body_vertices() {
     // printf("\n%p> Vehicle::get_body_vertices\n", this);
 
     dimensions.clear();
-    vertex_2d<float>pos_min = body->get_model_min_point();
+    Vertex2D<float>pos_min = body->get_model_min_point();
     // printf("vertex: ( %f , %f ) \n", pos_min.x, pos_min.y);
-    vertex_2d<float>pos_max = body->get_model_max_point();
+    Vertex2D<float>pos_max = body->get_model_max_point();
     dimensions.push_back(pos_min);
     float tmp = pos_min.y;
     pos_min.y = pos_max.y;
@@ -207,7 +207,7 @@ vector <vertex_2d<float> > Vehicle::get_body_vertices() {
 }
 
 void Vehicle::set_vertices() {
-    vector <vertex_2d<float> > verts = get_body_vertices();
+    vector <Vertex2D<float> > verts = get_body_vertices();
 
     for (unsigned i = 0; i < 4; ++i) {
         verts[i] = verts[i].rotate(-angle) + position;

@@ -17,7 +17,7 @@ private:
 	vector <bone_vertex_t> vertices;
 	material_t *material;
 	
-	vertex_2d<float> cords_min, cords_max;
+	Vertex2D<float> cords_min, cords_max;
 	
 	glm::mat4 MV;
 public:
@@ -35,8 +35,8 @@ public:
 	
 	void print();
 	
-	vertex_2d<float> get_cords_min();
-	vertex_2d<float> get_cords_max();
+	Vertex2D<float> get_cords_min();
+	Vertex2D<float> get_cords_max();
 };
 
 #endif

@@ -8,16 +8,16 @@ using namespace std;
 
 class Rectangle {
 private:
-	vertex_2d<float>UL, UR, LL, LR;
+	Vertex2D<float>UL, UR, LL, LR;
 public:
 	Rectangle();
-	Rectangle(vertex_2d<float>in_ul, vertex_2d<float>in_ur, vertex_2d<float>in_ll, vertex_2d<float>in_lr);
+	Rectangle(Vertex2D<float>in_ul, Vertex2D<float>in_ur, Vertex2D<float>in_ll, Vertex2D<float>in_lr);
 	~Rectangle();
 	bool intersection(Rectangle &rect);
 	bool full_inclusion(Rectangle &rect);
-	bool has_point_inside(vertex_2d<float>&in_vertex);
-	void set_vertices(vector <vertex_2d<float> > in);
-	vector <vertex_2d<float> > get_vertices();
+	bool has_point_inside(Vertex2D<float>&in_vertex);
+	void set_vertices(vector <Vertex2D<float> > in);
+	vector <Vertex2D<float> > get_vertices();
 	void print();
 };
 

@@ -72,7 +72,7 @@ void visitor_t::kill() {
 	alive = false;
 }
 
-bool visitor_t::move (vertex_2d<float>itd) {
+bool visitor_t::move (Vertex2D<float>itd) {
 	bool f, res = true;
 	
 	world->lock();
@@ -100,7 +100,7 @@ void visitor_t::life() {
 		
 		bool state = path.move(speed * dt);
 		
-		vertex_2d<float>itd = path.position();
+		Vertex2D<float>itd = path.position();
 // 		printf("life::In loop> path.position: (%f, %f), pos: (%f, %f)\n", itd.x, itd.y, pos.x, pos.y);
 		if (itd != pos) {
 // 			printf("life::move!\n");
@@ -156,7 +156,7 @@ glm::mat4 visitor_t::get_model_matrix() {
 	return M * in_transform;
 }
 
-vertex_2d<float>visitor_t::get_pos() {
+Vertex2D<float>visitor_t::get_pos() {
 	return pos;
 }
 

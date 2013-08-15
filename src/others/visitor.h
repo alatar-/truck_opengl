@@ -18,7 +18,7 @@ using namespace std;
 class visitor_t {
 private:
 	path_t path;
-	vertex_2d<float>pos;
+	Vertex2D<float>pos;
 	float ang_h
 		,	speed
 		,	wait_time
@@ -45,7 +45,7 @@ public:
 	int fire();
 	int join();
 	void kill();
-	bool move (vertex_2d<float>itd);
+	bool move (Vertex2D<float>itd);
 	void life();
 	
 	void animate();
@@ -55,7 +55,7 @@ public:
 	void apply_mv();
 	void set_mv_matrix_to_meshes();
 	
-	vertex_2d<float>get_pos();
+	Vertex2D<float>get_pos();
 	float get_size();
 	
 	vector <material_t*> &get_materials() {

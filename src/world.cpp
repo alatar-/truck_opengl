@@ -557,13 +557,13 @@ void World::draw_all_markers(glm::mat4 V) {
 }
 
 void World::draw_rectangle(Rectangle &rect, glm::mat4 V) {
-	vector <vertex_2d<float> >verts = rect.get_vertices();
+	vector <Vertex2D<float> >verts = rect.get_vertices();
 	for (unsigned i = 0, ilen = verts.size(); i < ilen; ++i) {
 		draw_marker(verts[i], V);
 	}
 }
 
-void World::draw_marker (vertex_2d<float>pos, glm::mat4 V) {
+void World::draw_marker (Vertex2D<float>pos, glm::mat4 V) {
 	glm::mat4 M = glm::translate(glm::mat4(1.0f), glm::vec3(pos.x, 0.0f, pos.y));
 	red_marker->set_mv_matrix(V * M);
 	red_marker->draw(true, false);

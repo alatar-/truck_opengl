@@ -30,7 +30,7 @@ bool model_t::parse_scene (const aiScene *pScene, string &model_file) {
 			const aiMesh* paiMesh = pScene->mMeshes[i];
 			meshes.push_back(new mesh_t(paiMesh, materials[paiMesh->mMaterialIndex]));
 		}
-		vertex_2d<float>local_min = meshes[0]->get_cords_min(), local_max = meshes[0]->get_cords_max();
+		Vertex2D<float>local_min = meshes[0]->get_cords_min(), local_max = meshes[0]->get_cords_max();
 
 		// printf("\n\n\n\t\t%s\n\n%s> 0\n", model_file.c_str(), model_file.c_str());
 		// local_min.print();
@@ -123,10 +123,10 @@ float model_t::get_length() {
 	return length;
 }
 
-vertex_2d<float>model_t::get_min_point() {
+Vertex2D<float>model_t::get_min_point() {
 	return overall_min_point;
 }
 
-vertex_2d<float>model_t::get_max_point() {
+Vertex2D<float>model_t::get_max_point() {
 	return overall_max_point;
 }

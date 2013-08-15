@@ -21,7 +21,7 @@ protected:
 public:
 	float width;
 	float length;
-	vertex_2d<float>overall_min_point, overall_max_point;
+	Vertex2D<float>overall_min_point, overall_max_point;
 	model_t();
 	virtual ~model_t();
 	bool load_materials (const aiScene* pScene, const string& model_file);
@@ -38,8 +38,8 @@ public:
 	
 	float get_width();
 	float get_length();
-	vertex_2d<float>get_min_point();
-	vertex_2d<float>get_max_point();
+	Vertex2D<float>get_min_point();
+	Vertex2D<float>get_max_point();
 };
 
 #endif

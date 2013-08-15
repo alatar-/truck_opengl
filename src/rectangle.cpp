@@ -32,7 +32,7 @@ Rectangle::Rectangle() {
 
 }
 
-Rectangle::Rectangle (vertex_2d<float>in_ul, vertex_2d<float>in_ur, vertex_2d<float>in_ll, vertex_2d<float>in_lr) {
+Rectangle::Rectangle (Vertex2D<float>in_ul, Vertex2D<float>in_ur, Vertex2D<float>in_ll, Vertex2D<float>in_lr) {
 	UL = in_ul;
 	UR = in_ur;
 	LL = in_ll;
@@ -43,8 +43,8 @@ Rectangle::~Rectangle() {
 }
 
 bool Rectangle::intersection(Rectangle &rect) {
-	vertex_2d<long double>Axis[4];
-	vertex_2d<long double>projection[4]
+	Vertex2D<long double>Axis[4];
+	Vertex2D<long double>projection[4]
 		,	rect_projection[4];
 	long double points[4]
 		,	rect_points[4];
@@ -98,15 +98,15 @@ bool Rectangle::intersection(Rectangle &rect) {
 	return true;
 }
 
-bool Rectangle::has_point_inside(vertex_2d<float>&in_vertex) {
-	vertex_2d<long double>Axis[2];
-	vertex_2d<long double>projection[4];
+bool Rectangle::has_point_inside(Vertex2D<float>&in_vertex) {
+	Vertex2D<long double>Axis[2];
+	Vertex2D<long double>projection[4];
 	long double points[4];
 	Axis[0].x = (long double)UR.x - UL.x;
 	Axis[0].y = (long double)UR.y - UL.y;
 	Axis[1].x = (long double)UR.x - LR.x;
 	Axis[1].y = (long double)UR.y - LR.y;
-	vertex_2d<long double>inv_projection;
+	Vertex2D<long double>inv_projection;
 	long double point;
 	for(int i = 0 ; i < 2 ; ++i) { 
 		long double Ax_squere = Axis[i].x * Axis[i].x + Axis[i].y * Axis[i].y;
@@ -146,15 +146,15 @@ bool Rectangle::full_inclusion(Rectangle &rect) {
 	return false;	
 }
 
-void Rectangle::set_vertices(vector <vertex_2d<float> > in) {
+void Rectangle::set_vertices(vector <Vertex2D<float> > in) {
 	UL = in[0];
 	UR = in[1];
 	LL = in[2];
 	LR = in[3];
 }
 
-vector <vertex_2d<float> > Rectangle::get_vertices() {
-  vector <vertex_2d<float> > verts;
+vector <Vertex2D<float> > Rectangle::get_vertices() {
+  vector <Vertex2D<float> > verts;
   verts.reserve(4);
   verts.push_back(UL);
   verts.push_back(UR);
@@ -166,7 +166,7 @@ vector <vertex_2d<float> > Rectangle::get_vertices() {
 
 void Rectangle::print() {
   printf("\n");
-  vector<vertex_2d<float> > verts = get_vertices();
+  vector<Vertex2D<float> > verts = get_vertices();
   for (unsigned i = 0; i < 4; ++i) {
     printf("vertex #%u: ( %f , %f ) \n", i, verts[i].x, verts[i].y);
   }

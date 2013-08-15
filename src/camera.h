@@ -14,7 +14,7 @@ class World;
 
 class Camera {
 private:
-	vertex_3d<float>position;
+	Vertex3D<float>position;
 	float angle_horizontal, angle_vertical;
     float max_vertical_angle_up, max_vertical_angle_down;
     float speed;
