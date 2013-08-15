@@ -9,7 +9,7 @@
 #define CAMERA_RADIUS 100
 const float EPSILON =  1/10e9;
 
-class world_t;
+class World;
 #include "world.h"
 
 class Camera {

@@ -15,7 +15,7 @@ bool f_key_up, f_key_down,
      f_key_w, f_key_s,
      f_key_a, f_key_d;
 
-world_t *World = new world_t();
+World *world = new World();
 
 void key_down(int c, int x, int y) {
 	switch (c) {
@@ -55,7 +55,7 @@ void keyDown(unsigned char c, int x, int y) {
             f_key_d = true;
             break;
         case 'p':
-            World->tmp_animate();
+            world->tmp_animate();
     }
 }
 
@@ -105,7 +105,7 @@ void mouse_motion(int x, int y) {
         dy = y - m_y;
 	
 	if ((abs(dx) < MOUSE_OVERFLOW) && (abs(dy) < MOUSE_OVERFLOW)) {
-		World->mouse_motion(dx, dy);
+		world->mouse_motion(dx, dy);
 	}
 
 	if (x <= 10 ||
@@ -127,12 +127,12 @@ void display_frame() {
 	glClearColor(0.5, 0.5, 0.8, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	World->draw();
+	world->draw();
 	glutSwapBuffers();
 }
 
 void next_frame() {
-	World->next_frame(
+	world->next_frame(
 		(direct_t)(BACK * f_key_right + FORW * f_key_left)
 	,	(direct_t)(BACK * f_key_down + FORW * f_key_up)
 	,	(direct_t)(BACK * f_key_lower + FORW * f_key_higher)
@@ -187,7 +187,7 @@ void gl_init(int *argc, char **argv) {
 
 int main(int argc, char **argv) {
 	gl_init(&argc, argv);
-	World->load("config.ini", screen_w, screen_h);
+	world->load("config.ini", screen_w, screen_h);
 	
 	glutMainLoop();
 	return 0;

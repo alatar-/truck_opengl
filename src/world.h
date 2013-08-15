@@ -8,7 +8,7 @@
 #include "shared.h"
 #include "model.h"
 
-class world_t;
+class World;
 
 class Camera;
 #include "camera.h"
@@ -25,7 +25,7 @@ class Obstacle;
 
 using namespace std;
 
-class world_t {
+class World {
 private: 
 	model_t *parking;
 	Vehicle* truck;
@@ -48,8 +48,8 @@ private:
 
 public:
 	bool win;
-	world_t(){}
-	~world_t();
+	World(){}
+	~World();
 	
 	bool load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h);
 	void clear();

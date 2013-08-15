@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Obstacle::Obstacle(world_t* in_world, string in_path) : Rectangle() {
+Obstacle::Obstacle(World* in_world, string in_path) : Rectangle() {
 	world = in_world;
 	model = new model_t();
 	model->load(in_path);

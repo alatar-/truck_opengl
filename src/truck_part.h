@@ -5,7 +5,7 @@
 #include <string>
 #include "vertex.h"
 
-class world_t;
+class World;
 #include "world.h"
 
 using namespace std;
@@ -18,13 +18,13 @@ private:
 		,	ang_bend
 		,	size;
 	glm::mat4 in_transform,	MV;
-	world_t *world;
+	World *world;
 	model_t *model;
 	int last_time;
 	int speed;
 	glm::mat4 get_model_matrix();
 public:
-	TruckPart (world_t *in_world, string in_path, float in_size, float x, float y, glm::vec3 in_T, glm::vec3 in_R, glm::vec3 in_S);
+	TruckPart (World *in_world, string in_path, float in_size, float x, float y, glm::vec3 in_T, glm::vec3 in_R, glm::vec3 in_S);
 	~TruckPart();
 	
 	void draw (bool use_mv);

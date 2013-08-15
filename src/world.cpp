@@ -29,11 +29,11 @@ bool materials_ptr_less(const material_t *a, const material_t *b) {
 	return *a < *b;
 }
 
-void world_t::tmp_animate() {
+void World::tmp_animate() {
     this->camera->tmp_animate();
 }
 
-bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h) {
+bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h) {
 	/** load config */
 	ini_t ini(in_config_file, true);
 	
@@ -474,17 +474,17 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
   return true;
 }
 
-world_t::~world_t() {	
+World::~World() {	
 	delete parking;
 	delete camera;
 }
 
-void world_t::clear() {
+void World::clear() {
 	delete parking;
 	delete camera;
 }
 
-void world_t::draw() {
+void World::draw() {
     camera->animate_crash();
 	glm::mat4 V = camera->get_view_matrix();
 	
@@ -527,7 +527,7 @@ void world_t::draw() {
 	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
-void world_t::draw_in_material_order(glm::mat4 V) {
+void World::draw_in_material_order(glm::mat4 V) {
 	glMatrixMode(GL_MODELVIEW);
 	
 	for (unsigned i = 0, ilen = materials.size(); i < ilen; ++i) {
@@ -535,7 +535,7 @@ void world_t::draw_in_material_order(glm::mat4 V) {
 	}
 }
 
-void world_t::draw_all_markers(glm::mat4 V) {
+void World::draw_all_markers(glm::mat4 V) {
 	if (red_marker) {
 		glMatrixMode(GL_MODELVIEW);
 		
@@ -556,21 +556,21 @@ void world_t::draw_all_markers(glm::mat4 V) {
 	}
 }
 
-void world_t::draw_rectangle(Rectangle &rect, glm::mat4 V) {
+void World::draw_rectangle(Rectangle &rect, glm::mat4 V) {
 	vector <vertex_2d<float> >verts = rect.get_vertices();
 	for (unsigned i = 0, ilen = verts.size(); i < ilen; ++i) {
 		draw_marker(verts[i], V);
 	}
 }
 
-void world_t::draw_marker (vertex_2d<float>pos, glm::mat4 V) {
+void World::draw_marker (vertex_2d<float>pos, glm::mat4 V) {
 	glm::mat4 M = glm::translate(glm::mat4(1.0f), glm::vec3(pos.x, 0.0f, pos.y));
 	red_marker->set_mv_matrix(V * M);
 	red_marker->draw(true, false);
 }
 
 
-void world_t::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct_t cam_up_down, direct_t veh_front_back, direct_t veh_right_left) {
+void World::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct_t cam_up_down, direct_t veh_front_back, direct_t veh_right_left) {
 	camera->move(cam_right_left, cam_front_back, cam_up_down);
 	truck->calculate(veh_front_back, veh_right_left, obstacles);
 	if(is_win()) {
@@ -578,14 +578,14 @@ void world_t::next_frame (direct_t cam_right_left, direct_t cam_front_back, dire
 	}
 }
 
-void world_t::mouse_motion(float dang_h, float dang_v) {
+void World::mouse_motion(float dang_h, float dang_v) {
 	if (invert_mouse_y) {
 		dang_v *= -1;
 	}
 	camera->mouse_motion(dang_h * mouse_sensitivity_x / 300, dang_v * mouse_sensitivity_y / 300);
 }
 
-bool world_t::is_win() {
+bool World::is_win() {
 	int i = 0;
 	Vehicle *curr_vehicle = truck;
 

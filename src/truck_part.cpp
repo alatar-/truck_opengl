@@ -1,7 +1,7 @@
 #include "truck_part.h"
 
 #include <unistd.h>
-TruckPart::TruckPart(world_t *in_world, 
+TruckPart::TruckPart(World *in_world, 
 					string in_path, 
 					float in_size, 
 					float x, float y, 
