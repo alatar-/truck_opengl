@@ -39,11 +39,7 @@ private:
 	float mouse_sensitivity_x, mouse_sensitivity_y;
 	bool invert_mouse_y;
 	
-	unsigned max_textures;
-	bool shadows_working;
-	
-	GLuint shadow_map;
-	unsigned shadow_map_size, screen_w,	screen_h;
+	unsigned screen_w,	screen_h;
 public:
 	bool win;
 	world_t(){}

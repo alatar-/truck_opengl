@@ -96,12 +96,8 @@ void material_t::apply() {
 	}
 }
 
-bool material_t::operator< (const material_t& other) const {
-	return texture_size < other.texture_size;
-}
-
 void material_t::draw_associated_meshes(glm::mat4 V) {
-	if (marker && meshes.size()) {
+	if (meshes.size()) {
 		apply();
 		for (unsigned i = 0, ilen = meshes.size(); i < ilen; ++i) {
 			meshes[i]->draw(true, false, V);
@@ -109,6 +105,38 @@ void material_t::draw_associated_meshes(glm::mat4 V) {
 	}
 }
 
-void material_t::set_marker (bool in_marker) {
-	marker = in_marker;
+string material_t::get_texture_file_name() {
+	return texture->get_file_name();
+}
+
+int material_t::compare_textures(const material_t &o) const {
+	if (texture == o.texture) {
+		return 0;
+	} else if (texture != NULL && o.texture != NULL) {
+		return texture->get_file_name().compare(o.texture->get_file_name());
+	} else {
+		return texture - o.texture;
+	}
+}
+
+bool material_t::operator<(const material_t &o) const {
+	return compare_textures(o) < 0;
+}
+
+bool material_t::operator==(const material_t &o) const {
+	return (compare_textures(o) == 0)
+			&& !(memcmp(ambient, o.ambient, 4)
+			|| memcmp(emission, o.emission, 4)
+			|| memcmp(diffuse, o.diffuse, 4)
+			|| memcmp(specular, o.specular, 4)
+			|| shininess != o.shininess);
+}
+
+void material_t::substitute(material_t *o) {
+	unsigned ilen = meshes.size();
+	o->meshes.reserve(o->meshes.size() + ilen);
+	for (unsigned i = 0; i < ilen; ++i) {
+		meshes[i]->set_material(o);
+		o->meshes.push_back(meshes[i]);
+	}
 }

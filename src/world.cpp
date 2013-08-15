@@ -26,7 +26,7 @@ vector <float> str_to_vec(const string &in_s) {
 }
 
 bool materials_ptr_less(const material_t *a, const material_t *b) {
-	return !(*a < *b);
+	return *a < *b;
 }
 
 bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h) {
@@ -38,9 +38,6 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		mouse_sensitivity_x = ini.get<float>("mouseSensitivityX", 0.8f);
 		mouse_sensitivity_y = ini.get<float>("mouseSensitivityY", 0.8f);
 		invert_mouse_y = ini.get<bool>("invertMouseY", false);
-
-		shadow_map_size = ini.get<unsigned>("shadowMapSize", 512);
-		shadows_working = ini.get<bool>("shadows", false);
 	}
 	
 	{
@@ -83,7 +80,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 
 		{
 			string model_file("./models/");
-			model_file += ini.get<string>("meta_model", "Parking/Meta.obj");
+			model_file += ini.get<string>("meta_model", "Parking/meta.obj");
 					meta = new Obstacle(
 						this,
 						model_file
@@ -94,16 +91,17 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 
 		{
 			int obstacle_number = ini.get<int>("obstacle_number", 0);
-			string pre = ini.get<string>("obstacle_model", "Parking/Obstacle");
+			string pre = "./models/";
+			pre += ini.get<string>("obstacle_model", "Parking/Obstacle");
 			string post = ini.get<string>("obstacle_suffix", ".obj");
-			for(int i = 0 ; i < obstacle_number; ++i) {
-				char number[4];
+			for(int i = 1 ; i <= obstacle_number; ++i) {
+				char number[15];
 				sprintf(number, "%03d", i);
 				string name("");
 				name += pre;
 				name += number;
 				name += post;
-				printf("%s\n", name.c_str());
+				printf("\n%s\n", name.c_str());
 				obstacles.push_back(new Obstacle(
 							this
 						,	name
@@ -111,7 +109,6 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 				obstacles.back()->set_vertices();
 				vector <material_t*> &obst_mats = obstacles.back()->get_materials();
 				materials.insert(materials.begin(), obst_mats.begin(), obst_mats.end());
-				printf("Got materials\n");
 			}
 		}
 	}
@@ -430,25 +427,27 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		truck->following_vehicle = first_trailer;
 		first_trailer-> following_vehicle = second_trailer;
 	}
-	
-	
-	{
-		int op;
-		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &op);
-		max_textures = op;
-	}
-	
-	
-	glGenTextures(1, &shadow_map);
-	glBindTexture(GL_TEXTURE_2D, shadow_map);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadow_map_size, shadow_map_size, 0,
-	GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-    return true;
+	{
+		sort(materials.begin(), materials.end(), materials_ptr_less);
+		unsigned i = 0, j = 1, len = materials.size();
+		for (; j < len; ++j) {
+			if (*materials[i] == *materials[j]) {
+				materials[j]->substitute(materials[i]);
+				delete materials[j];
+			} else {
+				i += 1;
+				if (i < j) {
+					materials[i] = materials[j];
+				}
+			}
+		}
+		if (i < len) {
+			materials.resize(i + 1);
+		}
+	}
+
+  return true;
 }
 
 world_t::~world_t() {	
@@ -468,9 +467,6 @@ void world_t::draw() {
 	 * Recalculate models
 	 */
 	
-	for (unsigned i = 0, ilen = materials.size(); i < ilen; ++i) {
-		materials[i]->set_marker(false);
-	}
 	parking->set_mv_matrix(glm::mat4(1.0f));
 	truck->body->set_mv_matrix(glm::mat4(1.0f));
 	truck->left_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
@@ -494,15 +490,10 @@ void world_t::draw() {
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	
-	if (shadows_working) {
-		glDisable(GL_LIGHT0);
-		//draw_with_shadows(V);
-	} else {
-		glEnable(GL_LIGHTING);
-		glEnable(GL_LIGHT0);
-		glDisable(GL_CULL_FACE);
-		draw_in_material_order(V);
-	}
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glDisable(GL_CULL_FACE);
+	draw_in_material_order(V);
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -548,14 +539,13 @@ bool world_t::test_colls_with_parking(vertex_2d pos, vertex_2d itd, float size, 
 }
 
 bool world_t::is_win() {
-	if(
-			meta->full_inclusion(*truck)
-		&&	meta->full_inclusion(*first_trailer)
-		&&	meta->full_inclusion(*second_trailer)
-		) {
+		Vehicle *curr_vehicle = truck;
+		while (curr_vehicle != NULL) {
+			if (meta->full_inclusion(*curr_vehicle)) {
+				curr_vehicle = curr_vehicle->following_vehicle;
+			} else {
+				return false;
+			}
+		}
 		return true;
-	}
-	else {
-		return false;
-	}
 }
