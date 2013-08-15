@@ -93,7 +93,7 @@ float Vehicle::turn_factor() {
     return min_turn + y * (max_turn - min_turn);
 }
 
-void Vehicle::calculate(direct_t front_back, direct_t right_left, vector <Obstacle*> obstacles) {
+void Vehicle::calculate(direct_t front_back, direct_t right_left, vector <Obstacle*> &obstacles) {
     int now = glutGet(GLUT_ELAPSED_TIME); 
     float dt = ((float)now - last_time) / 1000.0;
     last_time = now;
@@ -202,7 +202,7 @@ void Vehicle::set_vertices() {
 }
 
 
-bool Vehicle::detect_collision(vector <Obstacle*> obstacles) {
+bool Vehicle::detect_collision(vector <Obstacle*> &obstacles) {
     for(unsigned i = 0; i < obstacles.size(); ++i) {
         if(intersection(*obstacles[i])) {
             printf("collision with obstacle %d\n", i);
