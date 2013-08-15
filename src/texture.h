@@ -1,5 +1,5 @@
-#ifndef _INCLUDE_TEXTURE_H
-#define _INCLUDE_TEXTURE_H
+#ifndef TEXTURE_H
+#define TEXTURE_H
 
 #include <string>
 #include "shared.h"

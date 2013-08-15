@@ -1,5 +1,5 @@
-#ifndef _INCLUDE_BONE_VERTEX_H
-#define _INCLUDE_BONE_VERTEX_H
+#ifndef EXTRA_VERTEX_H
+#define EXTRA_VERTEX_H
 
 #include "vertex.h"
 #include "shared.h"

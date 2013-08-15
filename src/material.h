@@ -1,5 +1,5 @@
-#ifndef _INCLUDE_MATERIAL_H
-#define _INCLUDE_MATERIAL_H
+#ifndef MATERIAL_H
+#define MATERIAL_H
 
 #include <string>
 #include <cstring>

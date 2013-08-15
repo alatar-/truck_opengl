@@ -1,5 +1,5 @@
-#ifndef _INCLUDE_SHARED_H
-#define _INCLUDE_SHARED_H
+#ifndef SHARED_H
+#define SHARED_H
 
 #include <GL/glew.h>
 #include <GL/freeglut.h>
