@@ -38,13 +38,13 @@ public:
   TruckPart* right_steering_wheel;
   TruckPart* body;
   Vehicle* following_vehicle;
-  vector <vertex_2d> dimensions;
+  vector <vertex_2d<float> > dimensions;
 
     float velocity;
     float angle;
     float size;
     float following_bend;
-    vertex_2d position;
+    vertex_2d<float>position;
     int last_time;
 
 	
@@ -66,8 +66,8 @@ public:
 
 
     void calculate(direct_t front_back, direct_t right_left, vector <Obstacle*> &obstacles);
-    bool move(float parent_size, vertex_2d in_position, float in_angle, float ds, float in_following_bend, vector <Obstacle*> &obstacles);
-    vector <vertex_2d> get_body_vertices();
+    bool move(float parent_size, vertex_2d<float>in_position, float in_angle, float ds, float in_following_bend, vector <Obstacle*> &obstacles);
+    vector <vertex_2d<float> > get_body_vertices();
     void set_vertices();
 	bool detect_collision(vector <Obstacle*> &obstacles);
     void collision();

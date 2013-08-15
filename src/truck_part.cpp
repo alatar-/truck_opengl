@@ -70,7 +70,7 @@ glm::mat4 TruckPart::get_model_matrix() {
 	return M * R_follow * in_transform * R_bend * R_forward;
 }
 
-vertex_2d TruckPart::get_pos() {
+vertex_2d<float>TruckPart::get_pos() {
 	return pos;
 }
 
@@ -83,7 +83,7 @@ void TruckPart::set_pos(float x, float y) {
 	pos.y = y;
 }
 
-void TruckPart::move (vertex_2d position, float ang, float ds) {
+void TruckPart::move (vertex_2d<float>position, float ang, float ds) {
 	pos = position;
 	ang_forward = normalize_angle(ang_forward + ds / size);
 	ang_follow = ang;
@@ -101,10 +101,10 @@ float TruckPart::get_model_length() {
 	return model->get_length();
 }
 
-vertex_2d TruckPart::get_model_min_point() {
+vertex_2d<float>TruckPart::get_model_min_point() {
 	return model->get_min_point();
 }
 
-vertex_2d TruckPart::get_model_max_point() {
+vertex_2d<float>TruckPart::get_model_max_point() {
 	return model->get_max_point();
 }

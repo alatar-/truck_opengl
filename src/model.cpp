@@ -30,7 +30,7 @@ bool model_t::parse_scene (const aiScene *pScene, string &model_file) {
 			const aiMesh* paiMesh = pScene->mMeshes[i];
 			meshes.push_back(new mesh_t(paiMesh, materials[paiMesh->mMaterialIndex]));
 		}
-		vertex_2d local_min = meshes[0]->get_cords_min(), local_max = meshes[0]->get_cords_max();
+		vertex_2d<float>local_min = meshes[0]->get_cords_min(), local_max = meshes[0]->get_cords_max();
 
 		// printf("\n\n\n\t\t%s\n\n%s> 0\n", model_file.c_str(), model_file.c_str());
 		// local_min.print();
@@ -115,15 +115,6 @@ void model_t::draw (bool use_mv, bool apply_material) {
 	}
 }
 
-bool model_t::test_intersection (vertex_3d pos0, vertex_3d pos1) {
-	for (unsigned i = 0, ilen = meshes.size(); i < ilen; ++i) {
-		if (meshes[i]->test_intersection(pos0, pos1)) {
-			return true;
-		}
-	}
-	return false;
-}
-
 float model_t::get_width() {
 	return width;
 }
@@ -132,10 +123,10 @@ float model_t::get_length() {
 	return length;
 }
 
-vertex_2d model_t::get_min_point() {
+vertex_2d<float>model_t::get_min_point() {
 	return overall_min_point;
 }
 
-vertex_2d model_t::get_max_point() {
+vertex_2d<float>model_t::get_max_point() {
 	return overall_max_point;
 }

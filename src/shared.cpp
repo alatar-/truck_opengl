@@ -22,12 +22,8 @@ float to_degrees (float radians) {
 
 
 
-template<class T> T module (T a, T b);
+template<class T> T module (T a, T b) {
 	return sqrt(a * a + b * b);
-}
-
-template<class T> T module (vertex_2d<T> a, vertex_2d<T> b);
-	return module(a.x - b.x, a.y - b.y);
 }
 
 string get_file (const char *filename) {

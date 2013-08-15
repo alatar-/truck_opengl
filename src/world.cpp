@@ -549,13 +549,13 @@ void world_t::draw_all_markers(glm::mat4 V) {
 }
 
 void world_t::draw_rectangle(Rectangle &rect, glm::mat4 V) {
-	vector <vertex_2d> verts = rect.get_vertices();
+	vector <vertex_2d<float> >verts = rect.get_vertices();
 	for (unsigned i = 0, ilen = verts.size(); i < ilen; ++i) {
 		draw_marker(verts[i], V);
 	}
 }
 
-void world_t::draw_marker (vertex_2d pos, glm::mat4 V) {
+void world_t::draw_marker (vertex_2d<float>pos, glm::mat4 V) {
 	glm::mat4 M = glm::translate(glm::mat4(1.0f), glm::vec3(pos.x, 0.0f, pos.y));
 	red_marker->set_mv_matrix(V * M);
 	red_marker->draw(true, false);
@@ -575,21 +575,6 @@ void world_t::mouse_motion(float dang_h, float dang_v) {
 		dang_v *= -1;
 	}
 	camera->mouse_motion(dang_h * mouse_sensitivity_x / 300, dang_v * mouse_sensitivity_y / 300);
-}
-
-
-bool world_t::test_colls_with_parking(vertex_2d pos, vertex_2d itd, float size, float height) {
-	float scale = module(pos, itd);
-	scale = (scale + size) / size;
-	
-	vertex_3d pos0(pos.x, height * 0.8, pos.y)
-		,	pos1(pos.x + scale * (itd.x - pos.x), height * 0.8, pos.y + scale * (itd.y - pos.y));
-	
-	return !(abs(pos1.z) >= 37 || abs(pos1.x) >= 37
-		|| (abs(pos1.x) <= 3 && abs(20 - abs(pos1.z)) >= 2)
-		|| (abs(pos1.z - 1) <= 3 && abs(20 - abs(pos1.x)) >= 2)
-		);
-	return !parking->test_intersection(pos0, pos1);
 }
 
 bool world_t::is_win() {

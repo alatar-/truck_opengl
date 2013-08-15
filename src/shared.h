@@ -39,7 +39,6 @@ float normalize_angle (float ang);
 float to_degrees (float radians);
 
 template<class T> T module (T a, T b);
-template<class T> T module (vertex_2d<T> a, vertex_2d<T> b);
 string get_file (const char *filename);
 
 void print_mat4 (glm::mat4 M);

@@ -44,7 +44,7 @@ private:
 	model_t *red_marker;
 	void draw_all_markers(glm::mat4 V);
 	void draw_rectangle(Rectangle &rect, glm::mat4 V);
-	void draw_marker (vertex_2d pos, glm::mat4 V);
+	void draw_marker (vertex_2d<float>pos, glm::mat4 V);
 
 public:
 	bool win;
@@ -58,7 +58,7 @@ public:
 	
 	void mouse_motion(float dang_h, float dang_v);
 
-	bool test_colls_with_parking(vertex_2d pos, vertex_2d itd, float size, float height);
+	bool test_colls_with_parking(vertex_2d<float>pos, vertex_2d<float>itd, float size, float height);
 	
 	void draw_in_material_order(glm::mat4 V);
 	bool is_win();

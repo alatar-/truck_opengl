@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <cstdio>
+#include "shared.h"
 
 template<class T> class vertex_2d {
 public:
@@ -65,9 +66,12 @@ public:
 	}
 
 	void print() const {
-		printf("(%f %f)\n", x, y);
+		printf("(%Lf %Lf)\n", x, y);
 	}
 
+	T module(const T &o) const {
+		return module(x - o.x, y - o.y);
+	}
 };
 
 template<class T> class vertex_3d : public vertex_2d<T> {

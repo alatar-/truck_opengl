@@ -104,7 +104,7 @@ private:
         ,   *r_pos_15
         ,   *r_bend_1;
 
-    vertex_2d *point_1
+    vertex_2d<float>*point_1
         ,   *point_2
         ,   *point_3;
 };

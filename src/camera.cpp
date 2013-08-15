@@ -26,9 +26,9 @@ void Camera::move(direct_t right_left, direct_t front_back, direct_t up_down) {
 
 	float speed_delta = speed * time_delta;
 	float sinus = sin(angle_horizontal);
-    float cosinus = cos(angle_horizontal);
+  float cosinus = cos(angle_horizontal);
 
-	position = vertex_3d(
+	position = vertex_3d<float>(
         position.x + speed_delta * (front_back  * sinus + right_left * cosinus),
         position.y + speed_delta * (front_back * cosinus - right_left * sinus),
         position.z + speed_delta * up_down
