@@ -188,3 +188,7 @@ vector <vertex_2d>  Vehicle::get_body_vertices() {
     dimensions.push_back(pos_max);
     return dimensions;
 }
+
+void Vehicle::set_vertices() {
+    Rectangle::set_vertices(get_body_vertices());
+}

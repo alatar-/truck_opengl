@@ -69,31 +69,52 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 	}
 	
 	{
-		ini.select("Parking");
-		galery = new model_t();
-		string model_file("./models/");
-		model_file += ini.get<string>("model", "galery.obj");
-		if (!galery->load(model_file)) {
-			return false;
+		{
+			ini.select("Parking");
+			parking = new model_t();
+			string model_file("./models/");
+			model_file += ini.get<string>("model", "Parking.obj");
+			if (!parking->load(model_file)) {
+				return false;
+			}
+			vector <material_t*> &parking_mats = parking->get_materials();
+			materials.insert(materials.begin(), parking_mats.begin(), parking_mats.end());
 		}
-		
-		vector <material_t*> &gal_mats = galery->get_materials();
-		materials.insert(materials.begin(), gal_mats.begin(), gal_mats.end());
-		printf("done\n");
-	}
 
-	// {
-	// 	ini.select("Truck");
-	// 	string model_file("./models/Galery/Semi_truck.obj");
-	// 	//model_file + ini.get<string>("model", "Semi_truck.obj");
-	// 	truck = new model_t();
-	// 	if(!truck->load(model_file)) {
-	// 		return false;
-	// 	}
-	// 	vector <material_t*> &vis_mats = truck->get_materials();
-	// 	materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
-	// 	printf("Got materials\n");
-	// }
+		{
+			string model_file("./models/");
+			model_file += ini.get<string>("meta_model", "Parking/Meta.obj");
+					meta = new Obstacle(
+						this,
+						model_file
+					);
+					vector <material_t*> &meta_mats = meta->get_materials();
+			materials.insert(materials.begin(), meta_mats.begin(), meta_mats.end());
+		}
+
+		{
+			int obstacle_number = ini.get<int>("obstacle_number", 0);
+			string pre = ini.get<string>("obstacle_model", "Parking/Obstacle");
+			string post = ini.get<string>("obstacle_suffix", ".obj");
+			for(int i = 0 ; i < obstacle_number; ++i) {
+				char number[4];
+				sprintf(number, "%03d", i);
+				string name("");
+				name += pre;
+				name += number;
+				name += post;
+				printf("%s\n", name.c_str());
+				obstacles.push_back(new Obstacle(
+							this
+						,	name
+					));
+				obstacles.back()->set_vertices();
+				vector <material_t*> &obst_mats = obstacles.back()->get_materials();
+				materials.insert(materials.begin(), obst_mats.begin(), obst_mats.end());
+				printf("Got materials\n");
+			}
+		}
+	}
 
 	{
 		{
@@ -129,7 +150,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			vector <material_t*> &vis_mats = truck->body->get_materials();
 			materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 			printf("Got materials\n");
-			truck->set_verticies(truck->get_body_vertices());
+			truck->set_vertices();
 		}
 
 		{
@@ -253,7 +274,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 				vector <material_t*> &vis_mats = first_trailer->body->get_materials();
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 				printf("Got materials\n");
-				first_trailer->set_verticies(first_trailer->get_body_vertices());
+				first_trailer->set_vertices();
 			}
 
 			{
@@ -338,7 +359,7 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 				vector <material_t*> &vis_mats = second_trailer->body->get_materials();
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
 				printf("Got materials\n");
-				second_trailer->set_verticies(second_trailer->get_body_vertices());
+				second_trailer->set_vertices();
 			}
 
 			{
@@ -408,49 +429,6 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 		}
 		truck->following_vehicle = first_trailer;
 		first_trailer-> following_vehicle = second_trailer;
-		/*--------------------------------------------------------------------------------*/
-		// {
-		// 	ini.select("TruckDoubleWheels");
-		// 	model_file = "./models/";
-		// 	truck->right_steering_wheel = new TruckPart(this
-		// 				,	model_file + ini.get<string>("model", "single_wheel.obj")
-		// 				,	180.0f
-		// 				,	ini.get<float>("leftS", 2.0f)
-		// 				,	ini.get<float>("leftX", 2.0f)
-		// 				,	ini.get<float>("leftY", 2.0f)
-		// 				,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
-		// 				,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
-		// 				,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
-		// 				);
-		// 	vector <material_t*> &vis_mats = truck->body->get_materials();
-		// 	materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
-		// 	printf("Got materials\n");
-		// }
-
-
-		// for(ini_t::sectionsit_t i = ini.sections.begin(); i != ini.sections.end(); ++i) {
-		// 	if (!strncmp(i->first.c_str(), "Truck", strlen("Truck"))) {
-		// 		ini.select(i->first.c_str());
-		// 		string model_file("./models/");
-
-
-		// 		truck.push_back(new TruckPart(this
-		// 			,	model_file + ini.get<string>("model", "Semi_truck.obj")
-		// 			,	ini.get<float>("size", 2.0f)
-		// 			,	ini.get<float>("posX", 2.0f)
-		// 			,	ini.get<float>("posY", 2.0f)
-		// 			,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
-		// 			,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
-		// 			,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
-		// 			)
-		// 		);
-				
-		// 		vector <material_t*> &vis_mats = truck.back()->get_materials();
-		// 		materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
-		// 		printf("Got materials\n");
-		// 	}
-		// }
-
 	}
 	
 	
@@ -474,7 +452,12 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 }
 
 world_t::~world_t() {	
-	delete galery;
+	delete parking;
+	delete camera;
+}
+
+void world_t::clear() {
+	delete parking;
 	delete camera;
 }
 
@@ -488,20 +471,7 @@ void world_t::draw() {
 	for (unsigned i = 0, ilen = materials.size(); i < ilen; ++i) {
 		materials[i]->set_marker(false);
 	}
-	galery->set_mv_matrix(glm::mat4(1.0f));
-	// glm::mat4(
-	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-	// 	glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)
-	// 	glm::vec4(0.0f, 0.5f, 0.0f, 0.0f),
-	// 	glm::vec4(0.0f, 0.0f, 0.5f, 0.0f),
-	// 	glm::vec4(0.5f, 0.5f, 0.5f, 1.0f)
-	// ));
-
-    //printf("mv matrix set\n");
-	galery->set_mv_matrix(glm::mat4(1.0f));
-
+	parking->set_mv_matrix(glm::mat4(1.0f));
 	truck->body->set_mv_matrix(glm::mat4(1.0f));
 	truck->left_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
 	truck->right_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
@@ -539,79 +509,6 @@ void world_t::draw() {
 	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
-// void world_t::draw_with_shadows (glm::mat4 V) {
-// 	/**
-// 	 * First draw - from all lights into shadow map
-// 	 */
-	
-// 	glCullFace(GL_FRONT);
-// 	glColorMask(0, 0, 0, 0);
-
-// 	glMatrixMode(GL_PROJECTION);
-// 	glMatrixMode(GL_MODELVIEW);
-// 	glViewport(0, 0, shadow_map_size, shadow_map_size);
-	
-// 	glBindTexture(GL_TEXTURE_2D, shadow_map);
-// 	glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, shadow_map_size, shadow_map_size);
-	
-// 	glCullFace(GL_BACK);
-// 	glShadeModel(GL_SMOOTH);
-// 	glColorMask(1, 1, 1, 1);
-	
-// 	/**
-// 	 * Second draw
-// 	 */
-// 	glClear(GL_DEPTH_BUFFER_BIT);
-// 	glMatrixMode(GL_PROJECTION);
-// 	glLoadMatrixf(glm::value_ptr(P));
-	
-// 	glViewport(0, 0, screen_w, screen_h);
-// 	glEnable(GL_LIGHTING);
-	
-// 	draw_in_material_order(V);
-	
-// 	/**
-// 	 * Third draw
-// 	 */
-	
-// 	glEnable(GL_TEXTURE_GEN_S);
-// 	glEnable(GL_TEXTURE_GEN_T);
-// 	glEnable(GL_TEXTURE_GEN_R);
-// 	glEnable(GL_TEXTURE_GEN_Q);
-// 	glBindTexture(GL_TEXTURE_2D, shadow_map);
-// 	glEnable(GL_TEXTURE_2D);
-// 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
-// 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
-// 	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE_ARB, GL_INTENSITY);
-// 	glAlphaFunc(GL_GEQUAL, 0.99f);
-// 	glEnable(GL_ALPHA_TEST);
-	
-// 	glDisable(GL_CULL_FACE);
-	
-// 		glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-// 		glTexGenfv(GL_S, GL_EYE_PLANE, glm::value_ptr(texture_matrix[0]));
-
-// 		glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-// 		glTexGenfv(GL_T, GL_EYE_PLANE, glm::value_ptr(texture_matrix[1]));
-
-// 		glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-// 		glTexGenfv(GL_R, GL_EYE_PLANE, glm::value_ptr(texture_matrix[2]));
-
-// 		glTexGeni(GL_Q, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR);
-// 		glTexGenfv(GL_Q, GL_EYE_PLANE, glm::value_ptr(texture_matrix[3]));
-
-// 		draw_in_material_order(V);
-// 	glDisable(GL_TEXTURE_GEN_S);
-// 	glDisable(GL_TEXTURE_GEN_T);
-// 	glDisable(GL_TEXTURE_GEN_R);
-// 	glDisable(GL_TEXTURE_GEN_Q);
-
-// 	//Restore other states
-// 	glDisable(GL_LIGHTING);
-// 	glDisable(GL_TEXTURE_2D);
-// 	glDisable(GL_ALPHA_TEST);
-// }
-
 void world_t::draw_in_material_order(glm::mat4 V) {
 	glMatrixMode(GL_MODELVIEW);
 	
@@ -623,6 +520,9 @@ void world_t::draw_in_material_order(glm::mat4 V) {
 void world_t::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct_t cam_up_down, direct_t veh_front_back, direct_t veh_right_left) {
 	camera->move(cam_right_left, cam_front_back, cam_up_down);
 	truck->calculate(veh_front_back, veh_right_left);
+	if(is_win()) {
+		printf("Wygrałeś!!!\n");
+	}
 }
 
 void world_t::mouse_motion(float dang_h, float dang_v) {
@@ -633,7 +533,7 @@ void world_t::mouse_motion(float dang_h, float dang_v) {
 }
 
 
-bool world_t::test_colls_with_galery(vertex_2d pos, vertex_2d itd, float size, float height) {
+bool world_t::test_colls_with_parking(vertex_2d pos, vertex_2d itd, float size, float height) {
 	float scale = module(pos, itd);
 	scale = (scale + size) / size;
 	
@@ -644,5 +544,18 @@ bool world_t::test_colls_with_galery(vertex_2d pos, vertex_2d itd, float size, f
 		|| (abs(pos1.x) <= 3 && abs(20 - abs(pos1.z)) >= 2)
 		|| (abs(pos1.z - 1) <= 3 && abs(20 - abs(pos1.x)) >= 2)
 		);
-	return !galery->test_intersection(pos0, pos1);
+	return !parking->test_intersection(pos0, pos1);
+}
+
+bool world_t::is_win() {
+	if(
+			meta->full_inclusion(*truck)
+		&&	meta->full_inclusion(*first_trailer)
+		&&	meta->full_inclusion(*second_trailer)
+		) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }

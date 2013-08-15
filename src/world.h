@@ -18,17 +18,23 @@ class TruckPart;
 
 class Vehicle;
 #include "vehicle.h"
+#include "obstacle.h"
+
+class Obstacle;
+#include "obstacle.h"
 
 using namespace std;
 
 class world_t {
 private: 
-	model_t *galery;
+	model_t *parking;
 	Vehicle* truck;
     Vehicle* first_trailer;
 	Vehicle* second_trailer;
 	Camera *camera;
 	vector <material_t*> materials;
+	vector <Obstacle*> obstacles;
+	Obstacle* meta;
 	glm::mat4 P;
 	float mouse_sensitivity_x, mouse_sensitivity_y;
 	bool invert_mouse_y;
@@ -39,18 +45,21 @@ private:
 	GLuint shadow_map;
 	unsigned shadow_map_size, screen_w,	screen_h;
 public:
+	bool win;
 	world_t(){}
 	~world_t();
 	
 	bool load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h);
+	void clear();
 	void draw();
 	void next_frame (direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn);
 	
 	void mouse_motion(float dang_h, float dang_v);
 
-	bool test_colls_with_galery(vertex_2d pos, vertex_2d itd, float size, float height);
+	bool test_colls_with_parking(vertex_2d pos, vertex_2d itd, float size, float height);
 	
 	void draw_in_material_order(glm::mat4 V);
+	bool is_win();
 	// void draw_with_shadows (glm::mat4 V);
 };
 
