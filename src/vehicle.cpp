@@ -97,7 +97,7 @@ void Vehicle::calculate(direct_t front_back, direct_t right_left) {
     int now = glutGet(GLUT_ELAPSED_TIME); 
     float dt = ((float)now - last_time) / 1000.0;
     last_time = now;
-
+    // printf("FPS: %f\n", 1 / dt);
     float new_velocity = velocity + acceleration(front_back, velocity) * dt;
     if ((front_back == STOP) && (sign(new_velocity) * sign(velocity) < 0)) {
         velocity = 0;

@@ -29,6 +29,10 @@ bool materials_ptr_less(const material_t *a, const material_t *b) {
 	return *a < *b;
 }
 
+void world_t::tmp_animate() {
+    this->camera->tmp_animate();
+}
+
 bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h) {
 	/** load config */
 	ini_t ini(in_config_file, true);
@@ -60,8 +64,11 @@ bool world_t::load(string in_config_file, unsigned in_screen_w, unsigned in_scre
 			ini.get<float>("posZ", 5.0f),
             ini.get<float>("angX", 0.0f),
 			ini.get<float>("speed", 20.0f),
-      ini.get<float>("max_vertical_angle_up", 0.5f),
-      ini.get<float>("max_vertical_angle_down", 0.5f)
+            ini.get<float>("max_vertical_angle_up", 0.5f),
+            ini.get<float>("max_vertical_angle_down", 0.5f),
+            ini.get<float>("animation_rand_range", 0.5f),
+            ini.get<float>("animation_time_estimated", 5),
+            ini.get<float>("animation_speed", 0.5f)
 		);
 	}
 	
@@ -462,6 +469,7 @@ void world_t::clear() {
 }
 
 void world_t::draw() {
+    camera->animate_crash();
 	glm::mat4 V = camera->get_view_matrix();
 	
 	/**

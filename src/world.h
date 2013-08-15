@@ -57,6 +57,7 @@ public:
 	void draw_in_material_order(glm::mat4 V);
 	bool is_win();
 	// void draw_with_shadows (glm::mat4 V);
+    void tmp_animate();
 };
 
 #endif

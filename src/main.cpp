@@ -54,6 +54,8 @@ void keyDown(unsigned char c, int x, int y) {
         case 'd':
             f_key_d = true;
             break;
+        case 'p':
+            World->tmp_animate();
     }
 }
 
