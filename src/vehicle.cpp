@@ -45,7 +45,7 @@ Vehicle::Vehicle(float in_size,
 }
 
 float Vehicle::acceleration(direct_t front_back, float velocity) {
-    if (front_back == FORW) {
+    if (front_back == FRONT) {
         if (velocity <= 0) {
             return max_acceleration;
         } else {

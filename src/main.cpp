@@ -133,11 +133,11 @@ void display_frame() {
 
 void next_frame() {
 	world->next_frame(
-		(direct_t)(BACK * f_key_right + FORW * f_key_left)
-	,	(direct_t)(BACK * f_key_down + FORW * f_key_up)
-	,	(direct_t)(BACK * f_key_lower + FORW * f_key_higher)
-	,	(direct_t)(BACK * f_key_s    + FORW * f_key_w)
-	,	(direct_t)(BACK * f_key_a + FORW * f_key_d)
+		(direct_t)(BACK * f_key_right + FRONT * f_key_left)
+	,	(direct_t)(BACK * f_key_down + FRONT * f_key_up)
+	,	(direct_t)(BACK * f_key_lower + FRONT * f_key_higher)
+	,	(direct_t)(BACK * f_key_s    + FRONT * f_key_w)
+	,	(direct_t)(BACK * f_key_a + FRONT * f_key_d)
 	);
 	glutPostRedisplay();
 }

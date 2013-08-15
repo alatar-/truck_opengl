@@ -28,7 +28,7 @@ using namespace std;
 typedef enum {
 	BACK = -1
 ,	STOP = 0
-,	FORW = 1
+,	FRONT = 1
 } direct_t;
 
 typedef INI <string, string, string> ini_t;
