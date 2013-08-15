@@ -16,6 +16,9 @@ Camera::Camera(float position_x, float position_y, float position_z, float angle
     this->animation_rand_range = animation_rand_range;
     this->animation_time_estimated = animation_time_estimated;
     this->animation_speed = animation_speed;
+
+    this->animation_angle_vertical_deviation = 0;
+    this->animation_angle_horizontal_deviation = 0;
 }
 
 void Camera::animate_crash() {
