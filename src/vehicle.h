@@ -15,6 +15,11 @@ private:
     float min_turn;
     float max_turn;
 
+    float begining_turn_point;
+    float max_turn_point;
+    float final_turn_point;
+
+    float current_max_following_bend;
     float max_following_bend;
     float time_following_bend;
     // int max_wheel_rotating_time;
@@ -22,6 +27,7 @@ private:
     float acceleration(direct_t front_back, float velocity);
     float turn_factor();
     float bend_acceleration(direct_t right_left, float in_following_bend, float in_velocity);
+
 public:
   vector <TruckPart*> left_wheels;
   vector <TruckPart*> right_wheels;
@@ -46,6 +52,9 @@ public:
     float in_turn_acceleration,
     float in_min_turn,
     float in_max_turn,
+    float in_begining_turn_point,
+    float in_max_turn_point,
+    float in_final_turn_point,
     float in_max_following_bend,
     float in_time_following_bend
     );
@@ -56,6 +65,7 @@ public:
     void calculate(direct_t front_back, direct_t right_left);
     void move(float parent_size, vertex_2d in_position, float in_angle, float ds, float in_following_bend);
     vector <vertex_2d> get_body_vertices();
+    void set_vertices();
 	// void set_mv_matrix(glm::mat4 V);
 	// void apply_mv();
 };

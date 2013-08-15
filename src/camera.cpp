@@ -36,9 +36,9 @@ void Camera::move(direct_t right_left, direct_t front_back, direct_t up_down) {
 }
 
 glm::mat4 Camera::get_view_matrix() {
-    float xy = CAMERA_RADIUS * cos(angle_vertical)
-    float o_xz = -sin(angle_vertical)
-    float sin_h = sin(angle_horizontal)
+    float xy = CAMERA_RADIUS * cos(angle_vertical);
+    float o_xz = -sin(angle_vertical);
+    float sin_h = sin(angle_horizontal);
     float cos_h = cos(angle_horizontal);
 	return glm::lookAt(
 		glm::vec3(position.x, position.z, position.y),

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-mesh_t::mesh_t (const aiMesh *paiMesh, material_t *in_material) {
+mesh_t::mesh_t (const aiMesh *paiMesh, material_t *in_material) : MV(1.0f) {
 	material = in_material;
 	material->meshes.push_back(this);
 	
@@ -134,14 +134,10 @@ void mesh_t::print() {
 
 void mesh_t::set_mv_matrix (glm::mat4 in_MV) {
 	MV = in_MV;
-	
-	if (test_visibility()) {
-		material->set_marker(true);
-	}
 }
 
-bool mesh_t::test_visibility() {
-	return true;
+void mesh_t::set_material (material_t *in_material) {
+	material = in_material;
 }
 
 bool mesh_t::test_intersection (vertex_3d pos0, vertex_3d pos1) {

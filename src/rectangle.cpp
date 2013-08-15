@@ -129,9 +129,22 @@ bool Rectangle::full_inclusion(Rectangle &rect) {
 	return false;	
 }
 
-void Rectangle::set_verticies(vector <vertex_2d> in) {
+void Rectangle::set_vertices(vector <vertex_2d> in) {
 	UL = in[0];
 	UR = in[1];
 	LL = in[2];
 	LR = in[3];
+}
+
+void Rectangle::print() {
+  printf("\n");
+  vector<vertex_2d> verts;
+  verts.reserve(4);
+  verts.push_back(UL);
+  verts.push_back(UR);
+  verts.push_back(LL);
+  verts.push_back(LR);
+  for (unsigned i = 0; i < 4; ++i) {
+    printf("vertex #%u: ( %f ; %f ) \n", i, verts[i].x, verts[i].y);
+  }
 }

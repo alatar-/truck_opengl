@@ -31,8 +31,7 @@ public:
 	unsigned vertices_size();
 	
 	void set_mv_matrix (glm::mat4 in_MV);
-	
-	bool test_visibility();
+	void set_material (material_t *in_material);
 	
 	void print();
 	

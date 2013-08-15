@@ -19,7 +19,8 @@ public:
 	bool intersection(Rectangle &rect);
 	bool full_inclusion(Rectangle &rect);
 	bool has_point_inside(vertex_2d &in_vertex);
-	void set_verticies(vector <vertex_2d> in);
+	void set_vertices(vector <vertex_2d> in);
+	void print();
 };
 
 #endif

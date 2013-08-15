@@ -2,9 +2,8 @@
 
 #include <cstdio>
 
-texture_t::texture_t(GLenum in_texture_target, const string& in_file_name) {
+texture_t::texture_t(GLenum in_texture_target, const string& in_file_name) : file_name(in_file_name) {
 	texture_target = in_texture_target;
-	file_name = in_file_name;
 	image = NULL;
 }
 
@@ -39,4 +38,12 @@ double texture_t::size() {
 	} else {
 		return 0;
 	}
+}
+
+string texture_t::get_file_name() {
+	return file_name;
+}
+
+bool texture_t::operator==(const texture_t &o) const {
+	return file_name == o.file_name;
 }

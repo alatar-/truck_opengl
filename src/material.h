@@ -2,6 +2,7 @@
 #define _INCLUDE_MATERIAL_H
 
 #include <string>
+#include <cstring>
 #include <vector>
 #include "shared.h"
 #include "texture.h"
@@ -19,7 +20,6 @@ private:
 		,	diffuse[4]
 		,	specular[4]
 		,	shininess;
-	bool marker;
 	
 	double texture_size;
 public:
@@ -33,14 +33,16 @@ public:
 	
 	void draw_associated_meshes(glm::mat4 V = glm::mat4(1.0f));
 	
-	bool operator< (const material_t& other) const;
-	
 	double get_texture_size() {
 		return texture_size;
 	}
 	
-	void set_marker (bool in_marker);
-	
+	string get_texture_file_name();
+	int compare_textures(const material_t &o) const;
+	bool operator<(const material_t &o) const;
+	bool operator==(const material_t &o) const;
+
+	void substitute(material_t *o);
 };
 
 #endif
