@@ -5,7 +5,7 @@
 
 class material_t;
 #include "material.h"
-#include "bone_vertex.h"
+#include "extra_vertex.h"
 #include <vector>
 
 using namespace std;
@@ -14,7 +14,7 @@ class mesh_t {
 private:
 	float *pos_data, *norm_data, *tex_coords;
 	vector <unsigned> indices;
-	vector <bone_vertex_t> vertices;
+	vector <ExtraVertex> vertices;
 	material_t *material;
 	
 	Vertex2D<float> cords_min, cords_max;
@@ -27,7 +27,7 @@ public:
 	void set_vertices_data();
 	void draw (bool use_mv, bool apply_material, glm::mat4 V = glm::mat4(1.0f));
 	
-	bone_vertex_t& operator[] (unsigned i);
+	ExtraVertex& operator[] (unsigned i);
 	unsigned vertices_size();
 	
 	void set_mv_matrix (glm::mat4 in_MV);

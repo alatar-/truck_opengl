@@ -1,5 +1,5 @@
 #include "mesh.h"
-#include "bone_vertex.h"
+#include "extra_vertex.h"
 #include <vector>
 
 using namespace std;
@@ -47,7 +47,7 @@ mesh_t::mesh_t (const aiMesh *paiMesh, material_t *in_material) : MV(1.0f) {
 				cords_max.y = max(cords_max.y, v_pos.z);
 			}
 			
-			vertices.push_back(bone_vertex_t(v_pos, Vertex3D<float>(norm->x, norm->y, norm->z)));
+			vertices.push_back(ExtraVertex(v_pos, Vertex3D<float>(norm->x, norm->y, norm->z)));
 		}
 	}
 	
@@ -109,7 +109,7 @@ void mesh_t::set_vertices_data() {
 // 	printf("mesh_t::set_vertices_data(%p)> set\n", this);
 }
 
-bone_vertex_t& mesh_t::operator[] (unsigned i) {
+ExtraVertex& mesh_t::operator[] (unsigned i) {
 	return vertices[i];
 }
 

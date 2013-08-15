@@ -11,7 +11,7 @@ using namespace std;
 
 class anim_mesh_model_t : public anim_model_t {
 protected:
-	vector < vector <vector <bone_vertex_t> > > frames;
+	vector < vector <vector <ExtraVertex> > > frames;
 	
 	void recalc_vertices();
 	void prepare_vertices (float frame);

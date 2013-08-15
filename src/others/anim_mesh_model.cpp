@@ -21,9 +21,9 @@ bool anim_mesh_model_t::load (string filename, float in_fps, unsigned in_frames)
 	if (!res) {
 		return false;
 	}
-	frames.push_back(vector <vector <bone_vertex_t> >());
+	frames.push_back(vector <vector <ExtraVertex> >());
 	for (unsigned i = 0, ilen = meshes.size(); i < ilen; ++i) {
-		frames[0].push_back(vector <bone_vertex_t>());
+		frames[0].push_back(vector <ExtraVertex>());
 		frames[0][i].reserve(meshes[i]->vertices_size());
 		for (unsigned j = 0, jlen = meshes[i]->vertices_size(); j < jlen; ++j) {
 			mesh_t &curr_mesh = (*meshes[i]);
@@ -53,22 +53,22 @@ bool anim_mesh_model_t::load_frame (string filename, unsigned idx) {
 	const aiScene* pScene = Importer.ReadFile(filename.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
 	
 	if (pScene) {
-		frames.push_back(vector <vector <bone_vertex_t> >());
-		vector <vector <bone_vertex_t> > &the_frame = frames.back();
+		frames.push_back(vector <vector <ExtraVertex> >());
+		vector <vector <ExtraVertex> > &the_frame = frames.back();
 		the_frame.reserve(pScene->mNumMeshes);
 		
 		for (unsigned i = 0, ilen = pScene->mNumMeshes; i < ilen; ++i) {
 			const aiMesh* paiMesh = pScene->mMeshes[i];
 			
-			the_frame.push_back(vector <bone_vertex_t>());
-			vector <bone_vertex_t> &the_mesh = the_frame.back();
+			the_frame.push_back(vector <ExtraVertex>());
+			vector <ExtraVertex> &the_mesh = the_frame.back();
 			the_mesh.reserve(paiMesh->mNumVertices);
 			
 			for (unsigned j = 0, jlen = paiMesh->mNumVertices; j < jlen; ++j) {
 				const aiVector3D* pos = &(paiMesh->mVertices[j]);
 				const aiVector3D* norm = &(paiMesh->mNormals[j]);
 				
-				the_mesh.push_back(bone_vertex_t(Vertex3D<float>pos->x, pos->y, pos->z), Vertex3D<float>norm->x, norm->y, norm->z)));
+				the_mesh.push_back(ExtraVertex(Vertex3D<float>pos->x, pos->y, pos->z), Vertex3D<float>norm->x, norm->y, norm->z)));
 				
 // 				printf("loaded vertex> (%.2f, %.2f, %.2f) - (%.2f, %.2f, %.2f)\n", the_mesh.back().get_pos().x, the_mesh.back().get_pos().y, the_mesh.back().get_pos().z, the_mesh.back().get_norm().x, the_mesh.back().get_norm().y, the_mesh.back().get_norm().z);
 // 				printf("loaded vertex> (%.2f, %.2f, %.2f) - (%.2f, %.2f, %.2f)\n", pos->x, pos->y, pos->z, norm->x, norm->y, norm->z);
@@ -93,10 +93,10 @@ void anim_mesh_model_t::prepare_vertices (float frame) {
 // 	printf("anim_mesh_model_t::prepare_vertices(%.2f)> ith=%u\n", frame, ith);
 	if ((float)ith == frame) {
 		
-		vector <vector <bone_vertex_t> > &the_frame = frames[ith];
+		vector <vector <ExtraVertex> > &the_frame = frames[ith];
 		for (unsigned i = 0, ilen = meshes.size(); i < ilen; ++i) {
 			mesh_t &the_mesh = (*meshes[i]);
-			vector <bone_vertex_t> &frame_mesh = the_frame[i];
+			vector <ExtraVertex> &frame_mesh = the_frame[i];
 			for (unsigned j = 0, jlen = the_mesh.vertices_size(); j < jlen; ++j) {
 				the_mesh[j] = frame_mesh[j];
 			}
@@ -107,11 +107,11 @@ void anim_mesh_model_t::prepare_vertices (float frame) {
 		unsigned jth = (ith + 1) % frames.size();
 		frame -= ith;
 		
-		vector <vector <bone_vertex_t> > &ith_frame = frames[ith]
+		vector <vector <ExtraVertex> > &ith_frame = frames[ith]
 			,	&jth_frame = frames[jth];
 		for (unsigned i = 0, ilen = meshes.size(); i < ilen; ++i) {
 			mesh_t &the_mesh = (*meshes[i]);
-			vector <bone_vertex_t> &ith_frame_mesh = ith_frame[i]
+			vector <ExtraVertex> &ith_frame_mesh = ith_frame[i]
 				,	&jth_frame_mesh = jth_frame[i];
 			for (unsigned j = 0, jlen = the_mesh.vertices_size(); j < jlen; ++j) {
 				// or slerp??
