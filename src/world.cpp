@@ -34,9 +34,7 @@ void World::tmp_animate() {
 }
 
 bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h) {
-	/** load config */
 	ini_t ini(in_config_file, true);
-	
 	{
 		ini.select("World");
 		mouse_sensitivity_x = ini.get<float>("mouseSensitivityX", 0.8f);
@@ -47,10 +45,10 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 	{
 		ini.select("Projection");
 		P = glm::perspective(
-			ini.get<float>("fovy", 50.0f)
-		,	ini.get<float>("aspect", (float)in_screen_w / in_screen_h)
-		,	ini.get<float>("zNear", 1.0f)
-		,	ini.get<float>("zFar", 400.0f)
+			ini.get<float>("fovy", 50.0f),
+			ini.get<float>("aspect", (float)in_screen_w / in_screen_h),
+			ini.get<float>("zNear", 1.0f),
+			ini.get<float>("zFar", 400.0f)
 		);
 		glMatrixMode(GL_PROJECTION);
 		glLoadMatrixf(glm::value_ptr(P));
@@ -110,10 +108,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 				name += number;
 				name += post;
 				printf("\n%s\n", name.c_str());
-				obstacles.push_back(new Obstacle(
-							this
-						,	name
-					));
+				obstacles.push_back(new Obstacle(this, name) );
 				obstacles.back()->set_vertices();
 				vector <Material*> &obst_mats = obstacles.back()->get_materials();
 				materials.insert(materials.begin(), obst_mats.begin(), obst_mats.end());
@@ -125,32 +120,32 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 		{
 			ini.select("Vehicle_consts");
 
-			truck = new Vehicle(ini.get<float>("size", 1.0f)
-			,	ini.get<float>("max_acceleration", 0.1)
-			,	ini.get<float>("max_velocity", 90)
-			,	ini.get<float>("max_reverse_velocity", 30)
-			, ini.get<float>("turn_acceleration", 1)
-			, ini.get<float>("min_turn", 1)
-			, ini.get<float>("max_turn", 10)
-			, ini.get<float>("begining_turn_point", 0.15)
-			, ini.get<float>("max_turn_point", 0.3)
-			, ini.get<float>("final_turn_point", 0.6)
-			, ini.get<float>("max_following_bend", 0.4)
-			, ini.get<float>("time_following_bend", 2)
+			truck = new Vehicle(ini.get<float>("size", 1.0f),
+								ini.get<float>("max_acceleration", 0.1),
+								ini.get<float>("max_velocity", 90),
+								ini.get<float>("max_reverse_velocity", 30),
+								ini.get<float>("turn_acceleration", 1),
+								ini.get<float>("min_turn", 1),
+								ini.get<float>("max_turn", 10),
+								ini.get<float>("begining_turn_point", 0.15),
+								ini.get<float>("max_turn_point", 0.3),
+								ini.get<float>("final_turn_point", 0.6),
+								ini.get<float>("max_following_bend", 0.4),
+								ini.get<float>("time_following_bend", 2)
 				);
 		}
 
 		{
 			string model_file("./models/");
 			ini.select("Truck");
-			truck->body = new TruckPart(this
-					,	model_file + ini.get<string>("model", "Semi_truck.obj")
-					,	ini.get<float>("size", 2.0f)
-					,	ini.get<float>("posX", 2.0f)
-					,	ini.get<float>("posY", 2.0f)
-					,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
-					,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
-					,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+			truck->body = new TruckPart(this,
+						model_file + ini.get<string>("model", "Semi_truck.obj"),
+						ini.get<float>("size", 2.0f),
+						ini.get<float>("posX", 2.0f),
+						ini.get<float>("posY", 2.0f),
+						str_to_vec3(ini.get<string>("translate", "0/0/0")),
+						str_to_vec3(ini.get<string>("rotate", "0/0/0")),
+						str_to_vec3(ini.get<string>("scale", "1/1/1"))
 					);
 			vector <Material*> &vis_mats = truck->body->get_materials();
 			materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
@@ -163,14 +158,14 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 			float posX = ini.get<float>("posX", 0.0f), posY = ini.get<float>("posY", 0.0f); 
 			ini.select("TruckSteeringWheels");
 			string model_file("./models/");
-			truck->left_steering_wheel = new TruckPart(this
-						,	model_file + ini.get<string>("model", "single_wheel.obj")
-						,	ini.get<float>("leftS", 2.0f)
-						,	posX
-						,	posY
-						,	glm::vec3(ini.get<float>("leftX", 2.0f), 0.0f, ini.get<float>("leftY", 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))
-						,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
-						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+			truck->left_steering_wheel = new TruckPart(this,
+							model_file + ini.get<string>("model", "single_wheel.obj"),
+							ini.get<float>("leftS", 2.0f),
+							posX,
+							posY,
+							glm::vec3(ini.get<float>("leftX", 2.0f), 0.0f, ini.get<float>("leftY", 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0")),
+							str_to_vec3(ini.get<string>("rotate", "0/0/0")),
+							str_to_vec3(ini.get<string>("scale", "1/1/1"))
 						);
 			vector <Material*> &vis_mats = truck->left_steering_wheel->get_materials();
 			materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
@@ -182,14 +177,14 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 			float posX = ini.get<float>("posX", 0.0f), posY = ini.get<float>("posY", 0.0f); 
 			ini.select("TruckSteeringWheels");
 			string model_file("./models/");
-			truck->right_steering_wheel = new TruckPart(this
-						,	model_file + ini.get<string>("model", "single_wheel.obj")
-						,	ini.get<float>("rightS", 2.0f)
-						,	posX
-						,	posY
-						,	glm::vec3(ini.get<float>("rightX", 2.0f), 0.0f, ini.get<float>("rightY", 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))
-						,	str_to_vec3(ini.get<string>("rotate", "0/180/0"))
-						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+			truck->right_steering_wheel = new TruckPart(this,
+							model_file + ini.get<string>("model", "single_wheel.obj"),
+							ini.get<float>("rightS", 2.0f),
+							posX,
+							posY,
+							glm::vec3(ini.get<float>("rightX", 2.0f), 0.0f, ini.get<float>("rightY", 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0")),
+							str_to_vec3(ini.get<string>("rotate", "0/180/0")),
+							str_to_vec3(ini.get<string>("scale", "1/1/1"))
 						);
 			vector <Material*> &vis_mats = truck->right_steering_wheel->get_materials();
 			materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
@@ -211,14 +206,14 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 				string leftY("leftY");
 				ssY<<leftY<<i;
 				leftY = ssY.str();
-				truck->left_wheels.push_back(new TruckPart(this
-							,	model_file + ini.get<string>("model", "double_wheel.obj")
-							,	ini.get<float>("leftS", 2.0f)
-							,	posX
-							,	posY
-							,	glm::vec3(ini.get<float>(leftX, 2.0f), 0.0f, ini.get<float>(leftY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))
-							,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
-							,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+				truck->left_wheels.push_back(new TruckPart(this,
+							model_file + ini.get<string>("model", "double_wheel.obj"),
+							ini.get<float>("leftS", 2.0f),
+							posX,
+							posY,
+							glm::vec3(ini.get<float>(leftX, 2.0f), 0.0f, ini.get<float>(leftY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0")),
+							str_to_vec3(ini.get<string>("rotate", "0/0/0")),
+							str_to_vec3(ini.get<string>("scale", "1/1/1"))
 							));
 				printf("loading double wheels 2\n");
 				vector <Material*> &vis_mats = truck->left_wheels.back()->get_materials();
@@ -243,14 +238,14 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 				string rightY("rightY");
 				ssY<<rightY<<i;
 				rightY = ssY.str();
-				truck->right_wheels.push_back(new TruckPart(this
-							,	model_file + ini.get<string>("model", "double_wheel.obj")
-							,	ini.get<float>("rightS", 2.0f)
-							,	posX
-							,	posY
-							,	glm::vec3(ini.get<float>(rightX, 2.0f), 0.0f, ini.get<float>(rightY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))
-							,	str_to_vec3(ini.get<string>("rotate", "0/180/0"))
-							,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+				truck->right_wheels.push_back(new TruckPart(this,
+							model_file + ini.get<string>("model", "double_wheel.obj"),
+							ini.get<float>("rightS", 2.0f),
+							posX,
+							posY,
+							glm::vec3(ini.get<float>(rightX, 2.0f), 0.0f, ini.get<float>(rightY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0")),
+							str_to_vec3(ini.get<string>("rotate", "0/180/0")),
+							str_to_vec3(ini.get<string>("scale", "1/1/1"))
 							));
 				printf("loading double wheels 2\n");
 				vector <Material*> &vis_mats = truck->right_wheels.back()->get_materials();
@@ -267,14 +262,14 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 			{
 				string model_file("./models/");
 				printf("trailer1!!!!!!!\n");
-				first_trailer->body = new TruckPart(this
-						,	model_file + ini.get<string>("model", "Truck/Trailer_no_wheels.obj")
-						,	ini.get<float>("size", 2.0f)
-						,	ini.get<float>("posX", 2.0f)
-						,	ini.get<float>("posY", 2.0f)
-						,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
-						,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
-						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+				first_trailer->body = new TruckPart(this,
+						model_file + ini.get<string>("model", "Truck/Trailer_no_wheels.obj"),
+						ini.get<float>("size", 2.0f),
+						ini.get<float>("posX", 2.0f),
+						ini.get<float>("posY", 2.0f),
+						str_to_vec3(ini.get<string>("translate", "0/0/0")),
+						str_to_vec3(ini.get<string>("rotate", "0/0/0")),
+						str_to_vec3(ini.get<string>("scale", "1/1/1"))
 						);
 				vector <Material*> &vis_mats = first_trailer->body->get_materials();
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
@@ -297,15 +292,15 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 					string leftY("leftY");
 					ssY<<leftY<<i;
 					leftY = ssY.str();
-					first_trailer->left_wheels.push_back(new TruckPart(this
-								,	model_file + ini.get<string>("model", "double_wheel.obj")
-								,	ini.get<float>("leftS", 2.0f)
-								,	posX
-								,	posY
-								,	glm::vec3(ini.get<float>(leftX, 2.0f), 0.0f, ini.get<float>(leftY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))
-								,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
-								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
-								));
+					first_trailer->left_wheels.push_back(new TruckPart(this,
+							model_file + ini.get<string>("model", "double_wheel.obj"),
+							ini.get<float>("leftS", 2.0f),
+							posX,
+							posY,
+							glm::vec3(ini.get<float>(leftX, 2.0f), 0.0f, ini.get<float>(leftY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0")),
+							str_to_vec3(ini.get<string>("rotate", "0/0/0")),
+							str_to_vec3(ini.get<string>("scale", "1/1/1"))
+						));
 					printf("loading double wheels 2\n");
 					vector <Material*> &vis_mats = first_trailer->left_wheels.back()->get_materials();
 					printf("loading double wheels 3\n");
@@ -329,15 +324,15 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 					string rightY("rightY");
 					ssY<<rightY<<i;
 					rightY = ssY.str();
-					first_trailer->right_wheels.push_back(new TruckPart(this
-								,	model_file + ini.get<string>("model", "double_wheel.obj")
-								,	ini.get<float>("rightS", 2.0f)
-								,	posX
-								,	posY
-								,	glm::vec3(ini.get<float>(rightX, 2.0f), 0.0f, ini.get<float>(rightY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))
-								,	str_to_vec3(ini.get<string>("rotate", "0/180/0"))
-								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
-								));
+					first_trailer->right_wheels.push_back(new TruckPart(this,
+							model_file + ini.get<string>("model", "double_wheel.obj"),
+							ini.get<float>("rightS", 2.0f),
+							posX,
+							posY,
+							glm::vec3(ini.get<float>(rightX, 2.0f), 0.0f, ini.get<float>(rightY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0")),
+							str_to_vec3(ini.get<string>("rotate", "0/180/0")),
+							str_to_vec3(ini.get<string>("scale", "1/1/1"))
+							));
 					printf("loading double wheels 2\n");
 					vector <Material*> &vis_mats = first_trailer->right_wheels.back()->get_materials();
 					printf("loading double wheels 3\n");
@@ -352,14 +347,14 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 			second_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 			{
 				string model_file("./models/");
-				second_trailer->body = new TruckPart(this
-						,	model_file + ini.get<string>("model", "Second_trailer_no_wheels.obj")
-						,	ini.get<float>("size", 2.0f)
-						,	ini.get<float>("posX", 2.0f)
-						,	ini.get<float>("posY", 2.0f)
-						,	str_to_vec3(ini.get<string>("translate", "0/0/0"))
-						,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
-						,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+				second_trailer->body = new TruckPart(this,
+							model_file + ini.get<string>("model", "Second_trailer_no_wheels.obj"),
+							ini.get<float>("size", 2.0f),
+							ini.get<float>("posX", 2.0f),
+							ini.get<float>("posY", 2.0f),
+							str_to_vec3(ini.get<string>("translate", "0/0/0")),
+							str_to_vec3(ini.get<string>("rotate", "0/0/0")),
+							str_to_vec3(ini.get<string>("scale", "1/1/1"))
 						);
 				vector <Material*> &vis_mats = second_trailer->body->get_materials();
 				materials.insert(materials.begin(), vis_mats.begin(), vis_mats.end());
@@ -382,14 +377,14 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 					string leftY("leftY");
 					ssY<<leftY<<i;
 					leftY = ssY.str();
-					second_trailer->left_wheels.push_back(new TruckPart(this
-								,	model_file + ini.get<string>("model", "double_wheel.obj")
-								,	ini.get<float>("leftS", 2.0f)
-								,	posX
-								,	posY
-								,	glm::vec3(ini.get<float>(leftX, 2.0f), 0.0f, ini.get<float>(leftY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))
-								,	str_to_vec3(ini.get<string>("rotate", "0/0/0"))
-								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
+					second_trailer->left_wheels.push_back(new TruckPart(this,
+									model_file + ini.get<string>("model", "double_wheel.obj"),
+									ini.get<float>("leftS", 2.0f),
+									posX,
+									posY,
+									glm::vec3(ini.get<float>(leftX, 2.0f), 0.0f, ini.get<float>(leftY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0")),
+									str_to_vec3(ini.get<string>("rotate", "0/0/0")),
+									str_to_vec3(ini.get<string>("scale", "1/1/1"))
 								));
 					printf("loading double wheels 2\n");
 					vector <Material*> &vis_mats = second_trailer->left_wheels.back()->get_materials();
@@ -415,15 +410,14 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 					string rightY("rightY");
 					ssY<<rightY<<i;
 					rightY = ssY.str();
-					second_trailer->right_wheels.push_back(new TruckPart(this
-								,	model_file + ini.get<string>("model", "double_wheel.obj")
-								,	ini.get<float>("rightS", 2.0f)
-								,	posX
-								,	posY
-								,	glm::vec3(ini.get<float>(rightX, 2.0f), 0.0f, ini.get<float>(rightY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0"))
-								,	str_to_vec3(ini.get<string>("rotate", "0/180/0"))
-								,	str_to_vec3(ini.get<string>("scale", "1/1/1"))
-								));
+					second_trailer->right_wheels.push_back(new TruckPart(this,
+						model_file + ini.get<string>("model", "double_wheel.obj"),
+						ini.get<float>("rightS", 2.0f),
+						posX,
+						posY,
+						glm::vec3(ini.get<float>(rightX, 2.0f), 0.0f, ini.get<float>(rightY, 2.0f)) + str_to_vec3(ini.get<string>("translate", "0/0/0")),
+						str_to_vec3(ini.get<string>("rotate", "0/180/0")),
+						str_to_vec3(ini.get<string>("scale", "1/1/1"))	)	);
 					printf("loading double wheels 2\n");
 					vector <Material*> &vis_mats = second_trailer->right_wheels.back()->get_materials();
 					printf("loading double wheels 3\n");
@@ -487,11 +481,6 @@ void World::clear() {
 void World::draw() {
     camera->animate_crash();
 	glm::mat4 V = camera->get_view_matrix();
-	
-	/**
-	 * Recalculate models
-	 */
-	
 	parking->set_mv_matrix(glm::mat4(1.0f));
 	truck->body->set_mv_matrix(glm::mat4(1.0f));
 	truck->left_steering_wheel->set_mv_matrix(glm::mat4(1.0f));
@@ -521,7 +510,7 @@ void World::draw() {
 	draw_all_markers(V);
 
 	draw_in_material_order(V);
-
+	
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);

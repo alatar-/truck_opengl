@@ -24,8 +24,7 @@ public:
 	}
 
 	Vertex2D<T> rotate (T angle) {
-		T sn = sin(angle)
-			,	cs = cos(angle);
+		T sn = sin(angle), cs = cos(angle);
 		return Vertex2D<T>(x * cs - y * sn, x * sn + y * cs);
 	}
 	

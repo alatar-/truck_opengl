@@ -12,35 +12,15 @@ TruckPart::TruckPart(World *in_world,
 	ang_forward = 0;
 	ang_follow = 0;
 	ang_bend = 0;
-
 	in_transform = glm::translate(glm::mat4(1.0f), in_T);
-// 	printf("\nvisitor_t::constructor> T\n");
-// 	print_mat4(in_transform);
-	
 	in_transform *= glm::rotate(glm::mat4(1.0f), in_R.x, glm::vec3(1.0f, 0.0f, 0.0f));
-// 	printf("\nvisitor_t::constructor> R.x\n");
-// 	print_mat4(in_transform);
-	
 	in_transform *= glm::rotate(glm::mat4(1.0f), in_R.y, glm::vec3(0.0f, 1.0f, 0.0f));
-// 	printf("\nvisitor_t::constructor> R.y\n");
-// 	print_mat4(in_transform);
-	
 	in_transform *= glm::rotate(glm::mat4(1.0f), in_R.z, glm::vec3(0.0f, 0.0f, 1.0f));
-// 	printf("\nvisitor_t::constructor> R.z\n");
-// 	print_mat4(in_transform);
-	
-// 	printf("S = (%.2f, %.2f, %.2f)\n", in_S.x, in_S.y, in_S.z);
 	in_transform *= glm::scale(glm::mat4(1.0f), in_S);
-// 	printf("\nvisitor_t::constructor> in_transform\n");
-// 	print_mat4(in_transform);
-	
 	size = in_size;
-	
 	world = in_world;
-	
 	model = new Model();//new anim_mesh_Model();
 	model->load(in_path);
-
 	last_time = glutGet(GLUT_ELAPSED_TIME);
 	speed = 5;
 }
