@@ -154,25 +154,32 @@ bool Vehicle::move(float parent_size, Vertex2D<float>in_position, float in_angle
     position = in_position;
     set_vertices();
     position = temp_position;
-    if (!detect_collision(obstacles)) {
-        if (!following_vehicle || following_vehicle->move(size, in_position, angle, ds, in_following_bend, obstacles)) {
-            position = in_position;
-            body->move(in_position, angle, 0);
-            if (left_steering_wheel && right_steering_wheel) {
-                left_steering_wheel->move(in_position, angle, ds);
-                left_steering_wheel->rotate(-in_following_bend);
-                right_steering_wheel->move(in_position, angle, -ds);
-                right_steering_wheel->rotate(-in_following_bend);
-            }
-
-            for (unsigned i = 0; i < this->left_wheels.size(); ++i) {
-                left_wheels[i]->move(in_position, angle, ds);
-                right_wheels[i]->move(in_position, angle, -ds);
-            }
+    if (!following_vehicle || following_vehicle->move(size, in_position, angle, ds, in_following_bend, obstacles)) {
+        position = in_position;
+        body->move(in_position, angle, 0);
+        if (left_steering_wheel && right_steering_wheel) {
+            left_steering_wheel->move(in_position, angle, ds);
+            left_steering_wheel->rotate(-in_following_bend);
+            right_steering_wheel->move(in_position, angle, -ds);
+            right_steering_wheel->rotate(-in_following_bend);
         }
+
+        for (unsigned i = 0; i < this->left_wheels.size(); ++i) {
+            left_wheels[i]->move(in_position, angle, ds);
+            right_wheels[i]->move(in_position, angle, -ds);
+        }
+    }
+    if (!detect_collision(obstacles)) {
         set_vertices();
         return true;
     } else {
+        velocity = 0;
+        if (following_vehicle) {
+            following_vehicle->velocity = 0;
+            if (following_vehicle->following_vehicle) {
+                following_vehicle->following_vehicle->velocity = 0;
+            }
+        }
         collision();
         set_vertices();
         return false;
