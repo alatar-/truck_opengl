@@ -5,6 +5,11 @@
 #include <cstdio>
 #include "shared.h"
 
+template<class T> T module (T a, T b);
+template<class T> T module (T a, T b) {
+	return sqrt(a * a + b * b);
+}
+
 template<class T> class Vertex2D {
 public:
 	T x
@@ -76,8 +81,35 @@ public:
 		}
 	}
 
+	T module() const {
+		return sqrt(x * x + y * y);
+	}
+
 	T module(const T &o) const {
 		return module(x - o.x, y - o.y);
+	}
+
+	T angle_between(const Vertex2D<T> &o) {
+		T modules = module() * o.module();
+		if (modules != 0) {
+			return acos(min(max((*this * o) / modules, -1.0f), 1.0f));
+		} else {
+			return 0;
+		}
+	}
+
+	Vertex2D<T> normal() const {
+		T mod = module();
+		if (mod) {
+			return Vertex2D<float>(x / mod, y / mod);
+		} else {
+			return Vertex2D<float>();
+		}
+	}
+
+
+	bool is_blank() {
+		return x == 0.0 && y == 0.0;
 	}
 };
 

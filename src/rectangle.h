@@ -12,7 +12,7 @@ private:
 public:
     Rectangle(){};
 	Rectangle(Vertex2D <float> in_ul, Vertex2D <float> in_ur, Vertex2D <float> in_ll, Vertex2D <float> in_lr);
-	bool intersection(Rectangle &rect);
+	bool intersection(Rectangle &rect, Vertex2D <float> &out_axis);
 	bool full_inclusion(Rectangle &rect);
 	bool has_point_inside(Vertex2D <float> &in_vertex);
 	void set_vertices(vector <Vertex2D <float> > in);

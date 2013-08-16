@@ -19,10 +19,6 @@ float to_degrees (float radians) {
 	return radians * 180 / PI;
 }
 
-template<class T> T module (T a, T b) {
-	return sqrt(a * a + b * b);
-}
-
 string get_file (const char *filename) {
 	ifstream in(filename, ios::in | ios::binary);
 	if (in) {

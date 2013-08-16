@@ -120,7 +120,8 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 		{
 			ini.select("Vehicle_consts");
 
-			truck = new Vehicle(ini.get<float>("size", 1.0f),
+			truck = new Vehicle(this,
+								ini.get<float>("size", 1.0f),
 								ini.get<float>("max_acceleration", 0.1),
 								ini.get<float>("max_velocity", 90),
 								ini.get<float>("max_reverse_velocity", 30),
@@ -131,7 +132,13 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 								ini.get<float>("max_turn_point", 0.3),
 								ini.get<float>("final_turn_point", 0.6),
 								ini.get<float>("max_following_bend", 0.4),
-								ini.get<float>("time_following_bend", 2)
+								ini.get<float>("time_following_bend", 2),
+								ini.get<float>("time_side_velocity", 0.5),
+								ini.get<float>("minimal_delta_side_velocity", 0.2),
+								ini.get<float>("in_max_side_velocity", 1),
+								ini.get<float>("reflection_angle_fraction", 0.2),
+								ini.get<float>("reflection_velocity_fraction", 0.6),
+								ini.get<float>("minimal_reflection", 1)
 				);
 		}
 
@@ -258,7 +265,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 
 		{
 			ini.select("Trailer1");
-			first_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			first_trailer = new Vehicle(this, ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 			{
 				string model_file("./models/");
 				printf("trailer1!!!!!!!\n");
@@ -344,7 +351,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 
 		{
 			ini.select("Trailer2");
-			second_trailer = new Vehicle(ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			second_trailer = new Vehicle(this, ini.get<float>("size", 1.0f), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 			{
 				string model_file("./models/");
 				second_trailer->body = new TruckPart(this,
@@ -426,8 +433,9 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 				}
 			}
 		}
-		truck->following_vehicle = first_trailer;
-		first_trailer-> following_vehicle = second_trailer;
+
+		truck->attach(first_trailer);
+		first_trailer->attach(second_trailer);
 	}
 
 	{

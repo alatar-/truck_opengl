@@ -35,7 +35,7 @@ Rectangle::Rectangle(Vertex2D<float>in_ul, Vertex2D<float>in_ur, Vertex2D<float>
 	LR = in_lr;
 }
 
-bool Rectangle::intersection(Rectangle &rect) {
+bool Rectangle::intersection(Rectangle &rect, Vertex2D <float> &out_axis) {
 	Vertex2D <long double> Axis[4];
 	Vertex2D <long double> projection[4];
     Vertex2D <long double> rect_projection[4];
@@ -89,6 +89,9 @@ bool Rectangle::intersection(Rectangle &rect) {
 		// printf("overlapping: %d\n", (min(points, 4) <= max(rect_points, 4) && min(rect_points, 4) <= max(points, 4)) || (min(rect_points, 4) <= max(points, 4) && min(points, 4) <= max(rect_points, 4)));
 		
 		if(!((min(points, 4) <= max(rect_points, 4) && min(rect_points, 4) <= max(points, 4)) || (min(rect_points, 4) <= max(points, 4) && min(points, 4) <= max(rect_points, 4)))) {
+			// ?? minus in the second condition...
+			out_axis.x = Axis[i].x;
+			out_axis.y = Axis[i].y;
 			return false;
 		}
 	}

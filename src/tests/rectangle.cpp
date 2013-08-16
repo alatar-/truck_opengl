@@ -1,80 +1,102 @@
 #include "rectangle.h"
 
 void TestRectangle::test_intersection_positives_only_1_f() {
-    CPPUNIT_ASSERT(r_pos_1->intersection(*r_pos_2) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_1->intersection(*r_pos_2, coll_face_norm) == false);
 }
 void TestRectangle::test_intersection_positives_only_1_r() {
-    CPPUNIT_ASSERT(r_pos_2->intersection(*r_pos_1) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_2->intersection(*r_pos_1, coll_face_norm) == false);
 }
 
 void TestRectangle::test_intersection_positives_only_2_f() {
-    CPPUNIT_ASSERT(r_pos_1->intersection(*r_pos_3) == true);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_1->intersection(*r_pos_3, coll_face_norm) == true);
 }
 void TestRectangle::test_intersection_positives_only_2_r() {
-    CPPUNIT_ASSERT(r_pos_3->intersection(*r_pos_1) == true);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_3->intersection(*r_pos_1, coll_face_norm) == true);
 }
 
 void TestRectangle::test_intersection_negatives_only_1_f() {
-    CPPUNIT_ASSERT(r_pos_5->intersection(*r_pos_7) == true);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_5->intersection(*r_pos_7, coll_face_norm) == true);
 }
 void TestRectangle::test_intersection_negatives_only_1_r() {
-    CPPUNIT_ASSERT(r_pos_7->intersection(*r_pos_5) == true);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_7->intersection(*r_pos_5, coll_face_norm) == true);
 }
 
 void TestRectangle::test_intersection_mixed_1_f() {
-    CPPUNIT_ASSERT(r_pos_5->intersection(*r_pos_6) == true);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_5->intersection(*r_pos_6, coll_face_norm) == true);
 }
 void TestRectangle::test_intersection_mixed_1_r() {
-    CPPUNIT_ASSERT(r_pos_6->intersection(*r_pos_5) == true);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_6->intersection(*r_pos_5, coll_face_norm) == true);
 }
 
 void TestRectangle::test_intersection_mixed_2_f() {
-    CPPUNIT_ASSERT(r_pos_6->intersection(*r_pos_7) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_6->intersection(*r_pos_7, coll_face_norm) == false);
 }
 void TestRectangle::test_intersection_mixed_2_r() {
-    CPPUNIT_ASSERT(r_pos_7->intersection(*r_pos_6) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_7->intersection(*r_pos_6, coll_face_norm) == false);
 }
 
 void TestRectangle::test_intersection_mixed_3_f() {
-    CPPUNIT_ASSERT(r_pos_2->intersection(*r_pos_7) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_2->intersection(*r_pos_7, coll_face_norm) == false);
 }
 void TestRectangle::test_intersection_mixed_3_r() {
-    CPPUNIT_ASSERT(r_pos_7->intersection(*r_pos_2) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_7->intersection(*r_pos_2, coll_face_norm) == false);
 }
 
 void TestRectangle::test_intersection_mixed_4_f() {
-    CPPUNIT_ASSERT(r_pos_8->intersection(*r_pos_9) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_8->intersection(*r_pos_9, coll_face_norm) == false);
 }
 void TestRectangle::test_intersection_mixed_4_r() {
-    CPPUNIT_ASSERT(r_pos_9->intersection(*r_pos_8) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_9->intersection(*r_pos_8, coll_face_norm) == false);
 }
 
 void TestRectangle::test_intersection_mixed_5_f() {
-    CPPUNIT_ASSERT(r_pos_12->intersection(*r_pos_13) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_12->intersection(*r_pos_13, coll_face_norm) == false);
 }
 void TestRectangle::test_intersection_mixed_5_r() {
-    CPPUNIT_ASSERT(r_pos_13->intersection(*r_pos_12) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_13->intersection(*r_pos_12, coll_face_norm) == false);
 }
 
 void TestRectangle::test_intersection_mixed_6_f() {
-    CPPUNIT_ASSERT(r_pos_14->intersection(*r_pos_15) == true);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_14->intersection(*r_pos_15, coll_face_norm) == true);
 }
 void TestRectangle::test_intersection_mixed_6_r() {
-    CPPUNIT_ASSERT(r_pos_15->intersection(*r_pos_14) == true);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_15->intersection(*r_pos_14, coll_face_norm) == true);
 }
 
 void TestRectangle::test_intersection_initial_f() {
-    CPPUNIT_ASSERT(r_pos_10->intersection(*r_pos_11) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_10->intersection(*r_pos_11, coll_face_norm) == false);
 }
 void TestRectangle::test_intersection_initial_r() {
-    CPPUNIT_ASSERT(r_pos_11->intersection(*r_pos_10) == false);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_11->intersection(*r_pos_10, coll_face_norm) == false);
 }
 
 void TestRectangle::test_intersection_bent_1_f() {
-    CPPUNIT_ASSERT(r_bend_1->intersection(*r_pos_1) == true);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_bend_1->intersection(*r_pos_1, coll_face_norm) == true);
 }
 void TestRectangle::test_intersection_bent_1_r() {
-    CPPUNIT_ASSERT(r_pos_1->intersection(*r_bend_1) == true);
+    Vertex2D <float> coll_face_norm;
+    CPPUNIT_ASSERT(r_pos_1->intersection(*r_bend_1, coll_face_norm) == true);
 }
 
 

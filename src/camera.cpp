@@ -30,7 +30,7 @@ void Camera::animate_crash() {
 
         if (animation_on == 1) {
             // initialization
-            printf("init\n");
+            // printf("init\n");
             animation_on = 2;
             time_delta = 0; 
             animation_time_duration = 1;
@@ -40,7 +40,8 @@ void Camera::animate_crash() {
         if (animation_on == 2) {
             // printf("%f %f %f %f\n", animation_angle_horizontal_deviation, animation_angle_vertical_deviation, animation_angle_horizontal_goto, animation_angle_vertical_goto);
             if (animation_time_duration >= animation_time_estimated) {
-                printf("in1\n"); fflush(stdout);
+                // printf("in1\n");
+                fflush(stdout);
                 animation_angle_vertical_goto = animation_angle_horizontal_goto = 0;
                 if (fabs(animation_angle_horizontal_goto - animation_angle_horizontal_goto) < EPSILON && fabs(animation_angle_vertical_goto - animation_angle_vertical_deviation) < EPSILON) {
                     animation_on = 0;
@@ -53,7 +54,7 @@ void Camera::animate_crash() {
                     animation_rand_range * 
                     (1 - tmp_animation_time_duration / 
                     (float)animation_time_estimated);
-                printf("in2 %f\n", rand_range_now); fflush(stdout);
+                // printf("in2 %f\n", rand_range_now); fflush(stdout);
                 // animation_angle_horizontal_goto = rand() % int(ceil(rand_range_now));
                 // animation_angle_vertical_goto = rand() % int(ceil(rand_range_now));
                 
@@ -85,14 +86,14 @@ void Camera::animate_crash() {
             } else {
                 sign_v = sign(animation_angle_vertical_goto);
             }
-            printf("%d %d || %f %f %d | %f %f %d\n", animation_time_duration, animation_time_estimated, animation_angle_horizontal_deviation, 
-                animation_angle_horizontal_goto,
-                sign_h,
-                animation_angle_vertical_deviation, animation_angle_vertical_goto,
-                sign_v);
+            // printf("%d %d || %f %f %d | %f %f %d\n", animation_time_duration, animation_time_estimated, animation_angle_horizontal_deviation, 
+            //     animation_angle_horizontal_goto,
+            //     sign_h,
+            //     animation_angle_vertical_deviation, animation_angle_vertical_goto,
+            //     sign_v);
             animation_angle_vertical_deviation = sign_v * min(max_shift, fabs(animation_angle_vertical_goto - animation_angle_vertical_deviation)) + animation_angle_vertical_deviation;
             animation_angle_horizontal_deviation = sign_h * min(max_shift, fabs(animation_angle_horizontal_goto - animation_angle_horizontal_deviation)) + animation_angle_horizontal_deviation;
-            printf("%f || %f %f\n", max_shift, animation_angle_horizontal_deviation, animation_angle_vertical_deviation);
+            // printf("%f || %f %f\n", max_shift, animation_angle_horizontal_deviation, animation_angle_vertical_deviation);
             animation_time_duration += time_delta;
         }
     } else {
